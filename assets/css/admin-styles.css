@@ -1,0 +1,1897 @@
+/**
+ * Fluid Space Forge - Admin Styles
+ * Version: 1.0
+ * Organized CSS with KSS documentation
+ */
+
+/* ==========================================================================
+   1.0 DESIGN TOKENS (CSS VARIABLES)
+   ========================================================================== */
+
+/*
+Design Tokens
+
+CSS custom properties for theming and consistency across the plugin interface.
+All color variables use --clr- prefix, spacing uses --sp-, and typography uses --fs-.
+
+Styleguide 1.0
+*/
+
+:root {
+    /* Core Brand Colors
+       
+       Primary color palette for the plugin's visual identity.
+       
+       Styleguide 1.1
+    */
+    --clr-primary: #3C2017;
+    --clr-secondary: #5C3324;
+    --clr-tertiary: #86400E;
+    --clr-accent: #FFD700;
+
+    /* Background Colors
+       
+       Surface colors for different UI layers and containers.
+       
+       Styleguide 1.2
+    */
+    --clr-page-bg: #E8D8C3;
+    --clr-card-bg: #F0E6DA;
+    --clr-light: #F5F1EC;
+    --clr-white: #FFFFFF;
+
+    /* Text Colors
+       
+       Typography color options for various contrast levels.
+       
+       Styleguide 1.3
+    */
+    --clr-txt: #86400E;
+    --clr-txt-light: #FAF9F6;
+    --clr-txt-muted: #6b7280;
+
+    /* Button Colors
+       
+       Interactive button color palette with hover states.
+       
+       Styleguide 1.4
+    */
+    --clr-btn-bg: #FFD700;
+    --clr-btn-hover: #E5B929;
+    --clr-btn-txt: #9C0202;
+    --clr-btn-bdr: #DE0B0B;
+
+    /* Status/Semantic Colors
+       
+       Colors for conveying meaning: success, danger, info, warning.
+       
+       Styleguide 1.5
+    */
+    --clr-success: #10b981;
+    --clr-success-dark: #059669;
+    --clr-success-darker: #15803d;
+    --clr-danger: #ef4444;
+    --clr-danger-dark: #dc2626;
+    --clr-danger-darker: #991b1b;
+    --clr-info: #3b82f6;
+    --clr-info-dark: #1d4ed8;
+    --clr-warning: #f59e0b;
+    --clr-warning-dark: #d97706;
+
+    /* Gray Scale
+       
+       Neutral color ramp from light to dark.
+       
+       Styleguide 1.6
+    */
+    --clr-gray-50: #f8fafc;
+    --clr-gray-100: #f1f5f9;
+    --clr-gray-200: #e2e8f0;
+    --clr-gray-300: #cbd5e1;
+    --clr-gray-400: #94a3b8;
+    --clr-gray-500: #64748b;
+    --clr-gray-600: #475569;
+    --clr-gray-700: #334155;
+    --clr-gray-800: #1e293b;
+    --clr-gray-900: #0f172a;
+
+    /* UI Element Colors
+       
+       Specialized colors for borders, shadows, overlays, and badges.
+       
+       Styleguide 1.7
+    */
+    --clr-overlay: rgba(232, 216, 195, 0.95);
+    --clr-shadow: rgba(60, 32, 23, 0.15);
+    --clr-shadow-dark: rgba(0, 0, 0, 0.3);
+    --clr-bdr: #d1d5db;
+    --clr-bdr-dark: #5C3324;
+    --clr-modal-backdrop: rgba(0, 0, 0, 0.5);
+
+    /* Badge Colors
+       
+       Colors for active/inactive badge states.
+       
+       Styleguide 1.8
+    */
+    --clr-badge-active-bg: #10b981;
+    --clr-badge-active-txt: #ffffff;
+    --clr-badge-inactive-bg: #e2e8f0;
+    --clr-badge-inactive-txt: #64748b;
+    --clr-badge-bdr: #cbd5e1;
+
+    /* Interactive States
+       
+       Colors for hover, selected, and focus states.
+       
+       Styleguide 1.9
+    */
+    --clr-hover-bg: rgba(59, 130, 246, 0.05);
+    --clr-hover-bg-light: rgba(255, 255, 255, 0.2);
+    --clr-selected-bg: rgba(59, 130, 246, 0.25);
+    --clr-selected-bg-light: rgba(59, 130, 246, 0.1);
+    --clr-selected-bdr: rgba(59, 130, 246, 0.5);
+    --clr-selected-bdr-light: rgba(59, 130, 246, 0.2);
+    --clr-selected-outline: rgba(59, 130, 246, 0.4);
+
+    /* Drag & Drop Colors
+       
+       Visual feedback colors for drag and drop interactions.
+       
+       Styleguide 1.10
+    */
+    --clr-drag-placeholder-bg: rgba(25, 118, 210, 0.1);
+    --clr-drag-placeholder-bdr: #1976d2;
+    --clr-drag-zone-bg: rgba(25, 118, 210, 0.05);
+
+    /* Sample Preview Colors
+   
+   Colors for interactive sample space displays.
+   
+   Styleguide 1.14
+*/
+    --clr-sample-margin-bg: #ffcdd2;
+    --clr-sample-margin-border: #f44336;
+    --clr-sample-padding-bg: #c8e6c9;
+    --clr-sample-padding-border: #4caf50;
+    --clr-sample-gap-bg: #fafafa;
+    --clr-sample-gap-border: #9e9e9e;
+    --clr-sample-content-bg: #90caf9;
+    --clr-sample-content-border: #2196f3;
+    --clr-sample-content-text: #1565c0;
+
+    /* Design System Tokens (non-color)
+       
+       Spacing, typography, borders, transitions, and shadows.
+       
+       Styleguide 1.11
+    */
+    --jimr-border-radius: 3px;
+    --jimr-border-radius-lg: 5px;
+    --jimr-transition: all 0.2s ease;
+    --jimr-transition-slow: all 0.3s ease;
+    --clr-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --clr-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --clr-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --clr-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    /* Font Sizes
+       
+       Typography scale from extra small to 2xl.
+       
+       Styleguide 1.12
+    */
+    --fs-xs: 10px;
+    --fs-sm: 12px;
+    --fs-base: 14px;
+    --fs-lg: 16px;
+    --fs-xl: 18px;
+    --fs-2xl: 20px;
+
+    /* Spacing Scale
+       
+       Consistent spacing units from 4px to 24px.
+       
+       Styleguide 1.13
+    */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+}
+
+/* ==========================================================================
+   2.0 RESETS & BASE STYLES
+   ========================================================================== */
+
+/*
+Global Styling
+
+Base styling overrides for WordPress admin environment.
+Ensures consistent background and text colors throughout the plugin.
+
+Styleguide 2.0
+*/
+
+body {
+    background: var(--clr-page-bg) !important;
+    color: var(--clr-txt) !important;
+}
+
+.wp-admin {
+    background: var(--clr-page-bg) !important;
+}
+
+#wpbody-content {
+    background: var(--clr-page-bg) !important;
+}
+
+.wrap {
+    background: var(--clr-page-bg) !important;
+}
+
+/* ==========================================================================
+   3.0 TYPOGRAPHY
+   ========================================================================== */
+
+/*
+Typography
+
+Heading styles and text hierarchy for the admin interface.
+
+Styleguide 3.0
+*/
+
+/*
+Heading Level 1
+
+Primary page heading with serif font and text shadow.
+
+Styleguide 3.1
+*/
+h1 {
+    color: var(--clr-primary) !important;
+    font-family: 'Georgia', serif;
+    text-shadow: 1px 1px 2px var(--clr-shadow);
+}
+
+/*
+Heading Level 2
+
+Section headings with bottom border and serif typography.
+
+Styleguide 3.2
+*/
+h2 {
+    color: var(--clr-primary) !important;
+    font-family: 'Georgia', serif;
+    border-bottom-color: var(--clr-bdr-dark) !important;
+    text-shadow: 1px 1px 2px var(--clr-shadow);
+    font-size: var(--fs-2xl);
+    margin: 0 0 var(--sp-5) 0;
+    border-bottom: 2px solid var(--clr-bdr-dark);
+    padding-bottom: var(--sp-2);
+}
+
+/*
+Labels
+
+Form labels and component labels with consistent styling.
+
+Styleguide 3.3
+*/
+label,
+.component-label,
+.fcc-label {
+    color: var(--clr-txt);
+    font-weight: 500;
+    font-size: var(--fs-sm);
+    line-height: 1.3;
+    margin-bottom: var(--sp-2);
+    display: block;
+}
+
+/* ==========================================================================
+   4.0 LAYOUT
+   ========================================================================== */
+
+/*
+Layout System
+
+Grid layouts and container structures for page organization.
+
+Styleguide 4.0
+*/
+.all-container {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+
+/*
+Main Container
+
+Primary content wrapper with fade-in animation.
+
+Styleguide 4.2
+*/
+.space-clamp-container {
+    background: var(--clr-card-bg);
+    border-radius: var(--jimr-border-radius-lg);
+    box-shadow: var(--clr-shadow-xl);
+    overflow: visible;
+    border: 2px solid var(--clr-primary);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: block !important;
+}
+
+#scc-main-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/*
+Two Column Grid
+
+Main layout grid for settings and data table panels.
+
+Styleguide 4.3
+*/
+.fcc-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: var(--sp-6);
+    margin-bottom: var(--sp-6);
+}
+
+/*
+Grid Items
+
+Flexible column layout for form fields.
+
+Styleguide 4.4
+*/
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* ==========================================================================
+   5.0 COMPONENTS
+   ========================================================================== */
+
+/*
+Components
+
+Reusable UI components including buttons, panels, tables, and forms.
+
+Styleguide 5.0
+*/
+
+/*
+Button System
+
+Primary button styling with hover effects and variants.
+
+Styleguide 5.1
+*/
+.fcc-btn,
+.fcc-copy-btn {
+    background: var(--clr-btn-bg);
+    color: var(--clr-btn-txt);
+    border: 2px solid var(--clr-btn-bdr);
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: var(--jimr-border-radius);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    font-style: italic;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    transition: var(--jimr-transition-slow);
+    cursor: pointer;
+    box-shadow: var(--clr-shadow-md);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    text-decoration: none;
+}
+
+.fcc-btn:hover,
+.fcc-copy-btn:hover {
+    background: var(--clr-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--clr-shadow-lg);
+}
+
+/*
+Button Variants
+
+Specialized button styles for different actions.
+
+Styleguide 5.2
+*/
+.fcc-btn-primary {
+    background: var(--clr-info);
+    color: var(--clr-white);
+    border-color: var(--clr-info);
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.fcc-btn-danger {
+    background: var(--clr-danger);
+    color: var(--clr-white);
+    border-color: var(--clr-danger-dark);
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.fcc-btn-ghost {
+    background: var(--clr-gray-500);
+    color: var(--clr-white);
+    border-color: var(--clr-gray-600);
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+/*
+Copy Button
+
+Specialized button for copying CSS output.
+
+Styleguide 5.3
+*/
+.fcc-copy-btn {
+    border: none;
+    min-width: 80px;
+    justify-content: center;
+}
+
+/*
+Button Groups
+
+Container for multiple related buttons.
+
+Styleguide 5.4
+*/
+.fcc-table-buttons {
+    display: flex;
+    gap: var(--sp-2);
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.fcc-css-buttons {
+    display: flex;
+    gap: var(--sp-2);
+    align-items: center;
+}
+
+.fcc-btn-group {
+    display: flex;
+    gap: var(--sp-3);
+    justify-content: flex-end;
+    margin-top: var(--sp-5);
+}
+
+/*
+Input System
+
+Text inputs, number inputs, and select dropdowns.
+
+Styleguide 5.5
+*/
+.fcc-input,
+.component-input,
+.component-select {
+    height: 40px;
+    padding: 10px 12px;
+    border: 2px solid var(--clr-bdr-dark);
+    border-radius: var(--jimr-border-radius);
+    font-size: var(--fs-base);
+    background: var(--clr-white);
+    color: var(--clr-txt);
+    transition: var(--jimr-transition-slow);
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+    overflow: visible;
+}
+
+.fcc-input:focus,
+.component-input:focus,
+.component-select:focus {
+    outline: none;
+    border-color: var(--clr-accent);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2), var(--clr-shadow-md);
+    background: var(--clr-light);
+    transform: translateY(-2px);
+}
+
+.fcc-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.grid-item .fcc-input-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.fcc-input-wrapper>input,
+.fcc-input-wrapper>select {
+    width: 100%;
+}
+
+/*
+Select Dropdown
+
+Custom styled select with arrow indicator.
+
+Styleguide 5.6
+*/
+.component-select,
+select.fcc-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C3324' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+}
+
+/*
+Panels
+
+Content containers with elevation and borders.
+
+Styleguide 5.7
+*/
+.fcc-panel {
+    background: var(--clr-light);
+    padding: var(--sp-5);
+    border-radius: var(--jimr-border-radius-lg);
+    border: 2px solid var(--clr-bdr-dark);
+    box-shadow: var(--clr-shadow-lg);
+    transition: var(--jimr-transition);
+    position: relative;
+    z-index: auto;
+}
+
+/*
+Tables
+
+Data table styling with fixed layout and hover effects.
+
+Styleguide 5.8
+*/
+.font-table {
+    border: none !important;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    min-width: 490px;
+    background: var(--clr-white);
+    border-radius: var(--jimr-border-radius);
+    overflow: hidden;
+    box-shadow: var(--clr-shadow-md);
+}
+
+.font-table th,
+.font-table td {
+    border: none !important;
+    padding: var(--sp-2) var(--sp-2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--fs-sm);
+    line-height: 1.3;
+}
+
+.font-table th {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    background-color: var(--clr-gray-100) !important;
+    color: var(--clr-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: top;
+    border-bottom: 2px solid var(--clr-gray-200) !important;
+}
+
+.font-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid var(--clr-gray-100) !important;
+}
+
+.size-name-input {
+    border: none !important;
+    background: transparent !important;
+    width: 100% !important;
+    padding: 4px 8px !important;
+    color: var(--clr-txt) !important;
+}
+
+#sizes-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    max-width: 100%;
+}
+
+.font-table td:first-child {
+    text-align: center;
+    padding-left: 10px !important;
+}
+
+.font-table td:nth-child(2) {
+    padding-left: 8px !important;
+}
+
+/*
+Info Toggles
+
+Collapsible information sections with expand/collapse animation.
+
+Styleguide 5.9
+*/
+.fcc-info-toggle-section {
+    margin-bottom: var(--sp-6);
+    border: 2px solid var(--clr-bdr-dark);
+    border-radius: var(--jimr-border-radius-lg);
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--clr-light), var(--clr-card-bg));
+    box-shadow: var(--clr-shadow-md);
+}
+
+.fcc-info-toggle {
+    width: 100%;
+    background: var(--clr-secondary);
+    color: var(--clr-txt-light) !important;
+    border: none;
+    padding: var(--sp-4) var(--sp-5);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    transition: var(--jimr-transition-slow);
+    text-shadow: 0 1px 2px var(--clr-shadow-dark);
+}
+
+.fcc-info-toggle:hover {
+    background: var(--clr-primary);
+    color: var(--clr-txt-light) !important;
+    transform: translateY(-1px);
+}
+
+.fcc-toggle-icon {
+    transition: transform 0.3s ease;
+    font-size: var(--fs-base);
+    color: var(--clr-txt-light) !important;
+}
+
+.fcc-info-toggle.expanded .fcc-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.fcc-info-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    background: var(--clr-light);
+    color: var(--clr-txt);
+}
+
+.fcc-info-content.expanded {
+    max-height: 500px;
+    padding: var(--sp-5);
+}
+
+/*
+Dividers
+
+Horizontal separator lines.
+
+Styleguide 5.10
+*/
+.divider {
+    border-top: 1px solid var(--clr-bdr-dark);
+    margin-top: var(--sp-4);
+}
+
+/*
+Font Units Selector
+
+Toggle buttons for px/rem unit selection.
+
+Styleguide 5.11
+*/
+.font-units-section {
+    margin-bottom: var(--sp-5);
+}
+
+.font-units-label {
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--clr-txt);
+    margin-bottom: var(--sp-1);
+}
+
+.font-units-buttons {
+    display: flex;
+    border-radius: var(--jimr-border-radius-lg);
+    overflow: visible;
+    border: 2px solid var(--clr-primary);
+    box-shadow: var(--clr-shadow-md);
+}
+
+.unit-button {
+    background: var(--clr-btn-bg);
+    color: var(--clr-btn-txt);
+    border: none;
+    width: 50%;
+    padding: var(--sp-2);
+    text-align: center;
+    font-size: var(--fs-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--jimr-transition-slow);
+    position: relative;
+    z-index: 1000;
+}
+
+.unit-button.active {
+    background: var(--clr-secondary);
+    color: var(--clr-txt-light);
+    font-weight: 700;
+}
+
+/*
+Tabs
+
+Tab navigation for switching between output formats.
+
+Styleguide 5.12
+*/
+.fcc-tabs {
+    display: flex;
+    gap: var(--sp-1);
+    background: var(--clr-primary);
+    padding: 3px;
+    border-radius: var(--jimr-border-radius-lg);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button {
+    background: var(--clr-btn-bg);
+    color: var(--clr-btn-txt);
+    border: 2px solid var(--clr-btn-bdr);
+    transition: var(--jimr-transition-slow);
+    cursor: pointer;
+    font-weight: 600;
+    text-shadow: none;
+    position: relative;
+}
+
+.tab-button:hover {
+    background: var(--clr-btn-hover);
+    color: var(--clr-btn-txt);
+    border-color: var(--clr-btn-bdr);
+    transform: translateY(-1px);
+    box-shadow: var(--clr-shadow-md);
+}
+
+.tab-button.active {
+    background: var(--clr-secondary) !important;
+    color: var(--clr-txt-light) !important;
+    border-color: var(--clr-primary) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 15px rgba(92, 51, 36, 0.4) !important;
+}
+
+/*
+Autosave Status
+
+Visual indicator for autosave functionality.
+
+Styleguide 5.13
+*/
+.fcc-autosave-flex {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    overflow: visible;
+}
+
+.fcc-autosave-flex label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1);
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.autosave-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: 0.8rem;
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: var(--jimr-border-radius);
+    transition: var(--jimr-transition-slow);
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.autosave-status.idle {
+    background: var(--clr-card-bg);
+    color: var(--clr-txt);
+    border-color: var(--clr-bdr-dark);
+}
+
+.autosave-status.saving {
+    background: linear-gradient(135deg, var(--clr-btn-bg), var(--clr-btn-hover));
+    color: var(--clr-btn-txt);
+    border-color: var(--clr-btn-bdr);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.autosave-status.saved {
+    background: linear-gradient(135deg, var(--clr-success), var(--clr-success-dark));
+    color: var(--clr-white);
+    border-color: var(--clr-success-darker);
+}
+
+.autosave-status.error {
+    background: linear-gradient(135deg, var(--clr-btn-bdr), var(--clr-danger));
+    color: var(--clr-white);
+    border-color: var(--clr-danger-darker);
+}
+
+/*
+CSS Output Headers
+
+Header sections for CSS code display areas.
+
+Styleguide 5.14
+*/
+.fcc-css-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-3);
+}
+
+/*
+Preview Panels
+
+Side-by-side preview containers for min/max viewport sizes.
+
+Styleguide 5.15
+*/
+.fcc-preview-enhanced {
+    background: var(--clr-light);
+    padding: var(--sp-5);
+    border-radius: var(--jimr-border-radius-lg);
+    border: 2px solid var(--clr-bdr-dark);
+    box-shadow: var(--clr-shadow-lg);
+    margin-top: var(--sp-4);
+    transition: var(--jimr-transition);
+    clear: both;
+    display: block;
+}
+
+/* Preview panel needs more height for the two-column grid */
+#preview-content.expanded {
+    max-height: 3000px;
+}
+
+.fcc-preview-header-row {
+    text-align: left;
+    margin-bottom: var(--sp-5);
+    border-bottom: 2px solid var(--clr-bdr-dark);
+    padding-bottom: var(--sp-3);
+}
+
+.fcc-preview-header-row h2 {
+    color: var(--clr-primary) !important;
+    font-family: 'Georgia', serif !important;
+    font-size: var(--fs-2xl) !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    text-shadow: 1px 1px 2px var(--clr-shadow) !important;
+    border: none !important;
+}
+
+.fcc-preview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--sp-6);
+    align-items: start;
+}
+
+.fcc-preview-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.fcc-preview-column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    background: rgba(92, 51, 36, 0.1);
+    border-radius: var(--jimr-border-radius);
+    border: 1px solid var(--clr-bdr-dark);
+}
+
+.fcc-preview-column-header h3 {
+    color: var(--clr-secondary) !important;
+    font-size: var(--fs-lg) !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+.fcc-scale-indicator {
+    background: var(--clr-secondary);
+    color: var(--clr-txt-light);
+    border: 1px solid var(--clr-primary);
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: var(--jimr-border-radius);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    font-style: normal;
+    display: inline-block;
+    box-shadow: var(--clr-shadow-sm);
+    min-width: 60px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/*
+Property Badges
+
+Visual indicators for margin/padding properties.
+
+Styleguide 5.16
+*/
+.property-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--clr-badge-bdr);
+    margin: 0 2px;
+    min-width: 16px;
+}
+
+.property-badge.active {
+    background: var(--clr-badge-active-bg);
+    color: var(--clr-badge-active-txt);
+    border-color: var(--clr-badge-active-bg);
+}
+
+.property-badge.inactive {
+    background: var(--clr-badge-inactive-bg);
+    color: var(--clr-badge-inactive-txt);
+}
+
+/* ==========================================================================
+   5.16 SAMPLE SPACE PREVIEW
+   ========================================================================== */
+
+/*
+Sample Space Preview
+
+Interactive preview panel showing spacing behavior across viewport widths
+with real-time interpolation via slider control.
+
+Styleguide 5.16
+*/
+
+/*
+Sample Space Container
+
+Main container for sample displays, controls, and slider.
+
+Styleguide 5.16.1
+*/
+.fcc-sample-space-container {
+    padding: 20px;
+    background: var(--clr-light);
+    border-radius: var(--jimr-border-radius-lg);
+}
+
+/*
+Sample Displays Grid
+
+Three-column layout for margin, padding, and gap samples.
+
+Styleguide 5.16.2
+*/
+.fcc-sample-displays {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+/*
+Sample Group
+
+Individual sample display container with label.
+
+Styleguide 5.16.3
+*/
+.fcc-sample-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fcc-sample-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--clr-secondary);
+    text-align: center;
+}
+
+/*
+Sample Box Wrapper
+
+Container for sample box and value display.
+
+Styleguide 5.16.4
+*/
+.fcc-sample-box-wrapper {
+    background: var(--clr-white);
+    border: 2px solid var(--clr-bdr-dark);
+    border-radius: var(--jimr-border-radius);
+    padding: 20px;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    margin: 0 auto;
+}
+
+/*
+Margin Sample
+
+Demonstrates margin spacing with visible outer container.
+Pink area represents margin space AROUND the fixed-size blue content.
+
+Styleguide 5.16.5
+*/
+.fcc-margin-sample {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--clr-sample-margin-bg);
+    border: 2px dashed var(--clr-sample-margin-border);
+    border-radius: var(--jimr-border-radius);
+    transition: padding 0.2s ease;
+    padding: 8px;
+}
+
+.fcc-margin-sample .fcc-sample-inner {
+    background: var(--clr-sample-content-bg);
+    border: 2px solid var(--clr-sample-content-border);
+    color: var(--clr-sample-content-text);
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/*
+/*
+Padding Sample
+
+Demonstrates padding spacing with inner content.
+Green container stays fixed size, padding grows inward, compressing blue content.
+
+Styleguide 5.16.6
+*/
+.fcc-padding-sample {
+    background: var(--clr-sample-padding-bg);
+    border: 2px dashed var(--clr-sample-padding-border);
+    border-radius: var(--jimr-border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+    transition: padding 0.2s ease;
+    padding: 8px;
+    margin: 0 auto;
+}
+
+.fcc-padding-sample .fcc-sample-inner {
+    background: var(--clr-sample-content-bg);
+    border: 2px solid var(--clr-sample-content-border);
+    color: var(--clr-sample-content-text);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/*
+Gap Sample
+
+Demonstrates gap spacing with flexbox items in a 2x2 grid.
+
+Styleguide 5.16.7
+*/
+.fcc-gap-sample {
+    display: grid;
+    grid-template-columns: 60px 60px;
+    grid-template-rows: 35px 35px;
+    border: 2px dashed var(--clr-sample-gap-border);
+    border-radius: var(--jimr-border-radius);
+    padding: 20px;
+    background: var(--clr-sample-gap-bg);
+    transition: gap 0.2s ease;
+    align-items: start;
+    justify-items: start;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+}
+
+.fcc-sample-item {
+    background: var(--clr-sample-content-bg);
+    border: 2px solid var(--clr-sample-content-border);
+    color: var(--clr-sample-content-text);
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 60px;
+    height: 35px;
+}
+
+/*
+Sample Value Display
+
+Shows current calculated space value below sample.
+
+Styleguide 5.16.8
+*/
+.fcc-sample-value {
+    font-size: 11px;
+    color: var(--clr-txt-muted);
+    font-weight: 500;
+    background: var(--clr-gray-100);
+    padding: 4px 8px;
+    border-radius: var(--jimr-border-radius);
+    border: 1px solid var(--clr-bdr);
+}
+
+/*
+Sample Controls
+
+Controls row for size selector.
+
+Styleguide 5.16.9
+*/
+.fcc-sample-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--clr-bdr);
+}
+
+.fcc-sample-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fcc-sample-selector .component-label {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+/*
+Viewport Slider Section
+
+Container for viewport slider and display.
+
+Styleguide 5.16.10
+*/
+.fcc-viewport-slider-section {
+    margin-bottom: 20px;
+}
+
+.fcc-viewport-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*
+Viewport Slider Component
+
+Custom-styled range slider for interactive viewport size control
+with brand colors and smooth interaction feedback.
+
+Styleguide 5.16.11
+*/
+.fcc-viewport-slider-container {
+    position: relative;
+    margin-bottom: 8px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#sample-viewport-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, var(--clr-secondary), var(--clr-accent), var(--clr-secondary));
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: var(--jimr-transition);
+}
+
+#sample-viewport-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--clr-accent);
+    border: 2px solid var(--clr-primary);
+    cursor: pointer;
+    box-shadow: var(--clr-shadow-md);
+    transition: var(--jimr-transition);
+}
+
+#sample-viewport-slider::-webkit-slider-thumb:hover {
+    background: var(--clr-btn-hover);
+    transform: scale(1.1);
+    box-shadow: var(--clr-shadow-lg);
+}
+
+#sample-viewport-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--clr-accent);
+    border: 2px solid var(--clr-primary);
+    cursor: pointer;
+    box-shadow: var(--clr-shadow-md);
+    transition: var(--jimr-transition);
+}
+
+#sample-viewport-slider::-moz-range-thumb:hover {
+    background: var(--clr-btn-hover);
+    transform: scale(1.1);
+    box-shadow: var(--clr-shadow-lg);
+}
+
+/*
+Slider Labels
+
+Min and max viewport labels below slider.
+
+Styleguide 5.16.12
+*/
+.fcc-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--clr-txt-muted);
+    margin-top: 4px;
+}
+
+/*
+Responsive Adjustments
+
+Stack samples vertically on smaller screens.
+
+Styleguide 5.16.13
+*/
+@media (max-width: 768px) {
+    .fcc-sample-displays {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/*
+Modal Dialogs
+
+Overlay modal for editing entries with backdrop.
+
+Styleguide 5.17
+*/
+.fcc-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--clr-modal-backdrop);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.fcc-modal.show {
+    display: flex;
+}
+
+.fcc-modal-dialog {
+    background: var(--clr-card-bg);
+    border-radius: var(--jimr-border-radius-lg);
+    border: 2px solid var(--clr-primary);
+    box-shadow: var(--clr-shadow-xl);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.fcc-modal-header {
+    background: var(--clr-secondary);
+    color: var(--clr-txt-light);
+    padding: var(--sp-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: var(--fs-lg);
+}
+
+.fcc-modal-close {
+    background: none;
+    border: none;
+    color: var(--clr-txt-light);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--jimr-transition);
+}
+
+.fcc-modal-close:hover {
+    background: var(--clr-hover-bg-light);
+}
+
+.fcc-modal-content {
+    padding: var(--sp-5);
+}
+
+.fcc-form-group {
+    margin-bottom: var(--sp-4);
+}
+
+/*
+Modal Error Banner
+
+Inline error display within modal dialogs.
+
+Styleguide 5.17.1
+*/
+.fcc-modal-error {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    background: var(--clr-danger);
+    border-radius: var(--jimr-border-radius);
+    padding: 12px 16px;
+    margin-bottom: var(--sp-4);
+    color: var(--clr-txt-light);
+    font-weight: 500;
+    font-size: var(--fs-sm);
+}
+
+.fcc-modal-error .error-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   5.18 STATE VISIBILITY CLASSES
+   ========================================================================== */
+
+/*
+State Visibility Classes
+
+Control display of empty and populated panel states.
+
+Styleguide 5.18
+*/
+
+.state-visible {
+    display: block !important;
+}
+
+.state-hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   6.0 INTERACTIVE STATES
+   ========================================================================== */
+
+/*
+Interactive States
+
+Hover, focus, selected, and dragging states for UI elements.
+
+Styleguide 6.0
+*/
+/*
+Edit Button States
+
+Hover effect for edit action buttons.
+
+Styleguide 6.0
+*/
+.edit-size {
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    padding: 4px !important;
+    color: var(--clr-info) !important;
+    transition: all 0.2s ease !important;
+}
+
+.edit-size:hover {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border-radius: 4px !important;
+}
+
+/*
+Delete Button States
+
+Hover effect for delete action buttons.
+
+Styleguide 6.1
+*/
+.delete-size {
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    padding: 4px !important;
+}
+
+.delete-size:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-radius: 4px !important;
+}
+
+/*
+Space Preview Item States
+
+Interactive states for preview items with selection highlighting.
+
+Styleguide 6.2
+*/
+.space-preview-item {
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.space-preview-item:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.space-preview-item.selected {
+    background-color: var(--clr-selected-bg-light) !important;
+    border-color: var(--clr-selected-bdr-light) !important;
+    box-shadow: 0 0 0 2px var(--clr-selected-outline) !important;
+}
+
+/*
+Table Row States
+
+Hover and selection states for data table rows.
+
+Styleguide 6.3
+*/
+.size-row {
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    border: 1px solid transparent !important;
+}
+
+.size-row:hover {
+    background-color: var(--clr-hover-bg) !important;
+    border-color: var(--clr-selected-bdr-light) !important;
+    transform: translateX(2px) !important;
+}
+
+.size-row.selected {
+    background-color: var(--clr-selected-bg) !important;
+    border-color: var(--clr-selected-bdr) !important;
+    box-shadow: 0 0 0 1px var(--clr-selected-outline) !important;
+}
+
+.size-row.selected:hover {
+    background-color: var(--clr-selected-bg-light) !important;
+}
+
+/*
+Drag and Drop States
+
+Visual feedback during drag and drop operations.
+
+Styleguide 6.4
+*/
+.drag-handle {
+    cursor: grab !important;
+    user-select: none;
+    padding: 4px;
+    color: var(--clr-gray-500);
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.drag-handle:hover {
+    color: var(--clr-secondary);
+}
+
+.drag-handle:active {
+    cursor: grabbing !important;
+}
+
+.size-row.dragging {
+    opacity: 0.5 !important;
+    transform: rotate(2deg) !important;
+    transition: all 0.2s ease !important;
+}
+
+.drag-placeholder {
+    opacity: 0.3 !important;
+    background-color: var(--clr-drag-placeholder-bg) !important;
+    border: 2px dashed var(--clr-drag-placeholder-bdr) !important;
+    transition: all 0.2s ease !important;
+}
+
+.drag-drop-zone {
+    background: var(--clr-drag-zone-bg) !important;
+    border-radius: var(--jimr-border-radius) !important;
+}
+
+/*
+Enhanced Drag Animations
+
+Optional enhanced animations for drag operations.
+
+Styleguide 6.5
+*/
+.drag-enhanced .size-row {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.drag-enhanced .size-row:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: var(--clr-shadow-lg) !important;
+}
+
+/* ==========================================================================
+   7.0 ANIMATIONS
+   ========================================================================== */
+
+/*
+Animations
+
+Keyframe animations for visual feedback.
+
+Styleguide 7.0
+*/
+
+/*
+Pulse Animation
+
+Used for autosave saving state indicator.
+
+Styleguide 7.1
+*/
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ==========================================================================
+   8.0 RESPONSIVE
+   ========================================================================== */
+
+/*
+Responsive Design
+
+Media queries for tablet and mobile breakpoints.
+
+Styleguide 8.0
+*/
+
+/*
+Tablet Breakpoint
+
+Layout adjustments for screens 1024px and below.
+
+Styleguide 8.1
+*/
+@media (max-width: 1024px) {
+    .fcc-main-grid {
+        grid-template-columns: 1fr;
+        gap: var(--sp-4);
+    }
+}
+
+/*
+Mobile Breakpoint
+
+Layout adjustments for screens 768px and below.
+
+Styleguide 8.2
+*/
+@media (max-width: 768px) {
+    .fcc-main-grid {
+        grid-template-columns: 1fr;
+        gap: var(--sp-4);
+    }
+
+    .fcc-tabs {
+        justify-content: center;
+    }
+
+    .fcc-info-content div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: var(--sp-4) !important;
+    }
+
+    .fcc-preview-grid {
+        grid-template-columns: 1fr;
+        gap: var(--sp-4);
+    }
+
+    #preview-content.expanded {
+        max-height: 200;
+    }
+}
+
+/* ==========================================================================
+   TOOLTIPS
+   ========================================================================== */
+
+/*
+Tooltips
+
+Hover-triggered informational tooltips using data-tooltip attribute.
+Pure CSS implementation with no JavaScript required.
+
+Markup:
+<button data-tooltip="Helpful information">Button</button>
+
+Styleguide 9.0
+*/
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 8px 12px;
+    background: var(--clr-gray-900);
+    color: var(--clr-white);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+    white-space: nowrap;
+    border-radius: var(--jimr-border-radius);
+    box-shadow: var(--clr-shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--jimr-transition);
+    pointer-events: none;
+    z-index: 999999;
+    text-align: center;
+}
+
+[data-tooltip]:after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    border: 6px solid transparent;
+    border-top-color: var(--clr-gray-900);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--jimr-transition);
+    pointer-events: none;
+    z-index: 999999;
+    display: none;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Tooltip positioning variants */
+[data-tooltip-position="right"]:before {
+    bottom: auto;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+}
+
+[data-tooltip-position="right"]:after {
+    bottom: auto;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(4px);
+    border-top-color: transparent;
+    border-right-color: var(--clr-gray-900);
+}
+
+[data-tooltip-position="left"]:before {
+    bottom: auto;
+    left: auto;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-8px);
+}
+
+[data-tooltip-position="left"]:after {
+    bottom: auto;
+    left: auto;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-4px);
+    border-top-color: transparent;
+    border-left-color: var(--clr-gray-900);
+}
+
+[data-tooltip-position="bottom"]:before {
+    bottom: auto;
+    top: 100%;
+    transform: translateX(-50%) translateY(8px);
+}
+
+[data-tooltip-position="bottom"]:after {
+    bottom: auto;
+    top: 100%;
+    transform: translateX(-50%) translateY(4px);
+    border-top-color: transparent;
+    border-bottom-color: var(--clr-gray-900);
+}
+
+.unit-button[data-tooltip]:before {
+    z-index: 999999 !important;
+}
+
+/* ==========================================================================
+   13. TAILWIND REPLACEMENT UTILITIES
+   ========================================================================== */
+
+/**
+ * Tailwind Replacement Utilities
+ *
+ * Essential utility classes to replace external Tailwind dependency.
+ * Provides layout, typography, and spacing utilities needed by the interface.
+ *
+ * Status: Stable
+ * Updated: 1.0.2
+ * Breaking Changes: None
+ *
+ * Styleguide 13.0
+ */
+
+/**
+ * Typography Utilities
+ *
+ * Text sizing and styling utilities for consistent typography hierarchy.
+ *
+ * Styleguide 13.1
+ */
+.text-2xl {
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mb-4 {
+    margin-bottom: var(--sp-4);
+}
+
+/**
+ * Layout Utilities
+ *
+ * Flexbox and grid utilities for consistent layout patterns.
+ *
+ * Styleguide 13.2
+ */
+.flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.w-full {
+    width: 100%;
+}
+
+/* ==========================================================================
+   End of Fluid Space Forge Admin Interface Styles
+   ========================================================================== */

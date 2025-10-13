@@ -1,0 +1,40 @@
+﻿# Development files
+*.log
+notes.txt
+todo.md
+progress-notes.md
+.DS_Store
+Thumbs.db
+
+# IDE folders
+.vscode/
+.idea/
+*.code-workspace
+
+# Dependencies
+node_modules/
+vendor/
+
+# Private documentation
+docs/progress-notes/
+docs/project-plans/
+docs/private/
+
+# Build artifacts
+*.zip
+dist/
+build/
+
+# OS files
+.DS_Store
+desktop.ini
+
+# WordPress specific
+wp-config.php
+.htaccess
+
+# Package managers
+package.json
+package-lock.json
+composer.json
+composer.lock
