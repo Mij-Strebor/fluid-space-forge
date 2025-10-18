@@ -2,17 +2,18 @@
 
 /**
  * Plugin Name: Fluid Space Forge
- * Plugin URI: https://jimrweb.com
+ * Plugin URI: https://github.com/Mij-Strebor/fluid-space-forge
  * Description: Generate responsive spacing using CSS clamp() functions. Perfect companion to Font Clamp Calculator for creating fluid design systems.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Jim R.
  * Author URI: https://jimrweb.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: fluid-space-forge
+ * Requires at least: 5.0
+ * Tested up to: 6.8
+ * Requires PHP: 7.4
  * 
- * TODO: Add more comments and documentation throughout the codebase.would look like on all size devices covered by the viewport range.
- * TODO: The Selected Class CSS should be highlighted in the data table.
  */
 
 namespace JimRWeb\FluidSpaceForge;
@@ -34,7 +35,7 @@ class FluidSpaceForge
     // ========================================================================
 
     // Configuration Constants
-    const VERSION = '1.0.2';
+    const VERSION = '1.0.3';
     const PLUGIN_SLUG = 'fluid-space-forge';
     const NONCE_ACTION = 'fluid-space_nonce';
 
@@ -171,10 +172,6 @@ class FluidSpaceForge
     private function create_default_sizes($type)
     {
         if (!isset(self::SIZE_TYPE_PROPERTY_NAMES[$type])) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log("Fluid Space: Invalid size type: {$type}");
-            }
             return [];
         }
 
@@ -396,9 +393,6 @@ class FluidSpaceForge
         $template_path = plugin_dir_path(__FILE__) . 'templates/admin/generic-panel.php';
 
         if (!file_exists($template_path)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("Fluid Space Forge: Template not found - {$template_path}");
-            }
             return "<!-- Template not found: {$template_name} -->";
         }
 

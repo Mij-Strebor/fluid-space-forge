@@ -30,8 +30,8 @@ if (!defined('ABSPATH')) {
             </button>
         </div>
     </div>
-    <div style="background: white; border-radius: 6px; padding: 8px; border: 1px solid #d1d5db;">
-        <pre id="class-code" style="font-size: 12px; white-space: pre-wrap; color: #111827; margin: 0;">/* Loading CSS output... */</pre>
+    <div style="background: white; border-radius: 6px; padding: 8px; border: 1px solid var(--clr-bdr);">
+        <pre id="class-code" tabindex="0" role="region" aria-label="Generated CSS code" style="font-size: 12px; white-space: pre-wrap; color: var(--clr-gray-800); margin: 0; outline: none;">/* Loading CSS output... */</pre>
     </div>
 </div>
 
@@ -47,7 +47,7 @@ if (!defined('ABSPATH')) {
             </button>
         </div>
     </div>
-    <div style="background: white; border-radius: 6px; padding: 8px; border: 1px solid #d1d5db; overflow: auto; max-height: 300px;">
-        <pre id="generated-code" style="font-size: 12px; white-space: pre-wrap; color: #111827; margin: 0;">/* Loading CSS output... */</pre>
+    <div style="background: white; border-radius: 6px; padding: 8px; border: 1px solid var(--clr-bdr); overflow: auto; max-height: 300px;">
+        <pre id="generated-code" tabindex="0" role="region" aria-label="All generated CSS code" style="font-size: 12px; white-space: pre-wrap; color: var(--clr-gray-800); margin: 0; outline: none;">/* Loading CSS output... */</pre>
     </div>
 </div>

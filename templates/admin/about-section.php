@@ -33,7 +33,7 @@ if (!defined('ABSPATH')) {
                 </p>
                 <div style="background: rgba(60, 32, 23, 0.1); padding: 12px 16px; border-radius: 6px; border-left: 4px solid var(--clr-accent); margin-top: 20px;">
                     <p style="margin: 0; font-size: 13px; opacity: 0.95; line-height: 1.5; color: var(--clr-txt);">
-                        Fluid Space Forge by Jim R. (<a href="https://jimrweb.com" target="_blank" style="color: #CD5C5C; text-decoration: underline; font-weight: 600;">JimRWeb</a>), part of the CSS Tools series developed with Claude AI (<a href="https://anthropic.com" target="_blank" style="color: #CD5C5C; text-decoration: underline; font-weight: 600;">Anthropic</a>).
+                        Fluid Space Forge by Jim R. (<a href="https://jimrweb.com" target="_blank" style="color: var(--clr-link); text-decoration: underline; font-weight: 600;">JimRWeb</a>), part of the CSS Tools series developed with Claude AI (<a href="https://anthropic.com" target="_blank" style="color: var(--clr-link); text-decoration: underline; font-weight: 600;">Anthropic</a>).
                     </p>
                 </div>
             </div>

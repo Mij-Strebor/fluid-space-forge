@@ -3,6 +3,38 @@
  * Version: 1.0
  * Organized CSS with KSS documentation
  */
+/* ==========================================================================
+   0.0 TOOLTIP REQUIREMENTS
+   ========================================================================== */
+
+/*
+Tooltip Requirements
+
+CRITICAL: Elements with data-tooltip attributes MUST have overflow: visible.
+
+Styleguide 0.0
+
+Elements with data-tooltip attributes MUST have overflow: visible for tooltips
+to render correctly. The ::before and ::after pseudo-elements need to extend
+beyond the element's bounds.
+
+DO NOT add overflow: hidden to these elements:
+- .fcc-btn
+- .tab-button  
+- .unit-button
+- .component-input
+- .component-select
+- Any element with [data-tooltip] attribute
+
+If you need to clip content, use a wrapper element instead.
+*/
+
+.fcc-btn,
+.tab-button,
+.unit-button {
+    overflow: visible;
+    /* Required for tooltips */
+}
 
 /* ==========================================================================
    1.0 DESIGN TOKENS (CSS VARIABLES)
@@ -29,6 +61,11 @@ Styleguide 1.0
     --clr-tertiary: #86400E;
     --clr-accent: #FFD700;
 
+    /* Link Colors */
+    --clr-link: #8B3A3A;
+    --clr-link-hover: #5C3324;
+
+
     /* Background Colors
        
        Surface colors for different UI layers and containers.
@@ -48,7 +85,7 @@ Styleguide 1.0
     */
     --clr-txt: #86400E;
     --clr-txt-light: #FAF9F6;
-    --clr-txt-muted: #6b7280;
+    --clr-txt-muted: #5f6672;
 
     /* Button Colors
        
@@ -70,8 +107,8 @@ Styleguide 1.0
     --clr-success: #10b981;
     --clr-success-dark: #059669;
     --clr-success-darker: #15803d;
-    --clr-danger: #ef4444;
-    --clr-danger-dark: #dc2626;
+    --clr-danger: #dc2626;
+    --clr-danger-dark: #b91c1c;
     --clr-danger-darker: #991b1b;
     --clr-info: #3b82f6;
     --clr-info-dark: #1d4ed8;
@@ -147,18 +184,27 @@ Styleguide 1.0
     /* Sample Preview Colors
    
    Colors for interactive sample space displays.
-   
+
    Styleguide 1.14
 */
     --clr-sample-margin-bg: #ffcdd2;
-    --clr-sample-margin-border: #f44336;
+    --clr-sample-margin-border: #d32f2f;
+    --clr-sample-margin-text: #b71c1c;
     --clr-sample-padding-bg: #c8e6c9;
-    --clr-sample-padding-border: #4caf50;
+    --clr-sample-padding-border: #388e3c;
+    --clr-sample-padding-text: #1b5e20;
     --clr-sample-gap-bg: #fafafa;
-    --clr-sample-gap-border: #9e9e9e;
+    --clr-sample-gap-border: #757575;
+    --clr-sample-gap-text: #424242;
     --clr-sample-content-bg: #90caf9;
-    --clr-sample-content-border: #2196f3;
-    --clr-sample-content-text: #1565c0;
+    --clr-sample-content-border: #1976d2;
+    --clr-sample-content-text: #0d47a1;
+
+    /* Sample Container Colors */
+    --clr-sample-container-bg: #f8f9fa;
+    --clr-sample-container-border: #dee2e6;
+    --clr-sample-title-text: #333;
+    --clr-sample-label-text: #666;
 
     /* Design System Tokens (non-color)
        
@@ -291,6 +337,63 @@ label,
     line-height: 1.3;
     margin-bottom: var(--sp-2);
     display: block;
+}
+
+/* ==========================================================================
+   3.4 CODE ELEMENTS
+   ========================================================================== */
+
+/*
+Code Elements
+
+Inline code styling with proper contrast for accessibility.
+
+Styleguide 3.4
+*/
+code {
+    background: var(--clr-gray-100);
+    color: var(--clr-primary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    border: 1px solid var(--clr-gray-300);
+}
+
+/* ==========================================================================
+   3.5 LINK OVERRIDES
+   ========================================================================== */
+
+/*
+Link Overrides
+
+Override WordPress admin link colors to ensure contrast on custom backgrounds.
+
+Styleguide 3.5
+*/
+.wrap a,
+#wpbody-content a,
+#wpcontent a {
+    color: var(--clr-link) !important;
+}
+
+/* Don't override admin bar links - they need to stay WordPress blue for contrast */
+#wpadminbar a {
+    color: #72aee6 !important;
+    /* WordPress admin bar link color */
+}
+
+#wpadminbar a:hover {
+    color: #9cc2e6 !important;
+    /* WordPress admin bar link hover */
+}
+
+/* Exclude our custom buttons and controls from link styling */
+.fcc-btn,
+.tab-button,
+.unit-button,
+.fcc-info-toggle {
+    color: inherit !important;
 }
 
 /* ==========================================================================
@@ -428,11 +531,16 @@ Styleguide 5.2
 
 .fcc-btn-danger {
     background: var(--clr-danger);
-    color: var(--clr-white);
+    color: var(--clr-txt-light) !important;
     border-color: var(--clr-danger-dark);
     font-style: normal;
     text-transform: none;
     letter-spacing: normal;
+}
+
+.fcc-btn-danger:hover {
+    background: var(--clr-danger-dark);
+    color: var(--clr-txt-light) !important;
 }
 
 .fcc-btn-ghost {
@@ -576,7 +684,7 @@ Data table styling with fixed layout and hover effects.
 
 Styleguide 5.8
 */
-.font-table {
+.space-table {
     border: none !important;
     border-collapse: collapse;
     table-layout: fixed;
@@ -588,8 +696,8 @@ Styleguide 5.8
     box-shadow: var(--clr-shadow-md);
 }
 
-.font-table th,
-.font-table td {
+.space-table th,
+.space-table td {
     border: none !important;
     padding: var(--sp-2) var(--sp-2);
     overflow: hidden;
@@ -598,7 +706,7 @@ Styleguide 5.8
     line-height: 1.3;
 }
 
-.font-table th {
+.space-table th {
     font-size: var(--fs-xs);
     font-weight: 600;
     background-color: var(--clr-gray-100) !important;
@@ -609,7 +717,7 @@ Styleguide 5.8
     border-bottom: 2px solid var(--clr-gray-200) !important;
 }
 
-.font-table tbody tr:not(:last-child) td {
+.space-table tbody tr:not(:last-child) td {
     border-bottom: 1px solid var(--clr-gray-100) !important;
 }
 
@@ -628,12 +736,12 @@ Styleguide 5.8
     max-width: 100%;
 }
 
-.font-table td:first-child {
+.space-table td:first-child {
     text-align: center;
     padding-left: 10px !important;
 }
 
-.font-table td:nth-child(2) {
+.space-table td:nth-child(2) {
     padding-left: 8px !important;
 }
 
@@ -754,7 +862,7 @@ Styleguide 5.11
 
 .unit-button.active {
     background: var(--clr-secondary);
-    color: var(--clr-txt-light);
+    color: var(--clr-txt-light) !important;
     font-weight: 700;
 }
 

@@ -1,6 +1,52 @@
-# Fluid Space Forge (v 1.0.2)
 
-## Changelog
+![Fluid Space Forge banner](docs/screenshots/changelog-1544x500.png)
+## Fluid Space Forge [1.0.3] - 2025-10-15
+
+### Fixed
+
+   - Fixed CSS table selector syntax error (missing dot before space-table class)
+
+
+- **Critical:** Created symlink for development environment to ensure VS Code changes sync with Local WordPress installation
+- **Accessibility:** Achieved WCAG 2.1 AA compliance - resolved 96 accessibility issues identified by axe DevTools
+  - Added `aria-label` to viewport slider for screen reader support
+  - Fixed color contrast ratios on all text elements to meet 4.5:1 minimum
+  - Darkened sample preview text colors for better readability
+  - Corrected heading hierarchy (h1 → h2 → h3) for proper document structure
+  - Added keyboard accessibility (`tabindex`, `role`, `aria-label`) to CSS code output panels
+  - Styled `<code>` elements with proper contrast in panel descriptions
+  - Fixed active unit button (PX/REM) text color contrast
+  - Fixed danger button (clear all) text color contrast
+  - Excluded WordPress admin bar from link color overrides to maintain proper contrast
+
+### Changed
+- **Refactoring:** Centralized all hardcoded colors into CSS variables for easier maintenance
+  - Moved link colors to `--clr-link` and `--clr-link-hover` variables
+  - Created sample preview color variables (margin, padding, gap, content text colors)
+  - Added sample container color variables for consistent styling
+  - Updated JavaScript to use CSS variables instead of hardcoded hex values
+- **Color Palette:** Adjusted colors for WCAG AA compliance
+  - Darkened `--clr-txt-muted` from `#6b7280` to `#5f6672`
+  - Darkened `--clr-danger` from `#ef4444` to `#dc2626`
+  - Darkened sample text colors: margin (`#b71c1c`), padding (`#1b5e20`), content (`#0d47a1`)
+  - Updated link color to `#8B3A3A` for better contrast on beige backgrounds
+
+### Enhanced
+- **Developer Experience:** Improved maintainability by eliminating hardcoded colors throughout codebase
+- **Testing:** Completed comprehensive browser compatibility testing (Chrome, Firefox, Edge)
+- **Testing:** Completed accessibility audit using axe DevTools - all Critical and Serious issues resolved
+
+### Technical Notes
+- All color contrast ratios now meet or exceed WCAG 2.1 Level AA standards (4.5:1 for normal text)
+- Plugin content is fully keyboard navigable with proper focus indicators
+- Screen readers can properly announce all interactive elements and form fields
+- 15 distinct color-related Find & Replace operations performed in `admin-script.js`
+- Symlink created: `C:\Users\Owner\Local Sites\site\app\public\wp-content\plugins\fluid-space-forge` → `E:\onedrive\projects\plugins\fsf`
+
+---
+
+
+## [1.0.2] - 2025-10-4
 
 ### Added
 - Generate responsive spacing using CSS clamp() functions

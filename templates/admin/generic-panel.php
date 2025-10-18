@@ -74,7 +74,7 @@ if (!defined('ABSPATH')) {
     </div>
 
     <div id="sizes-table-wrapper">
-        <table class="font-table">
+        <table class="space-table">
             <thead>
                 <tr id="table-header">
                     <th style="width: 10%; text-align: center;">⋮</th>

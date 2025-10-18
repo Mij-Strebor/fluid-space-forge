@@ -1,5 +1,6 @@
 # Fluid Space Forge - WordPress Admin Code Snippet
-<img src="..\..\resources\00-assets\design-assets\icons\svg\JimRWeb-logo-black.svg" alt="JimRWeb logo" style="height: 15px; width:100px;"/>
+
+![JimRWeb logo](docs/screenshots/JimRWeb-logo-black.svg)
 
 **Professional responsive design tools for WordPress developers**
 
@@ -7,7 +8,7 @@
 
 A WordPress plugin that generates responsive spacing systems using CSS `clamp()` functions. Create consistent, scalable margins, padding, and gaps that adapt beautifully from mobile to desktop.
 
-![WordPress Plugin Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
+![WordPress Plugin Version](https://img.shields.io/badge/version-1.0.3-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.4+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-red.svg)

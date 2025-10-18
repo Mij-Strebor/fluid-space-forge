@@ -1507,7 +1507,7 @@
   function updateDataTableValues(selectedBaseId) {
     setTimeout(() => {
       const settings = spaceClampAjax.data.settings;
-      const rows = document.querySelectorAll(".font-table tr[data-id]");
+      const rows = document.querySelectorAll("space-table tr[data-id]");
 
       rows.forEach((row) => {
         const sizeId = parseInt(row.getAttribute("data-id"));
@@ -1649,16 +1649,16 @@
             const cssValue = `${spacePx}px`;
 
             return `
-                  <div style="margin-bottom: 20px; padding: 12px; background: #f8f9fa; border-radius: 6px; border: 1px solid #dee2e6; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-                      <div style="font-size: 12px; color: #333; margin-bottom: 12px; font-weight: 600;">${name}</div>
+                  <div style="margin-bottom: 20px; padding: 12px; background: #var(--clr-sample-container-bg); border-radius: 6px; border: 1px solid #var(--clr-sample-container-border); box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                      <div style="font-size: 12px; color: #var(--clr-sample-title-text); margin-bottom: 12px; font-weight: 600;">${name}</div>
                       
                       <div style="margin-bottom: 12px;">
-                          <div style="font-size: 10px; color: #666; margin-bottom: 4px; font-weight: 500;">Margin & Padding</div>
-                          <div style="background: #ffcdd2; padding: ${cssValue}; border: 1px dashed #f44336; border-radius: 4px; display: inline-block;">
-                              <div style="font-size: 9px; color: #c62828; margin-bottom: 2px;">margin: ${displayValue}</div>
-                              <div style="background: #c8e6c9; padding: ${cssValue}; border: 1px dashed #4caf50;">
-                                  <div style="font-size: 9px; color: #2e7d32; margin-bottom: 2px;">padding: ${displayValue}</div>
-                                  <div style="background: #90caf9; padding: 12px 16px; border: 1px solid #2196f3; color: #1565c0; font-size: 11px; font-weight: 500;">
+                          <div style="font-size: 10px; color: #var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Margin & Padding</div>
+                          <div style="background: var(--clr-sample-margin-bg); padding: ${cssValue}; border: 1px dashed var(--clr-sample-margin-border); border-radius: 4px; display: inline-block;">
+                              <div style="font-size: 9px; color: var(--clr-sample-margin-text); margin-bottom: 2px;">margin: ${displayValue}</div>
+                             <div style="background: var(--clr-sample-padding-bg); padding: ${cssValue}; border: 1px dashed var(--clr-sample-padding-border);">
+                           <div style="font-size: 9px; color: var(--clr-sample-padding-text); margin-bottom: 2px;">padding: ${displayValue}</div>
+                                 <div style="background: var(--clr-sample-content-bg); padding: 12px 16px; border: 1px solid var(--clr-sample-content-border); color: var(--clr-sample-content-text); font-size: 11px; font-weight: 500;">
                                       Content
                                   </div>
                               </div>
@@ -1666,11 +1666,11 @@
                       </div>
                       
                       <div>
-                          <div style="font-size: 10px; color: #666; margin-bottom: 4px; font-weight: 500;">Gap (Flexbox/Grid)</div>
-                          <div style="display: flex; gap: ${cssValue}; border: 1px dashed #9e9e9e; padding: 8px; border-radius: 4px; background: #fafafa;">
-                              <div style="background: #90caf9; padding: 12px 16px; border: 1px solid #2196f3; color: #1565c0; font-size: 11px; font-weight: 500;">Item 1</div>
-                              <div style="font-size: 9px; color: #666; align-self: center; white-space: nowrap;">gap: ${displayValue}</div>
-                              <div style="background: #90caf9; padding: 12px 16px; border: 1px solid #2196f3; color: #1565c0; font-size: 11px; font-weight: 500;">Item 2</div>
+                          <div style="font-size: 10px; color: #var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Gap (Flexbox/Grid)</div>
+                          <div style="display: flex; gap: ${cssValue}; border: 1px dashed var(--clr-sample-gap-border); padding: 8px; border-radius: 4px; background: var(--clr-sample-gap-bg);">
+                              <div style="background: var(--clr-sample-content-bg); padding: 12px 16px; border: 1px solid var(--clr-sample-content-border); color: var(--clr-sample-content-text); font-size: 11px; font-weight: 500;">Item 1</div>
+                              <div style="font-size: 9px; color: var(--clr-sample-gap-text); align-self: center; white-space: nowrap;">gap: ${displayValue}</div>
+                              <div style="background: var(--clr-sample-content-bg); padding: 12px 16px; border: 1px solid var(--clr-sample-content-border); color: var(--clr-sample-content-text); font-size: 11px; font-weight: 500;">Item 2</div>
                           </div>
                       </div>
                   </div>

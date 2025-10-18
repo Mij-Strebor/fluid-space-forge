@@ -84,7 +84,7 @@ if (!defined('ABSPATH')) {
             <!-- Viewport Slider -->
             <div class="fcc-viewport-slider-section">
                 <div class="fcc-viewport-info">
-                    <span style="font-size: 14px; color: var(--clr-txt); font-weight: 500;">Viewport Size:</span>
+                    <label for="sample-viewport-slider" style="font-size: 14px; color: var(--clr-txt); font-weight: 500;">Viewport Size:</label>
                     <span id="sample-viewport-display" style="font-size: 14px; color: var(--clr-primary); font-weight: 600;">
                         768px • Tablet (portrait)
                     </span>
@@ -95,7 +95,8 @@ if (!defined('ABSPATH')) {
                         min="375"
                         max="1620"
                         value="768"
-                        step="1">
+                        step="1"
+                        aria-label="Viewport width slider">
                     <div class="fcc-slider-labels">
                         <span>375px</span>
                         <span>1620px</span>
