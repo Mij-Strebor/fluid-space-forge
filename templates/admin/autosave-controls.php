@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
                     <span>Autosave</span>
                 </label>
                 <button id="save-btn" class="fcc-btn" data-tooltip="Save all current settings and sizes to database">
-                    Save
+                    save
                 </button>
                 <div id="autosave-status" class="autosave-status idle">
                     <span id="autosave-icon">💾</span>

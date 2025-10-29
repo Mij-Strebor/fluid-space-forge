@@ -56,7 +56,6 @@
       const tableBody = document.querySelector("#sizes-table");
 
       if (!tableBody) {
-        console.log("❌ No table body found!");
         return;
       }
 
@@ -371,11 +370,11 @@
     getSizeData(sizeId) {
       let dataArray;
       if (this.currentTabType === "class") {
-        dataArray = window.spaceClampAjax.data.classSizes;
+        dataArray = window.fluispfoAjax.data.classSizes;
       } else if (this.currentTabType === "vars") {
-        dataArray = window.spaceClampAjax.data.variableSizes;
+        dataArray = window.fluispfoAjax.data.variableSizes;
       } else if (this.currentTabType === "utils") {
-        dataArray = window.spaceClampAjax.data.utilitySizes;
+        dataArray = window.fluispfoAjax.data.utilitySizes;
       }
 
       return dataArray ? dataArray.find((item) => item.id === sizeId) : null;
@@ -395,11 +394,11 @@
     reorderData(draggedId, targetId, dropAbove) {
       let dataArray;
       if (this.currentTabType === "class") {
-        dataArray = window.spaceClampAjax.data.classSizes;
+        dataArray = window.fluispfoAjax.data.classSizes;
       } else if (this.currentTabType === "vars") {
-        dataArray = window.spaceClampAjax.data.variableSizes;
+        dataArray = window.fluispfoAjax.data.variableSizes;
       } else if (this.currentTabType === "utils") {
-        dataArray = window.spaceClampAjax.data.utilitySizes;
+        dataArray = window.fluispfoAjax.data.utilitySizes;
       }
 
       if (!dataArray) return;
@@ -438,11 +437,11 @@
      */
     getCurrentDataArray() {
       if (this.currentTabType === "class") {
-        return window.spaceClampAjax.data.classSizes;
+        return window.fluispfoAjax.data.classSizes;
       } else if (this.currentTabType === "vars") {
-        return window.spaceClampAjax.data.variableSizes;
+        return window.fluispfoAjax.data.variableSizes;
       } else if (this.currentTabType === "utils") {
-        return window.spaceClampAjax.data.utilitySizes;
+        return window.fluispfoAjax.data.utilitySizes;
       }
       return [];
     }
@@ -544,7 +543,6 @@
         }
       }
 
-      console.log("❌ Returning null - invalid TR");
       return null;
     }
 

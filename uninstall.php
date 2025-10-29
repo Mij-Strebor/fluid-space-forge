@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Fluid Font Forge - Plugin Uninstall Handler
+ * Fluid Space Forge - Plugin Uninstall Handler
  *
  * Complete data removal script executed when plugin is permanently deleted
  * through WordPress admin interface. Ensures clean uninstallation by removing
@@ -17,11 +17,11 @@
  * - Cached transient data and temporary storage
  * - WordPress object cache clearing
  *
- * @package    FluidFontForge
+ * @package    FluidSpaceForge
  * @subpackage Uninstall
- * @author     Jim R (JimRWeb)
- * @version    4.1.0
- * @link       https://jimrweb.com
+ * @author     Jim R (JimRForge)
+ * @version    1.2.1
+ * @link       https://jimrforge.com
  */
 
 // If uninstall not called from WordPress, then exit

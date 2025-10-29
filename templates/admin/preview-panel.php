@@ -25,6 +25,13 @@ if (!defined('ABSPATH')) {
     </button>
 
     <div class="fcc-info-content <?php echo $settings['spaceSizeExpanded'] ? 'expanded' : ''; ?>" id="preview-content">
+        <!-- Interactive Preview Info -->
+        <div class="fcc-preview-intro" style="background: #e7e3df; padding: 16px 20px; margin: 0 80px 16px 80px; border-radius: 6px; border-left: 4px solid var(--clr-accent);">
+            <p style="margin: 0; color: var(--clr-txt); font-size: 16px; line-height: 1.6;">
+                <strong>Interactive Preview:</strong> This panel shows how your selected space size scales across different screen widths. The <strong>Min Size</strong> preview displays your spacing at the minimum viewport width, while the <strong>Max Size</strong> preview shows it at maximum width. Use these side-by-side views to verify your spacing looks good at all screen sizes before copying the CSS. Close this preview if not used.
+            </p>
+        </div>
+
         <div class="fcc-preview-enhanced">
             <div class="fcc-preview-grid">
                 <div class="fcc-preview-column">

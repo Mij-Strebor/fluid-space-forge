@@ -18,7 +18,12 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="fcc-panel" style="margin-bottom: 8px;">
-    <h2 class="settings-title">Settings</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 class="settings-title" style="margin: 0;">Settings</h2>
+        <button id="reset-settings-btn" class="fcc-btn" title="Reset all settings to default values">
+            reset
+        </button>
+    </div>
 
     <!-- space Units Selector -->
     <div class="font-units-section">

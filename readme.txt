@@ -1,11 +1,11 @@
 === Fluid Space Forge ===
-Contributors: jimrweb
+Contributors: mijstrebor
 Donate link: https://buymeacoffee.com/jimrweb
 Tags: spacing, css, clamp, responsive, design-system
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,14 +182,14 @@ Initial release of Fluid Space Forge. Start creating responsive spacing systems 
 
 = Credits =
 
-* **Developer**: Jim R. - [JimRWeb.com](https://jimrweb.com)
+* **Developer**: Jim R. - [JimRForge.com](https://jimrforge.com)
 * **Development Assistant**: Claude AI by Anthropic
 
 = Support =
 
-* **Documentation**: [GitHub Repository](https://github.com/jimrweb/fluid-space-forge)
-* **Issues**: Report bugs via [GitHub Issues](https://github.com/jimrweb/fluid-space-forge/issues)
-* **Website**: [JimRWeb.com](https://jimrweb.com)
+* **Documentation**: [GitHub Repository](https://github.com/Mij-Strebor/fluid-space-forge)
+* **Issues**: Report bugs via [GitHub Issues](https://github.com/Mij-Strebor/fluid-space-forge/issues)
+* **Website**: [JimRForge.com](https://jimrforge.com)
 
 = Privacy =
 
@@ -197,4 +197,4 @@ This plugin does not collect, store, or transmit any user data. All calculations
 
 = Contributing =
 
-Contributions are welcome! Visit the [GitHub repository](https://github.com/jimrweb/fluid-space-forge) to contribute to the project.
+Contributions are welcome! Visit the [GitHub repository](https://github.com/Mij-Strebor/fluid-space-forge) to contribute to the project.

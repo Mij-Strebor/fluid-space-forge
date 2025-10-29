@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
                 data-tooltip="Copy selected CSS to clipboard"
                 aria-label="Copy selected CSS to clipboard"
                 title="Copy CSS">
-                <span class="copy-icon">📋</span> copy
+                copy
             </button>
         </div>
     </div>
@@ -43,7 +43,7 @@ if (!defined('ABSPATH')) {
                 data-tooltip="Copy all generated CSS to clipboard"
                 aria-label="Copy all generated CSS to clipboard"
                 title="Copy All CSS">
-                <span class="copy-icon">📋</span> copy all
+                copy all
             </button>
         </div>
     </div>

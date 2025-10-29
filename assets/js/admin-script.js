@@ -108,13 +108,13 @@
     });
 
     // Generate initial content using saved active tab
-    const initialTab = spaceClampAjax.data.settings.activeTab || "class";
+    const initialTab = fluispfoAjax.data.settings.activeTab || "class";
     const panelContainer = document.getElementById("sizes-table-container");
 
     if (panelContainer) {
       panelContainer.innerHTML = generatePanelContent(initialTab);
 
-      const settings = spaceClampAjax.data.settings;
+      const settings = fluispfoAjax.data.settings;
       const currentSizes = getDataArray(initialTab);
       const cssGenerator = getCSSGenerator(initialTab);
       const css = cssGenerator(currentSizes, settings, getSelectedBaseId());
@@ -140,6 +140,20 @@
 
       // Attach initial event listeners
       attachEventListeners();
+      // Initialize generates text and prefix input
+      updateGeneratesText();
+
+      // Set initial prefix input value based on active tab
+      const prefixInput = document.getElementById("prefix-input");
+      if (prefixInput) {
+        const activeTab = document.querySelector(".tab-button.active")?.getAttribute("data-tab") || "class";
+        const settings = fluispfoAjax.data.settings;
+        if (activeTab === "class") {
+          prefixInput.value = settings.classPrefix || "space";
+        } else if (activeTab === "vars") {
+          prefixInput.value = settings.variablePrefix || "sp";
+        }
+      }
 
       // Initialize sample space controller (with delay to ensure data is ready)
       setTimeout(() => {
@@ -176,9 +190,18 @@
           // Save state to memory
           const isExpanded = content.classList.contains("expanded");
           if (targetId === "sample-space-content") {
-            spaceClampAjax.data.settings.viewportTestExpanded = isExpanded;
+            fluispfoAjax.data.settings.viewportTestExpanded = isExpanded;
           } else if (targetId === "preview-content") {
-            spaceClampAjax.data.settings.spaceSizeExpanded = isExpanded;
+            fluispfoAjax.data.settings.spaceSizeExpanded = isExpanded;
+          } else if (targetId === "about-content") {
+            fluispfoAjax.data.settings.aboutExpanded = isExpanded;
+          } else if (targetId === "info-content") {
+            fluispfoAjax.data.settings.howToUseExpanded = isExpanded;
+          }
+
+          // Save panel state immediately (control setting)
+          if (window.FluidSpaceForge && window.FluidSpaceForge.AutosaveManager) {
+            window.FluidSpaceForge.AutosaveManager.saveControlSettings();
           }
         }
       });
@@ -194,9 +217,60 @@
    * @param {Event} event - Input or blur event from settings field
    * @since 1.0
    */
+  /**
+   * Handle Enter key on settings inputs
+   *
+   * Accepts current value, triggers validation, and moves to next control.
+   *
+   * @param {KeyboardEvent} event - Keydown event
+   * @since 1.2.1
+   */
+  function handleSettingsKeydown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+
+      // Trigger blur to validate and update
+      event.target.blur();
+
+      // Move to next input in DOM tab order (2-column grid: left, right, left, right...)
+      const settingsInputs = [
+        "min-base-space",
+        "min-viewport",
+        "max-base-space",
+        "max-viewport",
+        "min-scale",
+        "max-scale",
+      ];
+
+      const currentIndex = settingsInputs.indexOf(event.target.id);
+      if (currentIndex !== -1 && currentIndex < settingsInputs.length - 1) {
+        const nextInput = document.getElementById(
+          settingsInputs[currentIndex + 1]
+        );
+        if (nextInput) {
+          nextInput.focus();
+          nextInput.select(); // Select text for easy replacement
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle click on settings inputs
+   *
+   * Selects all text for easy replacement when clicking into an input field.
+   *
+   * @param {MouseEvent} event - Click event
+   * @since 1.2.1
+   */
+  function handleInputClick(event) {
+    // Select all text on click for replace-mode behavior
+    event.target.select();
+  }
+
   function handleSettingsChange(event) {
-    const settings = spaceClampAjax.data.settings;
-    const constants = spaceClampAjax.constants;
+    const settings = fluispfoAjax.data.settings;
+    const constants = fluispfoAjax.constants;
 
     const minBaseInput = document.getElementById("min-base-space");
     const maxBaseInput = document.getElementById("max-base-space");
@@ -350,10 +424,17 @@
     spaceInputs.forEach((inputId) => {
       const input = document.getElementById(inputId);
       if (input) {
-        input.removeEventListener("input", handleSettingsChange);
-        input.addEventListener("input", handleSettingsChange);
+        // Only listen to blur, not input (avoid updating on every keypress)
         input.removeEventListener("blur", handleSettingsChange);
         input.addEventListener("blur", handleSettingsChange);
+
+        // Handle Enter key - accept value and move to next control
+        input.removeEventListener("keydown", handleSettingsKeydown);
+        input.addEventListener("keydown", handleSettingsKeydown);
+
+        // Select all text on click for easy replacement
+        input.removeEventListener("click", handleInputClick);
+        input.addEventListener("click", handleInputClick);
       }
     });
 
@@ -362,6 +443,14 @@
     if (baseSelect) {
       baseSelect.removeEventListener("change", handleBaseChange);
       baseSelect.addEventListener("change", handleBaseChange);
+    }
+    // Prefix input listeners
+    const prefixInput = document.getElementById("prefix-input");
+    if (prefixInput) {
+      prefixInput.removeEventListener("input", handlePrefixChange);
+      prefixInput.addEventListener("input", handlePrefixChange);
+      prefixInput.removeEventListener("keydown", handlePrefixKeydown);
+      prefixInput.addEventListener("keydown", handlePrefixKeydown);
     }
 
     // Unit button listeners (PX/REM)
@@ -397,6 +486,13 @@
     if (addSizeBtn) {
       addSizeBtn.removeEventListener("click", handleAddSize);
       addSizeBtn.addEventListener("click", handleAddSize);
+    }
+
+    // Reset settings button
+    const resetSettingsBtn = document.getElementById("reset-settings-btn");
+    if (resetSettingsBtn) {
+      resetSettingsBtn.removeEventListener("click", handleSettingsReset);
+      resetSettingsBtn.addEventListener("click", handleSettingsReset);
     }
 
     // Reset to defaults button
@@ -468,6 +564,19 @@
       }
     }
 
+    // Copy button listeners
+    const copySelectedBtn = document.getElementById("copy-selected-btn");
+    if (copySelectedBtn) {
+      copySelectedBtn.removeEventListener("click", copySelectedCSS);
+      copySelectedBtn.addEventListener("click", copySelectedCSS);
+    }
+
+    const copyAllBtn = document.getElementById("copy-all-btn");
+    if (copyAllBtn) {
+      copyAllBtn.removeEventListener("click", copyGeneratedCSS);
+      copyAllBtn.addEventListener("click", copyGeneratedCSS);
+    }
+
     // Row selection listeners
     const sizeRows = document.querySelectorAll(".size-row");
     sizeRows.forEach((row) => {
@@ -513,7 +622,7 @@
    */
   function getDataArray(tabType) {
     const config = TAB_CONFIG[tabType];
-    return config ? spaceClampAjax.data[config.dataKey] : [];
+    return config ? fluispfoAjax.data[config.dataKey] : [];
   }
 
   /**
@@ -624,22 +733,10 @@
    * @returns {Array<Object>} Array of objects with selector and css properties
    * @since 1.0
    */
-  function formatClassCSS(suffix, clampFunction) {
-    return [
-      {
-        selector: `.space-m-${suffix}`,
-        css: `.space-m-${suffix} {\n  margin: ${clampFunction};\n}`,
-      },
-      {
-        selector: `.space-p-${suffix}`,
-        css: `.space-p-${suffix} {\n  padding: ${clampFunction};\n}`,
-      },
-      {
-        selector: `.space-g-${suffix}`,
-        css: `.space-g-${suffix} {\n  gap: ${clampFunction};\n}`,
-      },
-    ];
+  function formatClassCSS(suffix, clampFunction, prefix = 'space') {
+    return `.${prefix}-${suffix} {\n  margin: ${clampFunction};\n}`;
   }
+
 
   /**
    * Format CSS for variables tab
@@ -652,13 +749,14 @@
    * @returns {string} Formatted CSS variable line with indentation
    * @since 1.0
    */
-  function formatVariableCSS(variableName, clampFunction) {
+  function formatVariableCSS(variableName, clampFunction, prefix = 'sp') {
     let formattedName = variableName;
     if (!formattedName.startsWith("--")) {
-      formattedName = `--sp-${formattedName}`;
+      formattedName = `--${prefix}-${formattedName}`;
     }
     return `  ${formattedName}: ${clampFunction};`;
   }
+
 
   /**
    * Format CSS for utilities tab (Tailwind-style)
@@ -719,6 +817,7 @@
     const minVp = settings.minViewport;
     const maxVp = settings.maxViewport;
     const unitType = settings.unitType;
+    const prefix = settings.classPrefix || 'space';
 
     const allClasses = [];
 
@@ -738,35 +837,14 @@
         );
 
       const suffix = size.className.replace("space-", "");
-      const formatted = formatClassCSS(suffix, clampFunction);
+      const formatted = formatClassCSS(suffix, clampFunction, prefix);
 
-      allClasses.push(
-        ...formatted.map((item) => ({
-          name: item.selector,
-          css: item.css,
-        }))
-      );
+      allClasses.push(formatted);
     });
 
-    allClasses.sort((a, b) => a.name.localeCompare(b.name));
-
-    const marginClasses = allClasses
-      .filter((c) => c.name.startsWith(".space-m-"))
-      .map((c) => c.css)
-      .join("\n\n");
-
-    const paddingClasses = allClasses
-      .filter((c) => c.name.startsWith(".space-p-"))
-      .map((c) => c.css)
-      .join("\n\n");
-
-    const gapClasses = allClasses
-      .filter((c) => c.name.startsWith(".space-g-"))
-      .map((c) => c.css)
-      .join("\n\n");
-
-    return `/* Margin classes */\n${marginClasses}\n\n/* Padding classes */\n${paddingClasses}\n\n/* Gap classes */\n${gapClasses}`;
+    return allClasses.join("\n\n");
   }
+
 
   /**
    * Generate CSS for Variables tab
@@ -784,6 +862,7 @@
     const minVp = settings.minViewport;
     const maxVp = settings.maxViewport;
     const unitType = settings.unitType;
+    const prefix = settings.variablePrefix || 'sp';
 
     const variablesList = sizes
       .map((size) => {
@@ -800,12 +879,13 @@
             maxVp,
             unitType
           );
-        return formatVariableCSS(size.variableName, clampFunction);
+        return formatVariableCSS(size.variableName, clampFunction, prefix);
       })
       .join("\n");
 
     return `:root {\n${variablesList}\n}`;
   }
+
 
   /**
    * Generate CSS for Utilities tab
@@ -868,7 +948,7 @@
    * @since 1.0
    */
   function generateSelectedCSS(sizeId, tabType) {
-    const settings = spaceClampAjax.data.settings;
+    const settings = fluispfoAjax.data.settings;
     const sizes = getDataArray(tabType);
     const size = sizes.find((s) => s.id === sizeId);
 
@@ -898,10 +978,12 @@
 
     if (tabType === "class") {
       const suffix = size.className.replace("space-", "");
-      const formatted = formatClassCSS(suffix, clampFunction);
-      return `/* Margin class */\n${formatted[0].css}\n\n/* Padding class */\n${formatted[1].css}\n\n/* Gap class */\n${formatted[2].css}`;
+      const prefix = settings.classPrefix || 'space';
+      const formatted = formatClassCSS(suffix, clampFunction, prefix);
+      return formatted;
     } else if (tabType === "vars") {
-      return formatVariableCSS(size.variableName, clampFunction);
+      const prefix = settings.variablePrefix || 'sp';
+      return formatVariableCSS(size.variableName, clampFunction, prefix);
     } else if (tabType === "utils") {
       const formatted = formatUtilityCSS(size.utilityName, clampFunction);
       return `/* Margin utilities */\n${formatted.margin.join(
@@ -931,6 +1013,9 @@
     tabButtons.forEach((tab) => tab.classList.remove("active"));
     event.target.classList.add("active");
 
+    // Get tab name FIRST
+    const tabName = event.target.getAttribute("data-tab");
+
     // Clear selected CSS panel when switching tabs
     const codePanel = document.getElementById("class-code");
     const titlePanel = document.getElementById("selected-code-title");
@@ -948,7 +1033,6 @@
       titlePanel.textContent = titles[tabName] || "Selected CSS";
     }
 
-    const tabName = event.target.getAttribute("data-tab");
     const panelContainer = document.getElementById("sizes-table-container");
 
     if (panelContainer) {
@@ -956,7 +1040,7 @@
 
       const generatedCode = document.getElementById("generated-code");
       if (generatedCode) {
-        const settings = spaceClampAjax.data.settings;
+        const settings = fluispfoAjax.data.settings;
         const currentSizes = getDataArray(tabName);
         const cssGenerator = getCSSGenerator(tabName);
         const css = cssGenerator(currentSizes, settings, getSelectedBaseId());
@@ -964,6 +1048,19 @@
         generatedCode.textContent = css;
         generatespacePreview(tabName, currentSizes, getSelectedBaseId());
         attachEventListeners();
+
+        // Update generates text and prefix input value for new tab
+        updateGeneratesText();
+
+        const prefixInput = document.getElementById("prefix-input");
+        if (prefixInput) {
+          const config = TAB_CONFIG[tabName];
+          if (tabName === "class") {
+            prefixInput.value = fluispfoAjax.data.settings.classPrefix || config.defaultPrefix || "";
+          } else if (tabName === "vars") {
+            prefixInput.value = fluispfoAjax.data.settings.variablePrefix || config.defaultPrefix || "";
+          }
+        }
       }
     }
 
@@ -971,7 +1068,13 @@
     document
       .querySelectorAll(".size-row")
       .forEach((r) => r.classList.remove("selected"));
+
+    // Save tab selection immediately (control setting)
+    if (window.FluidSpaceForge && window.FluidSpaceForge.AutosaveManager) {
+      window.FluidSpaceForge.AutosaveManager.saveControlSettings();
+    }
   }
+
 
   /**
    * Handle settings change with validation
@@ -982,48 +1085,6 @@
    * @param {Event} event - Input or blur event from settings field
    * @since 1.0
    */
-  function handleTabSwitch(event) {
-    const tabButtons = document.querySelectorAll(".tab-button");
-    tabButtons.forEach((tab) => tab.classList.remove("active"));
-    event.target.classList.add("active");
-
-    const tabName = event.target.getAttribute("data-tab");
-
-    // Clear selected CSS panel when switching tabs
-    const codePanel = document.getElementById("class-code");
-    const titlePanel = document.getElementById("selected-code-title");
-
-    if (codePanel) {
-      codePanel.textContent = "/* Click a row to see its CSS */";
-    }
-
-    if (titlePanel) {
-      const titles = {
-        class: "Selected Class CSS",
-        vars: "Selected Variable CSS",
-        utils: "Selected Utility CSS",
-      };
-      titlePanel.textContent = titles[tabName] || "Selected CSS";
-    }
-
-    const panelContainer = document.getElementById("sizes-table-container");
-
-    if (panelContainer) {
-      panelContainer.innerHTML = generatePanelContent(tabName);
-
-      const generatedCode = document.getElementById("generated-code");
-      if (generatedCode) {
-        const settings = spaceClampAjax.data.settings;
-        const currentSizes = getDataArray(tabName);
-        const cssGenerator = getCSSGenerator(tabName);
-        const css = cssGenerator(currentSizes, settings, getSelectedBaseId());
-
-        generatedCode.textContent = css;
-        generatespacePreview(tabName, currentSizes, getSelectedBaseId());
-        attachEventListeners();
-      }
-    }
-  }
 
   /**
    * Show validation error message
@@ -1081,15 +1142,134 @@
     const currentTab =
       document.querySelector(".tab-button.active")?.getAttribute("data-tab") ||
       "class";
+
+    // Update settings object with new base ID for current tab
+    const baseIdKey =
+      currentTab === "class"
+        ? "selectedClassSizeId"
+        : currentTab === "vars"
+        ? "selectedVariableSizeId"
+        : "selectedUtilitySizeId";
+    fluispfoAjax.data.settings[baseIdKey] = selectedBaseId;
+
     const panelContainer = document.getElementById("sizes-table-container");
 
     if (panelContainer) {
       panelContainer.innerHTML = generatePanelContent(currentTab);
       attachEventListeners();
+
+      // Restore prefix input value after regenerating panel (same as handleTabSwitch)
+      const prefixInput = document.getElementById("prefix-input");
+      if (prefixInput) {
+        if (currentTab === "class") {
+          prefixInput.value = fluispfoAjax.data.settings.classPrefix || "space";
+        } else if (currentTab === "vars") {
+          prefixInput.value = fluispfoAjax.data.settings.variablePrefix || "sp";
+        }
+      }
     }
 
     updateDataTableValues(selectedBaseId);
     updateCSSOutputs();
+  }
+
+  /**
+   * Handle prefix input change
+   *
+   * Updates the classPrefix or variablePrefix in settings when user types.
+   * Regenerates the description text and CSS output immediately.
+   *
+   * @since 1.2.0
+   */
+  function handlePrefixChange() {
+    const prefixInput = document.getElementById("prefix-input");
+    if (!prefixInput) return;
+
+    const currentTab = document.querySelector(".tab-button.active")?.getAttribute("data-tab") || "class";
+    const prefix = prefixInput.value.trim();
+
+    // Validate prefix doesn't include markers
+    if (prefix.includes(".") || prefix.includes("--")) {
+      showValidationError(prefixInput, "Markers (. or --) are added automatically");
+    }
+
+    // Store prefix in settings
+    const settings = fluispfoAjax.data.settings;
+    if (currentTab === "class") {
+      settings.classPrefix = prefix || "space";
+    } else if (currentTab === "vars") {
+      settings.variablePrefix = prefix || "sp";
+    }
+
+    // Update UI immediately
+    updateGeneratesText();
+    updateCSSOutputs();
+  }
+
+  /**
+   * Handle Enter key on prefix input
+   *
+   * Moves focus to the "Add Size" button when user presses Enter.
+   *
+   * @param {KeyboardEvent} event - Keydown event
+   * @since 1.2.0
+   */
+  function handlePrefixKeydown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      // Move focus to Add Size button
+      const addButton = document.getElementById("add-size-populated") || document.getElementById("add-size");
+      if (addButton) {
+        addButton.focus();
+      }
+    }
+  }
+
+  /**
+   * Update Generates text based on current tab and prefix
+   *
+   * Dynamically updates the description paragraph to show the current
+   * prefix value in the "Generates: ..." text. Also shows/hides the
+   * prefix control for Utilities tab.
+   *
+   * @since 1.2.0
+   */
+  function updateGeneratesText() {
+    // Get the panel description paragraph
+    const descParagraph = document.querySelector('#sizes-table-container > p');
+    if (!descParagraph) return;
+
+    const currentTab = document.querySelector(".tab-button.active")?.getAttribute("data-tab") || "class";
+    const prefixInput = document.getElementById("prefix-input");
+    const prefixControl = document.getElementById("prefix-control");
+
+    // Show/hide prefix control based on tab
+    if (prefixControl) {
+      if (currentTab === "utils") {
+        prefixControl.style.setProperty("display", "none", "important");
+      } else {
+        prefixControl.style.display = "flex";
+      }
+    }
+
+    // Get prefix value
+    const config = TAB_CONFIG[currentTab];
+    let prefix = config.defaultPrefix;
+    if (prefixInput && currentTab !== "utils") {
+      prefix = prefixInput.value.trim() || config.defaultPrefix;
+    }
+
+    // Update description with actual prefix
+    let description = "";
+    if (currentTab === "class") {
+      description = `Generates: <code>.${prefix}-{suffix}</code> (e.g., <code>.${prefix}-md</code>, <code>.${prefix}-xxl</code>). Make any change wanted to the base size and prefix used.`;
+    } else if (currentTab === "vars") {
+      description = `Generates: <code>--${prefix}-{suffix}</code> (e.g., <code>--${prefix}-md</code>, <code>--${prefix}-xxl</code>). Make any change wanted to the base size and prefix used.`;
+    } else if (currentTab === "utils") {
+      description = `Generates: <code>.{type}{side}-{suffix}</code> (e.g., <code>.mt-md</code>, <code>.pb-md</code>, <code>.gap-sm</code>).`;
+    }
+
+    descParagraph.innerHTML = description;
   }
 
   /**
@@ -1103,7 +1283,7 @@
   function handleUnitChange(event) {
     const selectedUnit = event.target.getAttribute("data-unit");
 
-    spaceClampAjax.data.settings.unitType = selectedUnit;
+    fluispfoAjax.data.settings.unitType = selectedUnit;
 
     document
       .querySelectorAll(".unit-button")
@@ -1118,6 +1298,11 @@
       window.FluidSpaceForge.SampleSpaceController
     ) {
       window.FluidSpaceForge.SampleSpaceController.updatePreview();
+    }
+
+    // Save unit type immediately (control setting)
+    if (window.FluidSpaceForge && window.FluidSpaceForge.AutosaveManager) {
+      window.FluidSpaceForge.AutosaveManager.saveControlSettings();
     }
   }
 
@@ -1237,6 +1422,68 @@
    *
    * @since 1.0
    */
+  /**
+   * Handle Settings Reset button click
+   *
+   * Resets all settings inputs to their default values.
+   *
+   * @since 1.2.1
+   */
+  function handleSettingsReset() {
+    window.FluidSpaceForge.ModalManager.showConfirmModal(
+      "Reset Settings",
+      "Reset all settings to default values?\n\nThis will reset:\n- Min Space Size to 8px\n- Max Space Size to 12px\n- Min Viewport Width to 375px\n- Max Viewport Width to 1620px\n- Min Scale to 1.125 (Major Second)\n- Max Scale to 1.25 (Major Third)\n\nYour class or variable Base and Prefix will not be affected, but the sizes of your suffix entries could change.",
+      () => {
+        // Get defaults from PHP constants
+        const defaults = window.fluispfoAjax?.defaults || {};
+
+        // Reset Min/Max Base Space
+        const minBaseInput = document.getElementById("min-base-space");
+        if (minBaseInput) {
+          minBaseInput.value = defaults.minBasespace || 8;
+        }
+
+        const maxBaseInput = document.getElementById("max-base-space");
+        if (maxBaseInput) {
+          maxBaseInput.value = defaults.maxBasespace || 12;
+        }
+
+        // Reset Min/Max Viewport Width
+        const minViewportInput = document.getElementById("min-viewport");
+        if (minViewportInput) {
+          minViewportInput.value = defaults.minViewport || 375;
+        }
+
+        const maxViewportInput = document.getElementById("max-viewport");
+        if (maxViewportInput) {
+          maxViewportInput.value = defaults.maxViewport || 1620;
+        }
+
+        // Reset Min/Max Scale dropdowns
+        const minScaleSelect = document.getElementById("min-scale");
+        if (minScaleSelect) {
+          minScaleSelect.value = "1.125"; // Major Second
+        }
+
+        const maxScaleSelect = document.getElementById("max-scale");
+        if (maxScaleSelect) {
+          maxScaleSelect.value = "1.25"; // Major Third
+        }
+
+        // Trigger recalculation
+        handleSettingsChange();
+
+        // Show success notification
+        window.FluidSpaceForge.ModalManager.showNotification(
+          "Settings reset to defaults",
+          "success"
+        );
+      },
+      null,
+      { confirmText: "Reset", isDangerous: false }
+    );
+  }
+
   function handleReset() {
     const currentTab =
       document.querySelector(".tab-button.active")?.getAttribute("data-tab") ||
@@ -1331,6 +1578,12 @@
         if (panelContainer) {
           panelContainer.innerHTML = generatePanelContent(currentTab);
           attachEventListeners();
+        }
+
+        // Clear Selected Class CSS panel
+        const codePanel = document.getElementById("class-code");
+        if (codePanel) {
+          codePanel.textContent = "";
         }
 
         updateCSSOutputs();
@@ -1471,7 +1724,7 @@
    * @since 1.0
    */
   function restoreDefaults(tabType) {
-    const constants = spaceClampAjax.constants;
+    const constants = fluispfoAjax.constants;
     const propertyName = constants.SIZE_TYPE_PROPERTY_NAMES[tabType];
 
     if (!propertyName) {
@@ -1484,11 +1737,11 @@
     }));
 
     if (tabType === "class") {
-      spaceClampAjax.data.classSizes = defaults;
+      fluispfoAjax.data.classSizes = defaults;
     } else if (tabType === "vars") {
-      spaceClampAjax.data.variableSizes = defaults;
+      fluispfoAjax.data.variableSizes = defaults;
     } else if (tabType === "utils") {
-      spaceClampAjax.data.utilitySizes = defaults;
+      fluispfoAjax.data.utilitySizes = defaults;
     }
   }
 
@@ -1506,8 +1759,8 @@
    */
   function updateDataTableValues(selectedBaseId) {
     setTimeout(() => {
-      const settings = spaceClampAjax.data.settings;
-      const rows = document.querySelectorAll("space-table tr[data-id]");
+      const settings = fluispfoAjax.data.settings;
+      const rows = document.querySelectorAll(".space-table tr[data-id]");
 
       rows.forEach((row) => {
         const sizeId = parseInt(row.getAttribute("data-id"));
@@ -1552,7 +1805,7 @@
       document.querySelector(".tab-button.active")?.getAttribute("data-tab") ||
       "class";
     const selectedBaseId = getSelectedBaseId();
-    const settings = spaceClampAjax.data.settings;
+    const settings = fluispfoAjax.data.settings;
 
     const currentSizes = getDataArray(currentTab);
     const cssGenerator = getCSSGenerator(currentTab);
@@ -1581,7 +1834,7 @@
    * @since 1.0
    */
   function generatespacePreview(tabType, currentSizes, selectedBaseId) {
-    const settings = spaceClampAjax.data.settings;
+    const settings = fluispfoAjax.data.settings;
 
     const minContainer = document.getElementById("preview-min-container");
     if (minContainer) {
@@ -1631,7 +1884,7 @@
     const unitType = settings.unitType || "px";
 
     return `
-    <div style="font-family: Arial, sans-serif;">
+    <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">
         ${sizes
           .map((size) => {
             const calc = window.FluidSpaceForge.Calculations.calculateSpaceSize(
@@ -1650,7 +1903,7 @@
 
             return `
                   <div style="margin-bottom: 20px; padding: 12px; background: #var(--clr-sample-container-bg); border-radius: 6px; border: 1px solid #var(--clr-sample-container-border); box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-                      <div style="font-size: 12px; color: #var(--clr-sample-title-text); margin-bottom: 12px; font-weight: 600;">${name}</div>
+                      <div style="font-size: 32px; color: #var(--clr-sample-title-text); margin-bottom: 12px; font-weight: 600;">${name}</div>
                       
                       <div style="margin-bottom: 12px;">
                           <div style="font-size: 10px; color: #var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Margin & Padding</div>
@@ -1695,7 +1948,7 @@
    * @since 1.0
    */
   function generatePanelContent(tabType) {
-    const data = spaceClampAjax.data;
+    const data = fluispfoAjax.data;
 
     const sizesMap = {
       class: data.classSizes,
@@ -1703,7 +1956,16 @@
       utils: data.utilitySizes,
     };
 
-    return generatePanel(tabType, sizesMap[tabType]);
+    // Get the selected base ID for this tab type
+    const baseIdKey =
+      tabType === "class"
+        ? "selectedClassSizeId"
+        : tabType === "vars"
+        ? "selectedVariableSizeId"
+        : "selectedUtilitySizeId";
+    const selectedBaseId = parseInt(data.settings[baseIdKey]) || 3;
+
+    return generatePanel(tabType, sizesMap[tabType], selectedBaseId);
   }
 
   /**
@@ -1719,13 +1981,14 @@
    * @since 1.0
    */
   function generatePanel(tabType, sizes, selectedBaseId = 3) {
-    const cfg = spaceClampAjax.panelConfig[tabType];
+    const cfg = fluispfoAjax.panelConfig[tabType];
     if (!cfg) return "<p>Unknown tab type</p>";
 
-    let html = spaceClampAjax.templates.genericPanel;
+    let html = fluispfoAjax.templates.genericPanel;
 
     html = html.replace(/{{PANEL_TITLE}}/g, cfg.title);
     html = html.replace(/{{PANEL_DESCRIPTION}}/g, cfg.description);
+    html = html.replace(/{{PREFIX_CONTROL_DISPLAY}}/g, tabType === "utils" ? "none" : "flex");
 
     // Handle empty state
     if (!sizes || sizes.length === 0) {
@@ -1764,20 +2027,20 @@
             ? "selectedVariableSizeId"
             : "selectedUtilitySizeId";
         const selectedBase =
-          parseInt(spaceClampAjax.data.settings[baseIdKey]) ||
+          parseInt(fluispfoAjax.data.settings[baseIdKey]) ||
           sizes[0]?.id ||
           3;
 
         const minCalc = window.FluidSpaceForge.Calculations.calculateSpaceSize(
           size.id,
-          spaceClampAjax.data.settings,
+          fluispfoAjax.data.settings,
           selectedBase,
           tabType
         );
 
         const maxCalc = window.FluidSpaceForge.Calculations.calculateSpaceSize(
           size.id,
-          spaceClampAjax.data.settings,
+          fluispfoAjax.data.settings,
           selectedBase,
           tabType
         );
@@ -1919,14 +2182,14 @@
         <button id="undo-clear-btn" style="
             background: var(--clr-accent);
             color: var(--clr-btn-txt);
-            border: 1px solid var(--clr-btn-bdr);
+            border: none;
             padding: 8px 16px;
             border-radius: var(--jimr-border-radius);
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--jimr-transition);
-        ">UNDO</button>
+        ">undo</button>
         <button id="dismiss-clear-btn" style="
             background: none;
             border: none;
@@ -2012,6 +2275,150 @@
         document.body.removeChild(notification);
       }
     }, 250);
+  }
+
+  // ========================================================================
+  // COPY TO CLIPBOARD
+  // ========================================================================
+
+  /**
+   * Copy selected CSS to clipboard
+   *
+   * Copies the CSS from the selected class code element to clipboard.
+   * Provides visual feedback via button animation.
+   *
+   * @since 1.2.1
+   */
+  function copySelectedCSS() {
+    const cssElement = document.getElementById("class-code");
+    if (!cssElement) return;
+
+    const cssText = cssElement.textContent || cssElement.innerText;
+
+    // Don't copy placeholder text
+    if (!cssText || cssText.includes("Loading CSS")) return;
+
+    const button = document.getElementById("copy-selected-btn");
+    copyToClipboard(cssText, button);
+  }
+
+  /**
+   * Copy all generated CSS to clipboard
+   *
+   * Copies the CSS from the generated code element to clipboard.
+   * Provides visual feedback via button animation.
+   *
+   * @since 1.2.1
+   */
+  function copyGeneratedCSS() {
+    const cssElement = document.getElementById("generated-code");
+    if (!cssElement) return;
+
+    const cssText = cssElement.textContent || cssElement.innerText;
+
+    // Don't copy placeholder text
+    if (!cssText || cssText.includes("Loading CSS")) return;
+
+    const button = document.getElementById("copy-all-btn");
+    copyToClipboard(cssText, button);
+  }
+
+  /**
+   * Copy text to clipboard with visual feedback
+   *
+   * Uses modern Clipboard API with fallback for older browsers.
+   * Provides visual success feedback on the button element.
+   *
+   * @param {string} text - Text to copy to clipboard
+   * @param {HTMLElement} button - Button element to show feedback on
+   * @since 1.2.1
+   */
+  function copyToClipboard(text, button) {
+    if (!navigator.clipboard) {
+      // Fallback for older browsers
+      fallbackCopyToClipboard(text, button);
+      return;
+    }
+
+    navigator.clipboard.writeText(text).then(
+      () => {
+        showCopySuccess(button);
+      },
+      (err) => {
+        console.error("Failed to copy:", err);
+        showCopyError(button);
+      }
+    );
+  }
+
+  /**
+   * Fallback copy method for older browsers
+   *
+   * Creates temporary textarea element to copy text.
+   *
+   * @param {string} text - Text to copy
+   * @param {HTMLElement} button - Button element to show feedback on
+   * @since 1.2.1
+   */
+  function fallbackCopyToClipboard(text, button) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+      showCopySuccess(button);
+    } catch (err) {
+      console.error("Fallback copy failed:", err);
+      showCopyError(button);
+    }
+
+    document.body.removeChild(textArea);
+  }
+
+  /**
+   * Show copy success feedback on button
+   *
+   * Temporarily changes button text and icon to indicate success.
+   *
+   * @param {HTMLElement} button - Button element to update
+   * @since 1.2.1
+   */
+  function showCopySuccess(button) {
+    if (!button) return;
+
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<span class="copy-icon">✅</span> copied!';
+    button.style.background = "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)";
+
+    setTimeout(() => {
+      button.innerHTML = originalHTML;
+      button.style.background = "";
+    }, 2000);
+  }
+
+  /**
+   * Show copy error feedback on button
+   *
+   * Temporarily changes button text and icon to indicate error.
+   *
+   * @param {HTMLElement} button - Button element to update
+   * @since 1.2.1
+   */
+  function showCopyError(button) {
+    if (!button) return;
+
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<span class="copy-icon">❌</span> error';
+    button.style.background = "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)";
+
+    setTimeout(() => {
+      button.innerHTML = originalHTML;
+      button.style.background = "";
+    }, 2000);
   }
 
   // ========================================================================

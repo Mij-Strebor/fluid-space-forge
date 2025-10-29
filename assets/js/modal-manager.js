@@ -72,8 +72,8 @@
                                    placeholder="e.g., lg" required>
                         </div>
                         <div class="fcc-btn-group">
-                            <button type="button" class="fcc-btn fcc-btn-ghost" id="modal-cancel">Cancel</button>
-                            <button type="button" class="fcc-btn" id="modal-save">Save</button>
+                            <button type="button" class="fcc-btn" id="modal-cancel">cancel</button>
+                            <button type="button" class="fcc-btn" id="modal-save">save</button>
                         </div>
                     </div>
                 </div>
@@ -155,8 +155,8 @@
     showConfirmModal(title, message, onConfirm, onCancel = null, options = {}) {
       this.removeCurrentModal();
 
-      const confirmText = options.confirmText || "Confirm";
-      const cancelText = options.cancelText || "Cancel";
+      const confirmText = options.confirmText || "confirm";
+      const cancelText = options.cancelText || "cancel";
       const isDangerous = options.isDangerous || false;
 
       const modal = document.createElement("div");
@@ -171,7 +171,7 @@
                     <div class="fcc-modal-content">
                         <p style="margin: 0 0 20px 0; line-height: 1.6; white-space: pre-line;">${message}</p>
                         <div class="fcc-btn-group">
-                            <button type="button" class="fcc-btn fcc-btn-ghost" id="modal-cancel">${cancelText}</button>
+                            <button type="button" class="fcc-btn" id="modal-cancel">${cancelText}</button>
                             <button type="button" class="fcc-btn ${
                               isDangerous ? "fcc-btn-danger" : ""
                             }" id="modal-confirm">${confirmText}</button>
@@ -241,7 +241,7 @@
                     <div class="fcc-modal-content">
                         <p style="margin: 0 0 20px 0; line-height: 1.6; white-space: pre-line;">${message}</p>
                         <div class="fcc-btn-group">
-                            <button type="button" class="fcc-btn" id="modal-ok">OK</button>
+                            <button type="button" class="fcc-btn" id="modal-ok">ok</button>
                         </div>
                     </div>
                 </div>

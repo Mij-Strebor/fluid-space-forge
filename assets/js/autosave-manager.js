@@ -84,14 +84,14 @@
 
       // Prepare AJAX request
       const data = {
-        action: "save_space_clamp_settings",
-        nonce: window.spaceClampAjax.nonce,
+        action: "save_fluispfo_settings",
+        nonce: window.fluispfoAjax.nonce,
         settings: JSON.stringify(settings),
         sizes: JSON.stringify(allSizes),
       };
 
       // Send request
-      fetch(window.spaceClampAjax.ajaxurl, {
+      fetch(window.fluispfoAjax.ajaxurl, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -151,6 +151,7 @@
      * Handle autosave toggle change
      *
      * Starts or stops autosave timer based on toggle state.
+     * Also saves the toggle state immediately (control setting).
      */
     handleAutosaveToggle() {
       const isEnabled = document.getElementById("autosave-toggle")?.checked;
@@ -160,6 +161,72 @@
       } else {
         this.stopTimer();
       }
+
+      // Save autosave toggle state immediately (control setting)
+      this.saveControlSettings();
+    },
+
+    /**
+     * Save only control/UI settings (immediate persistence)
+     *
+     * Saves UI state settings that should persist immediately without
+     * requiring Save button click. This allows refresh-to-undo for
+     * data settings while preserving UI preferences.
+     *
+     * Control settings:
+     * - Panel expand/collapse states (all 4 panels)
+     * - Autosave toggle state
+     * - Active tab selection
+     * - Unit type (PX/REM)
+     */
+    saveControlSettings() {
+      // Collect only control settings
+      const controlSettings = {
+        autosaveEnabled: document.getElementById("autosave-toggle")?.checked,
+        activeTab: document
+          .querySelector(".tab-button.active")
+          ?.getAttribute("data-tab"),
+        unitType: document
+          .querySelector(".unit-button.active")
+          ?.getAttribute("data-unit"),
+        aboutExpanded:
+          document
+            .getElementById("about-content")
+            ?.classList.contains("expanded") ?? true,
+        howToUseExpanded:
+          document
+            .getElementById("info-content")
+            ?.classList.contains("expanded") ?? true,
+        viewportTestExpanded:
+          document
+            .getElementById("sample-space-content")
+            ?.classList.contains("expanded") ?? true,
+        spaceSizeExpanded:
+          document
+            .getElementById("preview-content")
+            ?.classList.contains("expanded") ?? true,
+      };
+
+      // Prepare AJAX request - send only control settings
+      const data = {
+        action: "save_fluispfo_settings",
+        nonce: window.fluispfoAjax.nonce,
+        settings: JSON.stringify(controlSettings),
+        sizes: JSON.stringify({
+          classSizes: window.fluispfoAjax?.data?.classSizes || [],
+          variableSizes: window.fluispfoAjax?.data?.variableSizes || [],
+          utilitySizes: window.fluispfoAjax?.data?.utilitySizes || [],
+        }),
+      };
+
+      // Send silently (no UI feedback)
+      fetch(window.fluispfoAjax.ajaxurl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(data),
+      });
     },
 
     // ========================================================================
@@ -235,6 +302,8 @@
           .querySelector(".tab-button.active")
           ?.getAttribute("data-tab"),
         autosaveEnabled: document.getElementById("autosave-toggle")?.checked,
+        classPrefix: window.fluispfoAjax?.data?.settings?.classPrefix || "space",
+        variablePrefix: window.fluispfoAjax?.data?.settings?.variablePrefix || "sp",
         selectedClassSizeId: document.getElementById("base-value")?.value || 3,
         selectedVariableSizeId:
           document.getElementById("base-value")?.value || 3,
@@ -261,9 +330,9 @@
      */
     _collectSizes() {
       return {
-        classSizes: window.spaceClampAjax?.data?.classSizes || [],
-        variableSizes: window.spaceClampAjax?.data?.variableSizes || [],
-        utilitySizes: window.spaceClampAjax?.data?.utilitySizes || [],
+        classSizes: window.fluispfoAjax?.data?.classSizes || [],
+        variableSizes: window.fluispfoAjax?.data?.variableSizes || [],
+        utilitySizes: window.fluispfoAjax?.data?.utilitySizes || [],
       };
     },
 

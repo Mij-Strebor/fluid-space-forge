@@ -173,7 +173,7 @@
      */
     updatePreview() {
       // Get settings
-      const settings = window.spaceClampAjax.data.settings;
+      const settings = window.fluispfoAjax.data.settings;
       const minVp = parseInt(settings.minViewport);
       const maxVp = parseInt(settings.maxViewport);
       const unitType = settings.unitType || "px";
@@ -366,11 +366,11 @@
      */
     _getSizesForTab(tabType) {
       if (tabType === "class") {
-        return window.spaceClampAjax.data.classSizes;
+        return window.fluispfoAjax.data.classSizes;
       } else if (tabType === "vars") {
-        return window.spaceClampAjax.data.variableSizes;
+        return window.fluispfoAjax.data.variableSizes;
       } else {
-        return window.spaceClampAjax.data.utilitySizes;
+        return window.fluispfoAjax.data.utilitySizes;
       }
     },
 

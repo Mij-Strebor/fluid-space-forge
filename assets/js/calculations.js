@@ -58,11 +58,10 @@
       maxViewport,
       unitType
     ) {
-      // Convert input values to pixels for calculation
-      const minPx =
-        unitType === "rem" ? minValue * this.PIXELS_PER_REM : minValue;
-      const maxPx =
-        unitType === "rem" ? maxValue * this.PIXELS_PER_REM : maxValue;
+      // Input values are always in pixels from calculateSpaceSize
+      // No conversion needed - just use them directly
+      const minPx = minValue;
+      const maxPx = maxValue;
 
       // Calculate linear interpolation coefficients
       const coefficient = ((maxPx - minPx) / (maxViewport - minViewport)) * 100;
@@ -127,7 +126,6 @@
 
       // Validate indices
       if (baseIndex === -1 || currentIndex === -1) {
-        console.log("❌ Base entry not found in table");
         return this._getFallbackValues();
       }
 
@@ -179,9 +177,9 @@
      */
     _formatValue(pxValue, unitType) {
       if (unitType === "rem") {
-        return (pxValue / this.PIXELS_PER_REM).toFixed(3) + " rem";
+        return (pxValue / this.PIXELS_PER_REM).toFixed(3) + "rem";
       }
-      return pxValue + " px";
+      return pxValue + "px";
     },
 
     /**
@@ -228,7 +226,6 @@
       if (!baseId || isNaN(baseId)) {
         const baseComboValue = document.getElementById("base-value")?.value;
         if (!baseComboValue) {
-          console.log("❌ No base value selected.");
           return 3; // Default fallback
         }
         baseId = parseInt(baseComboValue);
@@ -254,11 +251,11 @@
 
       let currentSizes;
       if (currentTab === "class") {
-        currentSizes = window.spaceClampAjax.data.classSizes;
+        currentSizes = window.fluispfoAjax.data.classSizes;
       } else if (currentTab === "vars") {
-        currentSizes = window.spaceClampAjax.data.variableSizes;
+        currentSizes = window.fluispfoAjax.data.variableSizes;
       } else {
-        currentSizes = window.spaceClampAjax.data.utilitySizes;
+        currentSizes = window.fluispfoAjax.data.utilitySizes;
       }
 
       return currentSizes;
@@ -273,11 +270,11 @@
      */
     _getSizesArrayByType(tabType) {
       if (tabType === "class") {
-        return window.spaceClampAjax.data.classSizes;
+        return window.fluispfoAjax.data.classSizes;
       } else if (tabType === "vars") {
-        return window.spaceClampAjax.data.variableSizes;
+        return window.fluispfoAjax.data.variableSizes;
       } else {
-        return window.spaceClampAjax.data.utilitySizes;
+        return window.fluispfoAjax.data.utilitySizes;
       }
     },
 

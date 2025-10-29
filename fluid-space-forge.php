@@ -4,9 +4,9 @@
  * Plugin Name: Fluid Space Forge
  * Plugin URI: https://github.com/Mij-Strebor/fluid-space-forge
  * Description: Generate responsive spacing using CSS clamp() functions. Perfect companion to Font Clamp Calculator for creating fluid design systems.
- * Version: 1.0.4
+ * Version: 1.2.1
  * Author: Jim R.
- * Author URI: https://jimrweb.com
+ * Author URI: https://jimrforge.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: fluid-space-forge
@@ -16,9 +16,7 @@
  * 
  */
 
-namespace JimRWeb\FluidSpaceForge;
-
-use Exception;
+namespace JimRForge\FluidSpaceForge;
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
@@ -35,9 +33,9 @@ class FluidSpaceForge
     // ========================================================================
 
     // Configuration Constants
-    const VERSION = '1.0.3';
+    const VERSION = '1.2.1';
     const PLUGIN_SLUG = 'fluid-space-forge';
-    const NONCE_ACTION = 'fluid-space_nonce';
+    const NONCE_ACTION = 'fluispfo_nonce';
 
     // Validation Ranges
     // Why 1-16px: Prevents unusably small (<1px) or absurdly large (>16px) min base space
@@ -86,10 +84,10 @@ class FluidSpaceForge
     ];
 
     // WordPress Options Keys
-    const OPTION_SETTINGS = 'space_clamp_settings';
-    const OPTION_CLASS_SIZES = 'space_clamp_class_sizes';
-    const OPTION_VARIABLE_SIZES = 'space_clamp_variable_sizes';
-    const OPTION_UTILITY_SIZES = 'space_clamp_utility_sizes';
+    const OPTION_SETTINGS = 'fluispfo_settings';
+    const OPTION_CLASS_SIZES = 'fluispfo_class_sizes';
+    const OPTION_VARIABLE_SIZES = 'fluispfo_variable_sizes';
+    const OPTION_UTILITY_SIZES = 'fluispfo_utility_sizes';
 
     // ========================================================================
     // CLASS PROPERTIES
@@ -132,7 +130,7 @@ class FluidSpaceForge
     {
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
-        add_action('wp_ajax_save_space_clamp_settings', [$this, 'save_settings']);
+        add_action('wp_ajax_save_fluispfo_settings', [$this, 'save_settings']);
     }
 
     // ========================================================================
@@ -157,8 +155,12 @@ class FluidSpaceForge
             'minScale' => self::DEFAULT_MIN_SCALE,
             'maxScale' => self::DEFAULT_MAX_SCALE,
             'autosaveEnabled' => true,
+            'aboutExpanded' => true,
+            'howToUseExpanded' => true,
             'viewportTestExpanded' => true,
-            'spaceSizeExpanded' => true
+            'spaceSizeExpanded' => true,
+            'classPrefix' => 'space',
+            'variablePrefix' => 'sp',
         ];
     }
 
@@ -234,16 +236,33 @@ class FluidSpaceForge
             return;
         }
 
+        // Enqueue Design System Tokens
         wp_enqueue_style(
-            'space-clamp-admin-styles',
-            plugins_url('assets/css/admin-styles.css', __FILE__),
+            'fluispfo-design-tokens',
+            plugins_url('assets/css/design-tokens.css', __FILE__),
             [],
+            self::VERSION
+        );
+
+        // Enqueue Forge Header
+        wp_enqueue_style(
+            'fluispfo-forge-header',
+            plugins_url('assets/css/forge-header.css', __FILE__),
+            ['fluispfo-design-tokens'],
+            self::VERSION
+        );
+
+        // Enqueue Admin Styles
+        wp_enqueue_style(
+            'fluispfo-admin-styles',
+            plugins_url('assets/css/admin-styles.css', __FILE__),
+            ['fluispfo-forge-header'],
             self::VERSION
         );
 
         // Enqueue drag-drop controller
         wp_enqueue_script(
-            'space-clamp-drag-drop',
+            'fluispfo-drag-drop',
             plugins_url('assets/js/drag-drop-controller.js', __FILE__),
             ['wp-util'],
             self::VERSION,
@@ -252,7 +271,7 @@ class FluidSpaceForge
 
         // Enqueue calculations module
         wp_enqueue_script(
-            'space-clamp-calculations',
+            'fluispfo-calculations',
             plugins_url('assets/js/calculations.js', __FILE__),
             ['wp-util'],
             self::VERSION,
@@ -261,7 +280,7 @@ class FluidSpaceForge
 
         // Enqueue autosave manager
         wp_enqueue_script(
-            'space-clamp-autosave',
+            'fluispfo-autosave',
             plugins_url('assets/js/autosave-manager.js', __FILE__),
             ['wp-util'],
             self::VERSION,
@@ -270,16 +289,16 @@ class FluidSpaceForge
 
         // Enqueue sample space controller        
         wp_enqueue_script(
-            'space-clamp-sample-space',
+            'fluispfo-sample-space',
             plugins_url('assets/js/sample-space-controller.js', __FILE__),
-            ['wp-util', 'space-clamp-calculations'],
+            ['wp-util', 'fluispfo-calculations'],
             self::VERSION,
             true
         );
 
         // Enqueue modal manager
         wp_enqueue_script(
-            'space-clamp-modal',
+            'fluispfo-modal',
             plugins_url('assets/js/modal-manager.js', __FILE__),
             ['wp-util'],
             self::VERSION,
@@ -288,9 +307,9 @@ class FluidSpaceForge
 
         // Enqueue main admin script
         wp_enqueue_script(
-            'space-clamp-admin-script',
+            'fluispfo-admin-script',
             plugins_url('assets/js/admin-script.js', __FILE__),
-            ['wp-util', 'space-clamp-calculations', 'space-clamp-autosave', 'space-clamp-drag-drop', 'space-clamp-sample-space'],
+            ['wp-util', 'fluispfo-calculations', 'fluispfo-autosave', 'fluispfo-drag-drop', 'fluispfo-sample-space'],
             self::VERSION,
             true
         );
@@ -307,10 +326,10 @@ class FluidSpaceForge
                 'maxViewport' => self::DEFAULT_MAX_VIEWPORT,
             ],
             'data' => [
-                'settings' => $this->get_space_clamp_settings(),
-                'classSizes' => $this->get_space_clamp_class_sizes(),
-                'variableSizes' => $this->get_space_clamp_variable_sizes(),
-                'utilitySizes' => $this->get_space_clamp_utility_sizes()
+                'settings' => $this->get_fluispfo_settings(),
+                'classSizes' => $this->get_fluispfo_class_sizes(),
+                'variableSizes' => $this->get_fluispfo_variable_sizes(),
+                'utilitySizes' => $this->get_fluispfo_utility_sizes()
             ],
             'templates' => [
                 'genericPanel' => $this->load_panel_template('generic-panel.php')
@@ -318,7 +337,7 @@ class FluidSpaceForge
             'panelConfig' => [
                 'class' => [
                     'title' => 'Space Size Classes',
-                    'description' => 'Generates: <code>.space-{m|p|g}-{suffix}</code><br>(e.g., <code>.space-m-lg</code>, <code>.space-p-md</code>, <code>.space-g-sm</code>)',
+                    'description' => 'Generates: <code>.{prefix}-{suffix}</code> (e.g., <code>.space-md</code>, <code>.space-xxl</code>). Make any change wanted to the base size and prefix used.',
                     'nameProperty' => 'className',
                     'emptyIcon' => '🔭',
                     'emptyTitle' => 'No Space Classes',
@@ -328,7 +347,7 @@ class FluidSpaceForge
                 ],
                 'vars' => [
                     'title' => 'CSS Custom Properties',
-                    'description' => 'Generates: <code>--sp-{suffix}</code><br>(e.g., <code>--sp-lg</code>, <code>--sp-md</code>, <code>--sp-sm</code>)',
+                    'description' => 'Generates: <code>--{prefix}-{suffix}</code> (e.g., <code>--sp-md</code>, <code>--sp-xxl</code>). Make any change wanted to the base size and prefix used.',
                     'nameProperty' => 'variableName',
                     'emptyIcon' => '📦',
                     'emptyTitle' => 'No CSS Variables',
@@ -338,7 +357,7 @@ class FluidSpaceForge
                 ],
                 'utils' => [
                     'title' => 'Utility Classes (Tailwind)',
-                    'description' => 'Generates: <code>.{type}{side}-{suffix}</code><br>(e.g., <code>.mt-lg</code>, <code>.pb-md</code>, <code>.gap-sm</code>)',
+                    'description' => 'Generates: <code>.{type}{side}-{suffix}</code> (e.g., <code>.mt-lg</code>, <code>.pb-md</code>, <code>.gap-sm</code>).',
                     'nameProperty' => 'utilityName',
                     'emptyIcon' => '🛠️',
                     'emptyTitle' => 'No Utility Classes',
@@ -352,7 +371,7 @@ class FluidSpaceForge
             'debug' => defined('WP_DEBUG') && WP_DEBUG
         ];
 
-        wp_localize_script('wp-util', 'spaceClampAjax', $localized_data);
+        wp_localize_script('wp-util', 'fluispfoAjax', $localized_data);
     }
 
     /**
@@ -370,6 +389,7 @@ class FluidSpaceForge
             'BROWSER_DEFAULT_FONT_SIZE' => self::BROWSER_DEFAULT_FONT_SIZE,
             'CSS_UNIT_CONVERSION_BASE' => self::CSS_UNIT_CONVERSION_BASE,
             'MIN_BASE_SPACE_RANGE' => self::MIN_BASE_SPACE_RANGE,
+            'MAX_BASE_SPACE_RANGE' => self::MAX_BASE_SPACE_RANGE,
             'VIEWPORT_RANGE' => self::VIEWPORT_RANGE,
             'SCALE_RANGE' => self::SCALE_RANGE,
             'VALID_UNITS' => self::VALID_UNITS,
@@ -405,7 +425,7 @@ class FluidSpaceForge
     // DATA GETTERS
     // ========================================================================
 
-    public function get_space_clamp_settings()
+    public function get_fluispfo_settings()
     {
         static $cached_settings = null;
 
@@ -425,29 +445,35 @@ class FluidSpaceForge
         return $cached_settings;
     }
 
-    public function get_space_clamp_class_sizes()
+    public function get_fluispfo_class_sizes()
     {
         static $cached_sizes = null;
         if ($cached_sizes === null) {
             $cached_sizes = get_option(self::OPTION_CLASS_SIZES, $this->default_class_sizes);
+            // AUTO-FIX: Add missing IDs if they don't exist
+            $cached_sizes = $this->ensure_sizes_have_ids($cached_sizes);
         }
         return $cached_sizes;
     }
 
-    public function get_space_clamp_variable_sizes()
+    public function get_fluispfo_variable_sizes()
     {
         static $cached_sizes = null;
         if ($cached_sizes === null) {
             $cached_sizes = get_option(self::OPTION_VARIABLE_SIZES, $this->default_variable_sizes);
+            // AUTO-FIX: Add missing IDs if they don't exist
+            $cached_sizes = $this->ensure_sizes_have_ids($cached_sizes);
         }
         return $cached_sizes;
     }
 
-    public function get_space_clamp_utility_sizes()
+    public function get_fluispfo_utility_sizes()
     {
         static $cached_sizes = null;
         if ($cached_sizes === null) {
             $cached_sizes = get_option(self::OPTION_UTILITY_SIZES, $this->default_utility_sizes);
+            // AUTO-FIX: Add missing IDs if they don't exist
+            $cached_sizes = $this->ensure_sizes_have_ids($cached_sizes);
         }
         return $cached_sizes;
     }
@@ -463,18 +489,25 @@ class FluidSpaceForge
     {
 
         $data = [
-            'settings' => $this->get_space_clamp_settings(),
-            'class_sizes' => $this->get_space_clamp_class_sizes(),
-            'variable_sizes' => $this->get_space_clamp_variable_sizes(),
-            'utility_sizes' => $this->get_space_clamp_utility_sizes()
+            'settings' => $this->get_fluispfo_settings(),
+            'class_sizes' => $this->get_fluispfo_class_sizes(),
+            'variable_sizes' => $this->get_fluispfo_variable_sizes(),
+            'utility_sizes' => $this->get_fluispfo_utility_sizes()
         ];
 
         // Hide admin bar on this page for cleaner interface
         add_filter('show_admin_bar', '__return_false');
 
-        // SAFETY: get_complete_interface() returns pre-escaped HTML from template files
-        // All template files use esc_html(), esc_attr(), etc. for proper escaping
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        // Output admin interface HTML
+        // Security Note: This outputs static HTML structure with included template files.
+        // All dynamic user data within templates is properly escaped using WordPress functions:
+        // - esc_attr() for all HTML attribute values (line 45, 57, 72, 83 in settings-panel.php)
+        // - esc_html() for text content where applicable
+        // - selected() for dropdown options (lines 101-120 in settings-panel.php)
+        // - Only controlled strings ('checked', 'active', 'expanded') in conditional outputs
+        // The $data array passed contains sanitized database values (see sanitize_settings_array()
+        // and sanitize_sizes_array() methods). All output reaching the browser is escaped.
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML structure is static, all dynamic data escaped in templates
         echo $this->get_complete_interface($data);
     }
 
@@ -532,6 +565,7 @@ class FluidSpaceForge
                 <!-- Enhanced CSS Output Containers -->
                 <div class="all-container">
                     <?php include plugin_dir_path(__FILE__) . 'templates/admin/css-output-panels.php'; ?>
+</div>                <!-- JimRForge Community Panel -->                <div class="all-container">                    <?php include plugin_dir_path(__FILE__) . 'templates/admin/community-panel.php'; ?>
                 </div>
             </div>
     <?php
@@ -541,12 +575,212 @@ class FluidSpaceForge
     /**
      * Check if we're on the plugin page
      */
-    private function is_space_clamp_page()
+    private function fluispfo_is_plugin_page()
     {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
         return $page === self::PLUGIN_SLUG;
     }
+
+    // ========================================================================
+    // SANITIZATION HELPERS
+    // ========================================================================
+
+    /**
+     * Sanitize settings array from JSON input
+     *
+     * WordPress.org requires proper sanitization of all input data.
+     * This method sanitizes each field in the settings array individually.
+     *
+     * @param array $settings Raw settings array from JSON
+     * @return array Sanitized settings array
+     */
+    private function sanitize_settings_array($settings)
+    {
+        if (!is_array($settings)) {
+            return [];
+        }
+
+        $sanitized = [];
+
+        // Sanitize base space values (must be positive integers)
+        if (isset($settings['minBasespace'])) {
+            $sanitized['minBasespace'] = absint($settings['minBasespace']);
+        }
+        if (isset($settings['maxBasespace'])) {
+            $sanitized['maxBasespace'] = absint($settings['maxBasespace']);
+        }
+
+        // Sanitize viewport values (must be positive integers)
+        if (isset($settings['minViewport'])) {
+            $sanitized['minViewport'] = absint($settings['minViewport']);
+        }
+        if (isset($settings['maxViewport'])) {
+            $sanitized['maxViewport'] = absint($settings['maxViewport']);
+        }
+
+        // Sanitize scale values (must be valid floats)
+        if (isset($settings['minScale'])) {
+            $sanitized['minScale'] = floatval($settings['minScale']);
+        }
+        if (isset($settings['maxScale'])) {
+            $sanitized['maxScale'] = floatval($settings['maxScale']);
+        }
+
+        // Sanitize unit type (must be 'px' or 'rem')
+        if (isset($settings['unitType'])) {
+            $sanitized['unitType'] = in_array($settings['unitType'], ['px', 'rem'], true) ? $settings['unitType'] : 'px';
+        }
+        // Legacy 'unit' field support
+        if (isset($settings['unit'])) {
+            $sanitized['unit'] = in_array($settings['unit'], ['px', 'rem'], true) ? $settings['unit'] : 'rem';
+        }
+
+        // Sanitize selected size IDs (must be positive integers)
+        if (isset($settings['selectedClassSizeId'])) {
+            $sanitized['selectedClassSizeId'] = absint($settings['selectedClassSizeId']);
+        }
+        if (isset($settings['selectedVariableSizeId'])) {
+            $sanitized['selectedVariableSizeId'] = absint($settings['selectedVariableSizeId']);
+        }
+        if (isset($settings['selectedUtilitySizeId'])) {
+            $sanitized['selectedUtilitySizeId'] = absint($settings['selectedUtilitySizeId']);
+        }
+
+        // Sanitize active tab (must be valid tab name)
+        if (isset($settings['activeTab'])) {
+            $sanitized['activeTab'] = in_array($settings['activeTab'], self::VALID_TABS, true) ? $settings['activeTab'] : 'class';
+        }
+
+        // Sanitize boolean flags
+        if (isset($settings['autosaveEnabled'])) {
+            $sanitized['autosaveEnabled'] = (bool) $settings['autosaveEnabled'];
+        }
+        if (isset($settings['aboutExpanded'])) {
+            $sanitized['aboutExpanded'] = (bool) $settings['aboutExpanded'];
+        }
+        if (isset($settings['howToUseExpanded'])) {
+            $sanitized['howToUseExpanded'] = (bool) $settings['howToUseExpanded'];
+        }
+        if (isset($settings['viewportTestExpanded'])) {
+            $sanitized['viewportTestExpanded'] = (bool) $settings['viewportTestExpanded'];
+        }
+        if (isset($settings['spaceSizeExpanded'])) {
+            $sanitized['spaceSizeExpanded'] = (bool) $settings['spaceSizeExpanded'];
+        }
+
+        // Sanitize baseSize (alphanumeric with hyphens for size names like 'md')
+        if (isset($settings['baseSize'])) {
+            $sanitized['baseSize'] = sanitize_text_field($settings['baseSize']);
+        }
+
+        // Sanitize ratio (must be a valid float) - legacy field
+        if (isset($settings['ratio'])) {
+            $sanitized['ratio'] = floatval($settings['ratio']);
+        }
+
+        // Sanitize prefix values (alphanumeric with hyphens)
+        if (isset($settings['classPrefix'])) {
+            $sanitized['classPrefix'] = sanitize_text_field($settings['classPrefix']);
+        }
+        if (isset($settings['variablePrefix'])) {
+            $sanitized['variablePrefix'] = sanitize_text_field($settings['variablePrefix']);
+        }
+
+        return $sanitized;
+    }
+
+    /**
+     * Ensure all sizes have IDs (auto-fix for corrupted data)
+     *
+     * @param array $sizes Sizes array that may be missing IDs
+     * @return array Sizes array with IDs guaranteed
+     */
+    private function ensure_sizes_have_ids($sizes)
+    {
+        if (!is_array($sizes)) {
+            return [];
+        }
+
+        $fixed_sizes = [];
+        foreach ($sizes as $index => $size) {
+            if (!is_array($size)) {
+                continue;
+            }
+            // If ID is missing, add it based on array index
+            if (!isset($size['id']) || empty($size['id'])) {
+                $size['id'] = $index + 1;
+            }
+            $fixed_sizes[] = $size;
+        }
+
+        return $fixed_sizes;
+    }
+
+    /**
+     * Sanitize sizes array from JSON input
+     *
+     * WordPress.org requires proper sanitization of all input data.
+     * This method sanitizes each size object in the array.
+     *
+     * @param array $sizes Raw sizes array from JSON
+     * @return array Sanitized sizes array
+     */
+    private function sanitize_sizes_array($sizes)
+    {
+        if (!is_array($sizes)) {
+            return [];
+        }
+
+        $sanitized = [];
+
+        foreach ($sizes as $size) {
+            if (!is_array($size)) {
+                continue;
+            }
+
+            $sanitized_size = [];
+
+            // Sanitize ID (required for calculations)
+            if (isset($size['id'])) {
+                $sanitized_size['id'] = intval($size['id']);
+            }
+
+            // Sanitize name (alphanumeric with hyphens/underscores)
+            if (isset($size['name'])) {
+                $sanitized_size['name'] = sanitize_text_field($size['name']);
+            }
+
+            // Sanitize numeric values
+            if (isset($size['min'])) {
+                $sanitized_size['min'] = floatval($size['min']);
+            }
+            if (isset($size['max'])) {
+                $sanitized_size['max'] = floatval($size['max']);
+            }
+
+            // Sanitize preferred (CSS clamp formula string)
+            if (isset($size['preferred'])) {
+                $sanitized_size['preferred'] = sanitize_text_field($size['preferred']);
+            }
+
+            // Sanitize optional class-specific fields
+            if (isset($size['className'])) {
+                $sanitized_size['className'] = sanitize_text_field($size['className']);
+            }
+            if (isset($size['variableName'])) {
+                $sanitized_size['variableName'] = sanitize_text_field($size['variableName']);
+            }
+            if (isset($size['utilityName'])) {
+                $sanitized_size['utilityName'] = sanitize_text_field($size['utilityName']);
+            }
+
+            $sanitized[] = $sanitized_size;
+        }
+
+        return $sanitized;
+    }
+
 
     // ========================================================================
     // AJAX HANDLERS
@@ -567,47 +801,60 @@ class FluidSpaceForge
             return;
         }
 
-        try {
-            // Decode and validate settings data
-            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $settings_json = isset($_POST['settings']) ? wp_unslash($_POST['settings']) : '';
-            // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $settings = json_decode($settings_json, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                wp_send_json_error(['message' => 'Invalid settings data']);
-                return;
-            }
-
-            // Decode and validate sizes data
-            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $sizes_json = isset($_POST['sizes']) ? wp_unslash($_POST['sizes']) : '';
-            // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized   
-            $sizes = json_decode($sizes_json, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                wp_send_json_error(['message' => 'Invalid sizes data']);
-                return;
-            }
-
-            // Save settings
-            $result1 = update_option(self::OPTION_SETTINGS, $settings);
-            $result2 = update_option(self::OPTION_CLASS_SIZES, $sizes['classSizes'] ?? []);
-            $result3 = update_option(self::OPTION_VARIABLE_SIZES, $sizes['variableSizes'] ?? []);
-            $result4 = update_option(self::OPTION_UTILITY_SIZES, $sizes['utilitySizes'] ?? []);
-
-            // Clear cached data
-            wp_cache_delete(self::OPTION_SETTINGS, 'options');
-            wp_cache_delete(self::OPTION_CLASS_SIZES, 'options');
-            wp_cache_delete(self::OPTION_VARIABLE_SIZES, 'options');
-            wp_cache_delete(self::OPTION_UTILITY_SIZES, 'options');
-
-            wp_send_json_success([
-                'message' => 'All space data saved to database successfully',
-                'saved_settings' => $result1,
-                'saved_sizes' => $result2 && $result3 && $result4
-            ]);
-        } catch (Exception $e) {
-            wp_send_json_error(['message' => 'Save failed: ' . $e->getMessage()]);
+        // Get JSON string input (wp_unslash removes WordPress's automatic slashing)
+        // Note: We do NOT use sanitize_text_field() on JSON strings as it corrupts the data
+        // Instead, we validate JSON structure and sanitize individual fields after decoding
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON sanitized after decode
+        $settings_json = isset($_POST['settings']) ? wp_unslash($_POST['settings']) : '';
+        $settings_raw = json_decode($settings_json, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            wp_send_json_error(['message' => 'Invalid settings JSON']);
+            return;
         }
+
+        // Load existing settings and merge with incoming (preserves fields not sent)
+        // This allows partial updates (e.g., control settings) without losing data settings
+        $existing_settings = get_option(self::OPTION_SETTINGS, $this->default_settings);
+
+        // Sanitize the decoded settings array (individual field sanitization)
+        $sanitized_incoming = $this->sanitize_settings_array($settings_raw);
+
+        // Merge: incoming settings override existing, but existing are preserved
+        $settings = array_merge($existing_settings, $sanitized_incoming);
+
+        // Get sizes JSON string (wp_unslash removes WordPress's automatic slashing)
+        // Note: We do NOT use sanitize_text_field() on JSON strings as it corrupts the data
+        // Instead, we validate JSON structure and sanitize individual fields after decoding
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON sanitized after decode
+        $sizes_json = isset($_POST['sizes']) ? wp_unslash($_POST['sizes']) : '';
+        $sizes_raw = json_decode($sizes_json, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            wp_send_json_error(['message' => 'Invalid sizes JSON']);
+            return;
+        }
+
+        // Sanitize each sizes array individually
+        $class_sizes = $this->sanitize_sizes_array($sizes_raw['classSizes'] ?? []);
+        $variable_sizes = $this->sanitize_sizes_array($sizes_raw['variableSizes'] ?? []);
+        $utility_sizes = $this->sanitize_sizes_array($sizes_raw['utilitySizes'] ?? []);
+
+        // Save sanitized data to database
+        $result1 = update_option(self::OPTION_SETTINGS, $settings);
+        $result2 = update_option(self::OPTION_CLASS_SIZES, $class_sizes);
+        $result3 = update_option(self::OPTION_VARIABLE_SIZES, $variable_sizes);
+        $result4 = update_option(self::OPTION_UTILITY_SIZES, $utility_sizes);
+
+        // Clear cached data
+        wp_cache_delete(self::OPTION_SETTINGS, 'options');
+        wp_cache_delete(self::OPTION_CLASS_SIZES, 'options');
+        wp_cache_delete(self::OPTION_VARIABLE_SIZES, 'options');
+        wp_cache_delete(self::OPTION_UTILITY_SIZES, 'options');
+
+        wp_send_json_success([
+            'message' => 'All space data saved to database successfully',
+            'saved_settings' => $result1,
+            'saved_sizes' => $result2 && $result3 && $result4
+        ]);
     }
 }
 
@@ -617,6 +864,5 @@ class FluidSpaceForge
 
 // Initialize the Fluid Space Forge
 if (is_admin()) {
-    global $fluidSpaceForge;
-    $fluidSpaceForge = new FluidSpaceForge();
+    new FluidSpaceForge();
 }

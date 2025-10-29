@@ -1,139 +1,196 @@
 # Fluid Space Forge
 
-**Generate responsive spacing systems using CSS clamp() functions.**
+<!-- TODO: Add JimRForge logo here - Jim needs to create it -->
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.0.4-blue.svg)](https://github.com/Mij-Strebor/fluid-space-forge)
-[![License](https://img.shields.io/badge/license-GPL--2.0%2B-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
-[![WordPress](https://img.shields.io/badge/WordPress-5.0%2B-blue.svg)](https://wordpress.org/)
-[![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
+**Professional responsive spacing tools for WordPress developers**
 
-Create consistent, scalable spacing that adapts beautifully from mobile to desktop. Perfect companion to **Fluid Font Forge** for building complete fluid design systems.
+![Fluid Space Forge banner](docs/screenshots/banner.png)
 
----
+A WordPress plugin that generates responsive spacing systems using CSS `clamp()` functions. Create consistent, scalable margins, padding, and gaps that adapt beautifully from mobile to desktop.
 
-## Features
+![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.1-blue.svg)
+![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
+![PHP](https://img.shields.io/badge/php-7.4+-purple.svg)
+![License](https://img.shields.io/badge/license-GPL--2.0+-red.svg)
 
-### Responsive Spacing System
-- **CSS clamp() Functions** - Generate fluid spacing that scales smoothly across all device sizes
-- **Three Output Formats** - CSS Classes, CSS Custom Properties, or Tailwind-style Utilities
-- **Live Preview** - See your spacing at different screen sizes in real-time
-- **Drag & Drop** - Reorder your spacing scale with intuitive interface
+![Fluid Space Forge Interface](space.png)
 
-### Professional Tools
-- **Mathematical Scaling** - Use proven typographic ratios (Minor Second, Major Third, Perfect Fourth, etc.)
-- **Dual Units** - Full support for both `px` and `rem` units
-- **Autosave** - Automatic saving with manual save option
-- **Export Ready** - Copy generated CSS code with one click
+## 🚀 Why Fluid Space Forge?
 
-### Output Formats
+- **Responsive Spacing**: Generate CSS `clamp()` functions for fluid spacing across all device sizes
+- **Three Output Formats**:
+  - CSS Classes (`.space-lg`, `.space-md`)
+  - CSS Custom Properties (`--space-lg`, `--space-md`)
+  - Utility Classes (`.mt-lg`, `.p-md`, `.mx-sm`)
+- **Live Preview**: See your spacing at different screen sizes in real-time
+- **Drag & Drop**: Reorder your spacing scale with intuitive drag-and-drop
+- **Mathematical Scaling**: Use proven typographic ratios (Minor Second, Major Third, etc.)
+- **Dual Units**: Support for both `px` and `rem` units
+- **Two-Tier Autosave**: UI preferences save automatically, data requires manual save (allows refresh-to-undo)
+- **Copy to Clipboard**: Copy CSS code with visual feedback
+- **Reset Controls**: Restore default settings with confirmation
+- **Keyboard Navigation**: Tab and Enter key support for efficient workflow
 
-**CSS Classes**
+## 📱 Perfect Companion
+
+Fluid Space Forge is the perfect companion to the **Fluid Font Forge**! While typography scales smoothly across devices, your spacing should too. Together, they create cohesive, responsive design systems.
+
+## 🛠 Installation
+
+### From WordPress.org (Recommended)
+
+1. Go to **Plugins > Add New** in WordPress admin
+2. Search for "Fluid Space Forge"
+3. Click **Install Now** then **Activate**
+4. Access via **Fluid Space Forge** in the admin menu
+
+### Manual Installation
+
+1. Download the plugin ZIP file
+2. Go to **Plugins > Add New > Upload Plugin**
+3. Choose the ZIP file and click **Install Now**
+4. Click **Activate Plugin**
+5. Access via **Fluid Space Forge** in the admin menu
+
+## 🎯 Quick Start
+
+1. **Configure Settings**: Set your base spacing values and viewport range
+2. **Choose Output Format**: Select Classes, Variables, or Utilities tab
+3. **Customize Spacing Scale**: Add, edit, or reorder your spacing sizes
+4. **Preview Results**: See live previews at different screen sizes
+5. **Copy CSS**: Export your generated CSS code
+
+## 📊 How It Works
+
+The plugin uses linear interpolation to create smooth transitions between your minimum and maximum spacing values:
+
 ```css
-.space-m-lg { margin: clamp(0.75rem, calc(0.7rem + 0.2vw), 1rem); }
-.space-p-md { padding: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
-.space-g-sm { gap: clamp(0.4rem, calc(0.35rem + 0.15vw), 0.5rem); }
-```
-
-**CSS Custom Properties**
-```css
-:root {
-  --space-lg: clamp(0.75rem, calc(0.7rem + 0.2vw), 1rem);
-  --space-md: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem);
+/* Example output */
+.space-md {
+  margin: clamp(0.75rem, calc(0.7rem + 0.2vw), 1rem);
 }
 ```
 
-**Tailwind-style Utilities**
+### Mathematical Foundation
+
+- **Base Values**: Define your core spacing at min/max viewports
+- **Scaling Ratios**: Use proven ratios like 1.125 (Major Second) or 1.25 (Major Third)
+- **Linear Interpolation**: Smooth transitions between viewport breakpoints
+
+## 🎨 Configuration Options
+
+### Viewport Settings
+- **Min Viewport**: Smallest screen size (default: 375px)
+- **Max Viewport**: Largest screen size (default: 1620px)
+- **Min Base Space**: Space size at minimum viewport (default: 8px)
+- **Max Base Space**: Space size at maximum viewport (default: 12px)
+
+### Scaling Options
+- **1.067** - Minor Second (subtle scaling)
+- **1.125** - Major Second (balanced scaling)
+- **1.200** - Minor Third (noticeable scaling)
+- **1.250** - Major Third (dramatic scaling)
+- **1.333** - Perfect Fourth (strong scaling)
+
+## 💼 Output Formats
+
+### CSS Classes
 ```css
-.mt-lg { margin-top: clamp(...); }
-.px-md { padding-left: clamp(...); padding-right: clamp(...); }
-.gap-y-sm { row-gap: clamp(...); }
+.space-xs { margin: clamp(0.4rem, calc(0.35rem + 0.15vw), 0.5rem); }
+.space-sm { margin: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.space-md { margin: clamp(0.75rem, calc(0.7rem + 0.2vw), 1rem); }
 ```
 
----
+### CSS Custom Properties
+```css
+:root {
+  --space-xs: clamp(0.4rem, calc(0.35rem + 0.15vw), 0.5rem);
+  --space-sm: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem);
+  --space-md: clamp(0.75rem, calc(0.7rem + 0.2vw), 1rem);
+}
+```
 
-## Installation
+### Utility Classes
+```css
+.mt-sm { margin-top: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.mb-sm { margin-bottom: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.ml-sm { margin-left: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.mr-sm { margin-right: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.mx-sm { margin-left: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); margin-right: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.my-sm { margin-top: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); margin-bottom: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+.m-sm { margin: clamp(0.6rem, calc(0.55rem + 0.18vw), 0.75rem); }
+```
 
-### From WordPress.org (Coming Soon)
-1. Go to **Plugins → Add New**
-2. Search for "Fluid Space Forge"
-3. Click **Install Now** and then **Activate**
-4. Access via **Tools → Fluid Space Forge**
-
-### From GitHub
-1. Download the latest release ZIP file
-2. Go to **Plugins → Add New → Upload Plugin**
-3. Upload the ZIP file and click **Install Now**
-4. Click **Activate Plugin**
-5. Access via **Tools → Fluid Space Forge**
-
----
-
-## Usage
-
-1. Navigate to **Tools → Fluid Space Forge**
-2. Configure your base spacing values and viewport range in the Settings panel
-3. Choose your output format: Classes, Variables, or Utilities
-4. Customize your spacing scale by adding, editing, or reordering sizes
-5. Preview your spacing at different screen sizes
-6. Copy the generated CSS code and add it to your theme
-
----
-
-## Requirements
+## 🔧 Technical Requirements
 
 - **WordPress**: 5.0 or higher
 - **PHP**: 7.4 or higher
-- **Browser Support**: Modern browsers with CSS clamp() support
-  - Chrome 79+
-  - Firefox 75+
-  - Safari 13.1+
-  - Edge 79+
+- **Browser**: Modern browsers with CSS `clamp()` support
+
+## 🚨 Browser Support
+
+CSS `clamp()` is supported in:
+- ✅ Chrome 79+
+- ✅ Firefox 75+
+- ✅ Safari 13.1+
+- ✅ Edge 79+
+
+For older browsers, consider providing fallback values.
+
+## 🎓 Usage Examples
+
+### Design System Integration
+```css
+/* Use with your existing design system */
+.card {
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.section {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+```
+
+### Component Spacing
+```html
+<!-- Using utility classes -->
+<div class="p-md mb-lg">
+  <h2 class="mb-sm">Heading</h2>
+  <p class="mb-md">Content with responsive spacing</p>
+</div>
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+### Development Setup
+1. Clone the repository
+2. Install in WordPress development environment
+3. Make changes and test thoroughly
+4. Submit pull request with detailed description
+
+
+## 🙏 Credits
+
+**Fluid Space Forge** is part of the CSS Tools series by:
+- **Jim R.** - [JimRForge.com](https://jimrforge.com)
+- **Claude AI** - [Anthropic](https://anthropic.com) (Development Assistant)
+
+## 📄 License
+
+This project is licensed under the GPL-2.0+ License - see the WordPress Plugin Repository for details.
+
+## 🆘 Support
+
+- **Issues**: Submit via GitHub Issues
+- **Documentation**: [Plugin Documentation](https://jimrforge.com)
+- **Community**: WordPress Plugin Support Forum
 
 ---
 
-## Perfect Companion
+**Made with ❤️ for the WordPress community**
 
-**Fluid Space Forge** works beautifully alongside **[Fluid Font Forge](https://github.com/Mij-Strebor/fluid-font-forge)**! While typography scales smoothly across devices, your spacing should too. Together, they create cohesive, responsive design systems.
-
----
-
-## Privacy
-
-This plugin does not collect, store, or transmit any user data. All calculations and settings are stored locally in your WordPress database.
-
----
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## License
-
-This project is licensed under the GPL v2 or later - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Credits
-
-- **Developer**: Jim R. - [JimRWeb.com](https://jimrweb.com)
-- **Development Assistant**: Claude AI by Anthropic
-
----
-
-## Support
-
-- **Documentation**: [GitHub Repository](https://github.com/Mij-Strebor/fluid-space-forge)
-- **Issues**: [Report bugs](https://github.com/Mij-Strebor/fluid-space-forge/issues)
-- **Website**: [JimRWeb.com](https://jimrweb.com)
-
----
-
-**Start creating responsive spacing systems today!** 🚀
+*Create beautiful, responsive spacing systems that scale perfectly across all devices.*

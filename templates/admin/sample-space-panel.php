@@ -25,6 +25,13 @@ if (!defined('ABSPATH')) {
     </button>
 
     <div class="fcc-info-content <?php echo $settings['viewportTestExpanded'] ? 'expanded' : ''; ?>" id="sample-space-content">
+        <!-- Interactive Preview Info -->
+        <div class="fcc-preview-intro" style="background: #e7e3df; padding: 16px 20px; margin: 0 80px 16px 80px; border-radius: 6px; border-left: 4px solid var(--clr-accent);">
+            <p style="margin: 0; color: var(--clr-txt); font-size: 16px; line-height: 1.6;">
+                <strong>Viewport Test:</strong> Use the interactive slider to test all your spacing sizes at any specific viewport width. The <strong>Space Size</strong> dropdown lets you select which size to preview. Drag the slider to see real-time spacing changes as you move across different screen sizes, helping you compare your entire spacing scale and ensure consistent relationships between sizes. Close this preview if not used.
+            </p>
+        </div>
+
         <div class="fcc-sample-space-container">
 
             <!-- Sample Displays -->
@@ -84,8 +91,8 @@ if (!defined('ABSPATH')) {
             <!-- Viewport Slider -->
             <div class="fcc-viewport-slider-section">
                 <div class="fcc-viewport-info">
-                    <label for="sample-viewport-slider" style="font-size: 14px; color: var(--clr-txt); font-weight: 500;">Viewport Size:</label>
-                    <span id="sample-viewport-display" style="font-size: 14px; color: var(--clr-primary); font-weight: 600;">
+                    <label for="sample-viewport-slider" style="font-size: 16px; color: var(--clr-txt); font-weight: 500;">Viewport Size:</label>
+                    <span id="sample-viewport-display" style="font-size: 16px; color: var(--clr-primary); font-weight: 600;">
                         768px • Tablet (portrait)
                     </span>
                 </div>
@@ -104,13 +111,6 @@ if (!defined('ABSPATH')) {
                 </div>
             </div>
 
-            <!-- Info Box -->
-            <div style="background: rgba(255, 215, 0, 0.15); padding: 12px 16px; border-radius: 6px; border-left: 4px solid var(--clr-accent); margin-top: 20px;">
-                <p style="margin: 0; font-size: 13px; color: var(--clr-txt); line-height: 1.5;">
-                    <strong>Interactive Preview:</strong> The <strong>Space Size</strong> dropdown lets you select which size from your data table controls the preview.
-                    The viewport slider shows real-time interpolation between your minimum and maximum settings as you drag across different screen sizes.
-                </p>
-            </div>
         </div>
     </div>
 </div>
