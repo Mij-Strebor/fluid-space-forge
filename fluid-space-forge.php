@@ -89,6 +89,10 @@ class FluidSpaceForge
     const OPTION_VARIABLE_SIZES = 'fluispfo_variable_sizes';
     const OPTION_UTILITY_SIZES = 'fluispfo_utility_sizes';
 
+    // Migration Keys
+    const MIGRATION_TRANSIENT = 'fluispfo_snippet_migrated';
+    const MIGRATION_NOTICE_DISMISSED = 'fluispfo_snippet_notice_dismissed';
+
     // ========================================================================
     // CLASS PROPERTIES
     // ========================================================================
@@ -131,6 +135,8 @@ class FluidSpaceForge
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
         add_action('wp_ajax_save_fluispfo_settings', [$this, 'save_settings']);
+        add_action('admin_notices', [$this, 'show_snippet_migration_notice']);
+        add_action('wp_ajax_fluispfo_dismiss_snippet_notice', [$this, 'dismiss_snippet_notice']);
     }
 
     // ========================================================================
@@ -781,6 +787,112 @@ class FluidSpaceForge
         return $sanitized;
     }
 
+    // ========================================================================
+    // SNIPPET MIGRATION & DETECTION
+    // ========================================================================
+
+    /**
+     * Show admin notice if old code snippet version is detected
+     */
+    public function show_snippet_migration_notice()
+    {
+        // Don't show if user already dismissed it
+        if (get_user_meta(get_current_user_id(), self::MIGRATION_NOTICE_DISMISSED, true)) {
+            return;
+        }
+
+        // Check if old snippet functions exist in global namespace
+        // These functions would exist if the old code snippet is active
+        $old_snippet_active = function_exists('space_clamp_admin_page') ||
+                             function_exists('render_space_clamp_page') ||
+                             function_exists('space_clamp_register_menu');
+
+        if (!$old_snippet_active) {
+            return; // No old snippet detected, don't show notice
+        }
+
+        // Check if we've already migrated settings
+        $migrated = get_transient(self::MIGRATION_TRANSIENT);
+
+        ?>
+        <div class="notice notice-info is-dismissible fluispfo-snippet-notice">
+            <h3>🔄 Fluid Space Forge: Migration Available</h3>
+
+            <?php if ($migrated): ?>
+                <p><strong>✅ Your settings have been automatically imported from the code snippet version!</strong></p>
+            <?php else: ?>
+                <p>We detected you're running the older code snippet version of Fluid Space Forge.</p>
+            <?php endif; ?>
+
+            <p><strong>To complete the upgrade:</strong></p>
+            <ol style="margin-left: 20px;">
+                <li>Go to <strong>Code Snippets</strong> in your admin menu</li>
+                <li>Find and <strong>deactivate</strong> the "Fluid Space Forge" or "Space Clamp Calculator" snippet</li>
+                <li>You can safely delete it<?php echo $migrated ? ' - all your settings are preserved' : ''; ?></li>
+            </ol>
+
+            <p><em>After deactivating the snippet, refresh this page to see the updated plugin interface.</em></p>
+        </div>
+
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.fluispfo-snippet-notice').on('click', '.notice-dismiss', function() {
+                $.post(ajaxurl, {
+                    action: 'fluispfo_dismiss_snippet_notice',
+                    nonce: '<?php echo esc_js(wp_create_nonce('fluispfo_dismiss_notice')); ?>'
+                });
+            });
+        });
+        </script>
+        <?php
+    }
+
+    /**
+     * Handle AJAX request to dismiss the snippet migration notice
+     */
+    public function dismiss_snippet_notice()
+    {
+        check_ajax_referer('fluispfo_dismiss_notice', 'nonce');
+
+        update_user_meta(get_current_user_id(), self::MIGRATION_NOTICE_DISMISSED, true);
+
+        wp_send_json_success();
+    }
+
+    /**
+     * Attempt to migrate settings from old code snippet version
+     * Called on plugin activation
+     */
+    public static function migrate_from_snippet()
+    {
+        // Check if we already have plugin settings
+        if (get_option(self::OPTION_SETTINGS)) {
+            return; // Plugin already configured, don't overwrite
+        }
+
+        // Try to find old snippet settings
+        // Common option names the snippet might have used
+        $old_option_names = [
+            'space_clamp_settings',
+            'fluid_space_settings',
+            'space_calculator_settings'
+        ];
+
+        foreach ($old_option_names as $old_name) {
+            $old_settings = get_option($old_name);
+
+            if ($old_settings && is_array($old_settings)) {
+                // Found old settings! Migrate them
+                update_option(self::OPTION_SETTINGS, $old_settings);
+
+                // Set transient to show success message
+                set_transient(self::MIGRATION_TRANSIENT, true, WEEK_IN_SECONDS);
+
+                break;
+            }
+        }
+    }
+
 
     // ========================================================================
     // AJAX HANDLERS
@@ -861,6 +973,9 @@ class FluidSpaceForge
 // ========================================================================
 // INITIALIZATION
 // ========================================================================
+
+// Register activation hook for migration
+register_activation_hook(__FILE__, ['JimRForge\FluidSpaceForge\FluidSpaceForge', 'migrate_from_snippet']);
 
 // Initialize the Fluid Space Forge
 if (is_admin()) {
