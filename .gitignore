@@ -1,0 +1,107 @@
+# WordPress Plugin Development - .gitignore
+
+# ============================================================================
+# Development Files (DO NOT commit)
+# ============================================================================
+
+# Backups
+*.backup
+*.backup-*
+*.bak
+*.bak2
+*.tmp
+*~
+*.before-*
+*.pre-*
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-*
+*.code-workspace
+.vs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node modules (if using npm)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Testing
+phpunit.xml
+.phpunit.result.cache
+tests/_output/
+tests/_support/_generated/
+
+# Build artifacts
+/vendor/
+composer.lock
+
+# ============================================================================
+# WordPress Testing Environment
+# ============================================================================
+/wordpress/
+/wp-content/
+/wp-config.php
+
+# ============================================================================
+# Personal/Local Files (DO NOT commit)
+# ============================================================================
+
+# Jim's testing logs (keep local only)
+docs/product-test-log.docx
+*-test-log.*
+test-notes.txt
+
+# Personal notes
+TODO.md
+NOTES.md
+scratch.md
+
+# Text note files (replacement snippets, etc.)
+*.txt
+*-replacement.txt
+*-fix.txt
+css-enqueue-replacement.txt
+
+# ============================================================================
+# WHAT TO COMMIT (exceptions to rules above)
+# ============================================================================
+
+# DO commit WordPress.org assets (needed for SVN deployment)
+!.wordpress-org/
+
+# DO commit documentation
+!docs/
+!README.md
+!readme.txt
+!CHANGELOG.md
+
+# DO commit all source code
+!assets/
+!includes/
+!templates/
+!*.php
+
+# ============================================================================
+# Release Build Exclusions (handled at build time, not .gitignore)
+# ============================================================================
+#
+# These items ARE in git but excluded from release ZIPs:
+# - .wordpress-org/ (WordPress.org only, not in plugin ZIP)
+# - docs/ (GitHub only, not in plugin ZIP)
+# - README.md (GitHub only, not in plugin ZIP)
+# - CHANGELOG.md (GitHub only, not in plugin ZIP)
+# - .git/ (never in release ZIP)
+# - .gitignore (never in release ZIP)
+#
+# Build scripts handle these exclusions, not .gitignore
+#
+
+# Temporary generated files
+*.pdf
+*_tmp.html
