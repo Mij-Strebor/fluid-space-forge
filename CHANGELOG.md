@@ -1,3 +1,19 @@
+## [1.2.2] - 2025-11-08
+
+### Fixed
+
+- **WordPress.org Compliance:** Fixed inline `<script>` tag that violated WordPress plugin guidelines
+  - Replaced inline JavaScript with properly enqueued script using `wp_add_inline_script()`
+  - Created `enqueue_notice_scripts()` method following WordPress enqueueing standards
+  - All scripts now use WordPress `wp_enqueue_script()` and `wp_add_inline_script()` functions
+  - Resolves WordPress.org plugin review feedback from November 5, 2025
+
+### Technical Details
+
+- Added `enqueue_notice_scripts()` hook to `admin_enqueue_scripts` action
+- Registered `fluispfo-notice-dismiss` script handle with jQuery dependency
+- Moved migration notice dismiss functionality to properly enqueued inline script
+- No functional changes - purely compliance fix for WordPress.org submission
 
 ![Fluid Space Forge banner](docs/screenshots/changelog-1544x500.png)
 

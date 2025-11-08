@@ -4,7 +4,7 @@
  * Plugin Name: Fluid Space Forge
  * Plugin URI: https://github.com/Mij-Strebor/fluid-space-forge
  * Description: Generate responsive spacing using CSS clamp() functions. Perfect companion to Font Clamp Calculator for creating fluid design systems.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: Jim R.
  * Author URI: https://jimrforge.com
  * License: GPL v2 or later
@@ -33,7 +33,7 @@ class FluidSpaceForge
     // ========================================================================
 
     // Configuration Constants
-    const VERSION = '1.2.1';
+    const VERSION = '1.2.2';
     const PLUGIN_SLUG = 'fluid-space-forge';
     const NONCE_ACTION = 'fluispfo_nonce';
 

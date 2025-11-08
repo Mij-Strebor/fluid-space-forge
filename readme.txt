@@ -5,7 +5,7 @@ Tags: spacing, css, clamp, responsive, design-system
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,12 @@ Yes! The plugin includes autosave functionality that saves your changes every 10
 
 == Changelog ==
 
+= 1.2.2 - 2025-11-08 =
+* **Fixed:** WordPress.org compliance - replaced inline script tag with wp_add_inline_script()
+* **Fixed:** All JavaScript now properly enqueued using WordPress standards
+* Resolves WordPress.org plugin review feedback from November 5, 2025
+
+= 1.2.1 - 2025-10-29 =
 = 1.0 (2025-01-06) =
 * Initial release
 * Generate responsive spacing using CSS clamp() functions
