@@ -134,6 +134,7 @@ class FluidSpaceForge
     {
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_notice_scripts']);
         add_action('wp_ajax_save_fluispfo_settings', [$this, 'save_settings']);
         add_action('admin_notices', [$this, 'show_snippet_migration_notice']);
         add_action('wp_ajax_fluispfo_dismiss_snippet_notice', [$this, 'dismiss_snippet_notice']);
@@ -379,6 +380,50 @@ class FluidSpaceForge
 
         wp_localize_script('wp-util', 'fluispfoAjax', $localized_data);
     }
+    /**
+     * Enqueue scripts for migration notice dismiss functionality
+     * WordPress.org requires all scripts to be properly enqueued (no inline scripts)
+     */
+    public function enqueue_notice_scripts()
+    {
+        // Only enqueue if the notice would be shown
+        if (get_user_meta(get_current_user_id(), self::MIGRATION_NOTICE_DISMISSED, true)) {
+            return;
+        }
+
+        // Check if old snippet functions exist
+        $old_snippet_active = function_exists('space_clamp_admin_page') ||
+            function_exists('render_space_clamp_page') ||
+            function_exists('space_clamp_register_menu');
+
+        if (!$old_snippet_active) {
+            return;
+        }
+
+        // Enqueue jQuery (dependency)
+        wp_enqueue_script('jquery');
+
+        // Create a unique handle for the notice dismiss script
+        $handle = 'fluispfo-notice-dismiss';
+
+        // Register an empty script (we'll add inline code to it)
+        wp_register_script($handle, false, ['jquery'], self::VERSION, true);
+        wp_enqueue_script($handle);
+
+        // Add the inline script using wp_add_inline_script (WordPress 4.5+)
+        $inline_script = "
+        jQuery(document).ready(function($) {
+            $('.fluispfo-snippet-notice').on('click', '.notice-dismiss', function() {
+                $.post(ajaxurl, {
+                    action: 'fluispfo_dismiss_snippet_notice',
+                    nonce: '" . esc_js(wp_create_nonce('fluispfo_dismiss_notice')) . "'
+                });
+            });
+        });
+        ";
+
+        wp_add_inline_script($handle, $inline_script);
+    }
 
     /**
      * Get all constants for JavaScript access
@@ -571,10 +616,11 @@ class FluidSpaceForge
                 <!-- Enhanced CSS Output Containers -->
                 <div class="all-container">
                     <?php include plugin_dir_path(__FILE__) . 'templates/admin/css-output-panels.php'; ?>
-</div>                <!-- JimRForge Community Panel -->                <div class="all-container">                    <?php include plugin_dir_path(__FILE__) . 'templates/admin/community-panel.php'; ?>
+                </div> <!-- JimRForge Community Panel -->
+                <div class="all-container"> <?php include plugin_dir_path(__FILE__) . 'templates/admin/community-panel.php'; ?>
                 </div>
             </div>
-    <?php
+        <?php
         return ob_get_clean();
     }
 
@@ -804,8 +850,8 @@ class FluidSpaceForge
         // Check if old snippet functions exist in global namespace
         // These functions would exist if the old code snippet is active
         $old_snippet_active = function_exists('space_clamp_admin_page') ||
-                             function_exists('render_space_clamp_page') ||
-                             function_exists('space_clamp_register_menu');
+            function_exists('render_space_clamp_page') ||
+            function_exists('space_clamp_register_menu');
 
         if (!$old_snippet_active) {
             return; // No old snippet detected, don't show notice
@@ -815,36 +861,25 @@ class FluidSpaceForge
         $migrated = get_transient(self::MIGRATION_TRANSIENT);
 
         ?>
-        <div class="notice notice-info is-dismissible fluispfo-snippet-notice">
-            <h3>🔄 Fluid Space Forge: Migration Available</h3>
+            <div class="notice notice-info is-dismissible fluispfo-snippet-notice">
+                <h3>🔄 Fluid Space Forge: Migration Available</h3>
 
-            <?php if ($migrated): ?>
-                <p><strong>✅ Your settings have been automatically imported from the code snippet version!</strong></p>
-            <?php else: ?>
-                <p>We detected you're running the older code snippet version of Fluid Space Forge.</p>
-            <?php endif; ?>
+                <?php if ($migrated): ?>
+                    <p><strong>✅ Your settings have been automatically imported from the code snippet version!</strong></p>
+                <?php else: ?>
+                    <p>We detected you're running the older code snippet version of Fluid Space Forge.</p>
+                <?php endif; ?>
 
-            <p><strong>To complete the upgrade:</strong></p>
-            <ol style="margin-left: 20px;">
-                <li>Go to <strong>Code Snippets</strong> in your admin menu</li>
-                <li>Find and <strong>deactivate</strong> the "Fluid Space Forge" or "Space Clamp Calculator" snippet</li>
-                <li>You can safely delete it<?php echo $migrated ? ' - all your settings are preserved' : ''; ?></li>
-            </ol>
+                <p><strong>To complete the upgrade:</strong></p>
+                <ol style="margin-left: 20px;">
+                    <li>Go to <strong>Code Snippets</strong> in your admin menu</li>
+                    <li>Find and <strong>deactivate</strong> the "Fluid Space Forge" or "Space Clamp Calculator" snippet</li>
+                    <li>You can safely delete it<?php echo $migrated ? ' - all your settings are preserved' : ''; ?></li>
+                </ol>
 
-            <p><em>After deactivating the snippet, refresh this page to see the updated plugin interface.</em></p>
-        </div>
-
-        <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('.fluispfo-snippet-notice').on('click', '.notice-dismiss', function() {
-                $.post(ajaxurl, {
-                    action: 'fluispfo_dismiss_snippet_notice',
-                    nonce: '<?php echo esc_js(wp_create_nonce('fluispfo_dismiss_notice')); ?>'
-                });
-            });
-        });
-        </script>
-        <?php
+                <p><em>After deactivating the snippet, refresh this page to see the updated plugin interface.</em></p>
+            </div>
+    <?php
     }
 
     /**
