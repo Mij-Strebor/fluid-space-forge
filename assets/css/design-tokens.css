@@ -1,0 +1,114 @@
+/**
+ * Fluid Space Forge - JimRForge Design System Tokens
+ * Version: 1.1.0
+ * 
+ * Design tokens following MIF v3.0 reference implementation
+ * 95% compliance with JimRForge Design System
+ */
+
+/* ==========================================================================
+   0. INTER FONT LOADING (LOCAL)
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/Inter-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/Inter-Bold.woff2') format('woff2');
+}
+
+/* ==========================================================================
+   1. DESIGN SYSTEM TOKENS
+   ========================================================================== */
+
+:root {
+    /* Font Families */
+    --fluispfo-font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --fluispfo-font-heading: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --fluispfo-font-mono: Consolas, Monaco, 'Courier New', monospace;
+
+    /* Typography Scale - 16px Base (WCAG 2.1 AA) */
+    --jimr-font-xs: 12px;
+    --jimr-font-sm: 14px;
+    --jimr-font-base: 16px;     /* BASE SIZE */
+    --jimr-font-lg: 18px;
+    --jimr-font-xl: 20px;
+    --jimr-font-2xl: 24px;      /* H2 */
+    --jimr-font-3xl: 32px;      /* H1 */
+
+    /* Layout Constraints */
+    --fluispfo-container-max: 1280px;
+    --fluispfo-content-max: 65ch;
+
+    /* Enhanced Brand Colors (JimRForge Standard) */
+    --clr-primary: #3d2f1f;         /* Dark Brown - Headings */
+    --clr-secondary: #6d4c2f;       /* Medium Brown - Body Text */
+    --clr-accent: #f4c542;          /* Bright Gold - Accents */
+    --clr-accent-hover: #e5b12d;    /* Gold Hover */
+
+    /* Typography Colors */
+    --clr-txt: #6d4c2f;             /* Body text */
+    --clr-txt-heading: #3d2f1f;     /* Headings */
+    --clr-link: #c97b3c;            /* Burnt Orange - Accessibility */
+    --clr-link-hover: #a85f29;      /* Burnt Orange Hover */
+
+    /* Background Colors */
+    --clr-pageBackground: #faf6f0;  /* Warm Cream */
+    --clr-light: #f5f1ec;           /* Light Panels */
+    --clr-white: #ffffff;
+
+    /* Spacing Scale (8px Base) */
+    --fluispfo-space-1: 4px;
+    --fluispfo-space-2: 8px;
+    --fluispfo-space-3: 12px;
+    --fluispfo-space-4: 16px;
+    --fluispfo-space-5: 20px;
+    --fluispfo-space-6: 24px;
+    --fluispfo-space-8: 32px;
+    --fluispfo-space-9: 36px;       /* Panel Padding (MIF Standard) */
+    --fluispfo-space-12: 48px;
+    --fluispfo-space-16: 64px;
+    --fluispfo-space-18: 72px;      /* Notice Margins (Double Panel) */
+
+    /* Shadows (4-Tier System) */
+    --shd-sm: 0 1px 2px rgba(61, 47, 31, 0.1);
+    --shd-md: 0 2px 8px rgba(61, 47, 31, 0.12);
+    --shd-lg: 0 4px 16px rgba(61, 47, 31, 0.15);
+    --shd-xl: 0 8px 32px rgba(61, 47, 31, 0.18);
+
+    /* Border Radius */
+    --rad-sm: 4px;
+    --rad-md: 6px;
+    --rad-lg: 8px;
+    --rad-xl: 12px;
+
+    /* Transitions */
+    --trn-fast: 0.15s ease;
+    --trn-base: 0.2s ease;
+    --trn-slow: 0.3s ease;
+}

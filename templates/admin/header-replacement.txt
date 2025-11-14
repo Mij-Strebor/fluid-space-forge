@@ -1,0 +1,3 @@
+<div class="fcc-header-section">
+    <h1 class="plugin-title">Fluid Space Forge</h1>
+    <div class="version-line">v<?php echo esc_html(\JimRWeb\FluidSpaceForge\FluidSpaceForge::VERSION); ?></div>

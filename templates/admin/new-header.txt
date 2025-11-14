@@ -1,0 +1,11 @@
+?>
+
+<div class="fcc-header-section">
+    <h1 class="text-2xl font-bold mb-4">
+        Fluid Space Forge
+    </h1>
+
+    <!-- Version Info (subtle, italicized) -->
+    <div class="fluispfo-version-info" style="font-size: 8px; color: rgba(109, 76, 47, 0.6); font-style: italic; font-weight: 400; margin: -36px 0 24px 0;">
+        v<?php echo esc_html(\JimRWeb\FluidSpaceForge\FluidSpaceForge::VERSION); ?>
+    </div>

@@ -1,0 +1,205 @@
+/**
+ * Fluid Space Forge - Integrated Forge Header Styling
+ *
+ * Creates a seamless, integrated header with the forge background image
+ * that fades naturally into the page background. Multiple gradient overlays
+ * ensure soft transitions with no hard boundaries.
+ *
+ * @package MediaInventoryForge
+ * @version 3.0.0
+ * @author Jim R (JimRForge)
+ *
+ * Design Philosophy:
+ * - Warm, inviting forge atmosphere reinforcing brand metaphor
+ * - Soft, gradual transitions with no hard edges
+ * - Completely integrated with page background
+ * - Enhanced title visibility with layered text shadows
+ */
+
+/* Import Google Font: Cinzel for header title */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+/* ==========================================================================
+   INTEGRATED FORGE BACKGROUND HEADER
+   ========================================================================== */
+
+/**
+ * Main Page Wrapper - Background Integration Setup
+ *
+ * Sets up the main wrapper for positioning the integrated forge background.
+ * The position relative allows the ::before pseudo-element to be absolutely
+ * positioned within it.
+ */
+.wrap {
+    position: relative !important;
+}
+
+/**
+ * Forge Header Background Layer
+ *
+ * Uses the custom Photoshop composite banner with smooth bottom fade
+ * and subtle texture variation to eliminate the sharp dividing line.
+ *
+ * Layout Strategy:
+ * - Custom forge-banner.png with integrated left-to-right gradient
+ * - Smooth bottom fade to page background (no sharp line)
+ * - Subtle noise texture overlay for visual interest in solid areas
+ * - Top fade for seamless integration
+ */
+.wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;   /* 50% viewport height */
+    min-height: 500px;  /* Ensure enough space for About panel */
+    z-index: 0;     /* Behind all content */
+
+    /* Multi-layer gradient stack for soft, natural fade */
+    background-image:
+        /* Layer 1: Subtle noise texture for visual interest in brown areas */
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="0"/></filter><rect width="300" height="300" filter="url(%23noise)" opacity="0.03"/></svg>'),
+        /* Layer 2: Top fade from page background (very subtle) */
+        linear-gradient(
+            to bottom,
+            rgba(250, 246, 240, 0.9) 0%,    /* Nearly solid page bg */
+            rgba(250, 246, 240, 0.3) 8%,    /* Quick fade */
+            transparent 15%                  /* Reveal banner */
+        ),
+        /* Layer 3: Bottom fade - SHORT like top fade (echoes top transition) */
+        linear-gradient(
+            to bottom,
+            transparent 0%,                  /* Banner fully visible */
+            transparent 82%,                 /* Banner visible through most of height */
+            rgba(250, 246, 240, 0.2) 86%,   /* Gentle start */
+            rgba(250, 246, 240, 0.5) 91%,   /* Increase opacity */
+            rgba(250, 246, 240, 0.8) 96%,   /* Nearly solid */
+            rgba(250, 246, 240, 1) 100%     /* Solid page bg at bottom */
+        ),
+        /* Layer 4: The custom forge banner (Photoshop composite) */
+        url('../images/forge-banner.png');
+
+    /* Positioning strategy */
+    background-size:
+        300px 300px,    /* Layer 1: Noise texture (tiled) */
+        cover,          /* Layer 2: Top fade */
+        cover,          /* Layer 3: Bottom fade */
+        cover;          /* Layer 4: Banner fills entire area */
+
+    background-position:
+        0 0,            /* Layer 1: Noise from top-left (tiled) */
+        center top,     /* Layer 2: Top fade */
+        center bottom,  /* Layer 3: Bottom fade */
+        center top;     /* Layer 4: Banner centered */
+
+    background-repeat:
+        repeat,         /* Layer 1: Noise repeats */
+        no-repeat,      /* Layer 2: Top fade */
+        no-repeat,      /* Layer 3: Bottom fade */
+        no-repeat;      /* Layer 4: Banner */
+}
+
+/**
+ * Header Section Container
+ *
+ * Positions the header content above the background with proper z-index.
+ * Centered alignment matches body panels. Top padding positions H1 at top third.
+ */
+.fcc-header-section {
+    position: relative !important;
+    z-index: 1 !important;           /* Above ::before background */
+    padding-top: 160px !important;    /* Position H1 at top third (~33% of 50vh header) */
+    padding-left: 0 !important;      /* Remove left padding to fix alignment */
+    padding-right: 0 !important;     /* Remove right padding to fix alignment */
+    margin: 0 !important;       /* Center the container */
+    margin-bottom: 0 !important;  /* No bottom margin - About panel now outside header */  /* Push About panel way down */
+    min-height: 520px !important;    /* Ensures consistent spacing on small screens */
+    width: 1280px !important;        /* Fixed width to match body panels */
+    max-width: 100% !important;      /* Responsive on small screens */
+    box-sizing: border-box !important;
+}
+
+/**
+ * About Section Positioning
+ *
+ * Positions ONLY the first About panel closer to header, just below the fade transition.
+ * Targets About section inside header using descendant selector to prevent affecting inventory category panels.
+ */
+.fcc-header-section .fcc-info-toggle-section {
+    margin-top: 60vh !important;  /* Move up closer to header fade */
+    margin-top: max(400px, 36vh) !important;  /* Minimum 280px for small screens */
+}
+
+/**
+ * H1 Title - Enhanced Flame Gradient (Multi-Directional)
+ *
+ * Dramatic gradient with BOTH horizontal (orange→yellow) AND vertical (bright→darker)
+ * fades mimicking forge flames. Stronger color contrast for maximum impact.
+ *
+ * Gradient strategy: Radial from top-left (bright yellow) to bottom-right (deep orange)
+ */
+.fcc-header-section h1 {
+    /* Typography - Cinzel Bold 700 32px for 1800s blacksmith aesthetic */
+    font-family: 'Cinzel', Georgia, serif !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+
+    /* STRONGER multi-directional gradient - radial for top-to-bottom + left-to-right */
+    background: radial-gradient(
+        ellipse at top left,
+        #FFE66D 0%,      /* Bright yellow at top-left (hottest part) */
+        #FFC857 25%,     /* Golden yellow */
+        #FFB84D 50%,     /* Medium orange (middle) */
+        #FF8C42 75%,     /* Deep forge orange */
+        #E67332 100%     /* Even deeper orange at bottom-right (cooler) */
+    ) !important;
+
+    /* Clip gradient to text */
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+
+    /* Fallback color for browsers without gradient support */
+    color: #FFB84D !important;
+
+    /* STRONGER glow effects with more intensity */
+    filter: drop-shadow(0 0 30px rgba(255, 230, 109, 0.8))   /* Brighter yellow glow */
+            drop-shadow(0 0 15px rgba(255, 140, 66, 0.6))    /* Orange glow layer */
+            drop-shadow(0 3px 6px rgba(0, 0, 0, 0.95))       /* Strong black shadow */
+            drop-shadow(0 6px 15px rgba(0, 0, 0, 0.8)) !important; /* Deep shadow */
+
+    margin-bottom: var(--jimr-space-8) !important;
+    letter-spacing: -0.5px !important;
+    margin-left: 160px !important;
+}
+
+/**
+ * Main Content Container - Proper Z-Index Stacking
+ *
+ * Ensures the main inventory container sits properly above the
+ * background layer in the stacking context.
+ */
+.media-inventory-container {
+    position: relative !important;
+    z-index: 1 !important;  /* Above ::before background */
+}
+
+/* ==========================================================================
+   END OF FORGE HEADER INTEGRATION
+   ========================================================================== */
+
+/**
+ * About Panel Positioning (Outside Header)
+ *
+ * Since About panel is now outside .fcc-header-section, we need to position it
+ * appropriately below the forge background fade. Uses negative margin to pull
+ * it up into the faded area for seamless integration.
+ */
+.wrap > .fcc-info-toggle-section:first-of-type {
+    margin-top: -20vh !important;  /* Pull up into bottom fade area */
+    max-width: 1280px !important;  /* Match header and container width */
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
