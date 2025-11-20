@@ -63,8 +63,8 @@ Styleguide 1.0
     --clr-accent: #f4c542;            /* FFF standard - gold rgb(244, 197, 66) */
 
     /* Link Colors */
-    --clr-link: #8B3A3A;
-    --clr-link-hover: #5C3324;
+    --clr-link: #ce6565;              /* Coral red - JIMRFORGE standard */
+    --clr-link-hover: #b54545;        /* Darker coral */
 
 
     /* Background Colors
@@ -525,7 +525,7 @@ Styleguide 5.1
 .fcc-btn:hover,
 .fcc-copy-btn:hover {
     background: var(--clr-btn-hover);        /* Darker gold */
-    transform: translateY(-2px);
+    transform: translate(-2px, -2px);        /* Up and left (JIMRFORGE standard) */
     box-shadow: var(--clr-shadow-lg);
 }
 
@@ -685,7 +685,7 @@ Styleguide 5.7
 */
 .fcc-panel {
     background: var(--clr-light);
-    padding: 24px;                              /* FFF standard (24px not 20px) */
+    padding: 36px;                              /* JIMRFORGE standard panel padding */
     border-radius: var(--jimr-border-radius-lg);
     border: 2px solid var(--clr-bdr-dark);
     box-shadow: var(--clr-shadow-lg);
@@ -997,7 +997,18 @@ Styleguide 5.14
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--sp-3);
+    background: var(--clr-secondary);
+    color: var(--clr-txt-light);
+    padding: 16px 20px;
+    margin: -36px -36px 16px -36px;
+    border-radius: 6px 6px 0 0;
+}
+
+.fcc-css-header h2 {
+    color: var(--clr-txt-light) !important;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
 }
 
 /*

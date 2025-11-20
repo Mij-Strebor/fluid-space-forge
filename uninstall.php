@@ -9,18 +9,18 @@
  *
  * Security Features:
  * - WordPress uninstall constant validation
- * - Proper option key constant loading
  * - Complete data cleanup without orphaned entries
  *
  * Data Removal Operations:
  * - All plugin option entries from wp_options table
  * - Cached transient data and temporary storage
+ * - User meta (migration notice dismissal)
  * - WordPress object cache clearing
  *
  * @package    FluidSpaceForge
  * @subpackage Uninstall
  * @author     Jim R (JimRForge)
- * @version    1.2.1
+ * @version    1.2.3
  * @link       https://jimrforge.com
  */
 
@@ -30,27 +30,45 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 /**
- * Load Plugin Constants
- *
- * Import plugin constants required for proper option key references
- * during uninstall process.
- */
-require_once plugin_dir_path(__FILE__) . 'fluid-font-forge.php';
-
-/**
  * Remove Plugin Options from Database
  *
  * Systematically delete all plugin-related options to ensure
  * complete data removal and prevent orphaned database entries.
+ *
+ * Option Keys (from FluidSpaceForge class constants):
+ * - fluispfo_settings: Main settings (viewports, ratios, units, UI state)
+ * - fluispfo_class_sizes: Space size data for Classes output format
+ * - fluispfo_variable_sizes: Space size data for Variables output format
+ * - fluispfo_utility_sizes: Space size data for Utilities output format
  */
-delete_option(FLUID_FONT_FORGE_OPTION_SETTINGS);
-delete_option(FLUID_FONT_FORGE_OPTION_CLASS_SIZES);
-delete_option(FLUID_FONT_FORGE_OPTION_VARIABLE_SIZES);
-delete_option(FLUID_FONT_FORGE_OPTION_TAG_SIZES);
-delete_option(FLUID_FONT_FORGE_OPTION_TAILWIND_SIZES);
+delete_option('fluispfo_settings');
+delete_option('fluispfo_class_sizes');
+delete_option('fluispfo_variable_sizes');
+delete_option('fluispfo_utility_sizes');
 
-// Clear any cached data
+/**
+ * Remove Migration Transients
+ *
+ * Clean up any transient data related to CSS Snippet migration.
+ */
+delete_transient('fluispfo_snippet_migrated');
+
+/**
+ * Remove User Meta
+ *
+ * Clean up user meta entries (migration notice dismissal).
+ * Direct database query is appropriate here as we're deleting
+ * meta from all users during uninstall. Caching is not needed
+ * for deletion operations during plugin removal.
+ */
+global $wpdb;
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+$wpdb->query("DELETE FROM {$wpdb->usermeta} WHERE meta_key = 'fluispfo_snippet_notice_dismissed'");
+
+/**
+ * Clear WordPress Object Cache
+ *
+ * Flush the cache to ensure all plugin data is completely removed
+ * from memory and any persistent caching layers.
+ */
 wp_cache_flush();
-
-// Clean up any transients (if any were used)
-delete_transient('fluid_font_forge_cache');

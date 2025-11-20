@@ -1,10 +1,3 @@
----
-layout: default
-title: Quick Start Guide
----
-
-[← Back to Documentation](index)
-
 # Quick Start Guide
 
 Get started with Fluid Space Forge in 5 minutes and generate your first responsive spacing system.
@@ -476,8 +469,8 @@ Very dramatic, use sparingly
 ## Get Help
 
 - **📘 [Full User Manual](USER-MANUAL)** - Detailed use cases and examples
-- **🐛 [Report Issues](https://github.com/jimrweb/fluid-space-forge/issues)** - Found a bug?
-- **💬 [Discussions](https://github.com/jimrweb/fluid-space-forge/discussions)** - Ask questions
+- **🐛 [Report Issues](https://github.com/Mij-Strebor/fluid-space-forge/issues)** - Found a bug?
+- **💬 [Discussions](https://github.com/Mij-Strebor/fluid-space-forge/discussions)** - Ask questions
 
 ---
 
@@ -490,4 +483,4 @@ Very dramatic, use sparingly
 
 ---
 
-[← Back to Documentation](index) | [User Manual](USER-MANUAL) | [Report Issues](https://github.com/jimrweb/fluid-space-forge/issues)
+[← Back to Documentation](index) | [User Manual](USER-MANUAL) | [Report Issues](https://github.com/Mij-Strebor/fluid-space-forge/issues)

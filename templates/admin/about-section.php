@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
 <!-- About Section -->
 <div class="fcc-info-toggle-section">
     <button class="fcc-info-toggle <?php echo $settings['aboutExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="about-content">
-        <span style="color: #FAF9F6 !important;">🔍 About Fluid Space Forge</span>
+        <span style="color: #FAF9F6 !important;">About Fluid Space Forge</span>
         <span class="fcc-toggle-icon" style="color: #FAF9F6 !important;">▼</span>
     </button>
     <div class="fcc-info-content <?php echo $settings['aboutExpanded'] ? 'expanded' : ''; ?>" id="about-content">
@@ -39,7 +39,7 @@ if (!defined('ABSPATH')) {
             </p>
             <div style="background: #e7e3df; padding: 16px 20px; border-radius: 6px; border-left: 4px solid var(--clr-accent); margin: 20px 80px 0 80px;">
                 <p style="margin: 0; text-align: center; font-size: 16px; opacity: 0.95; line-height: 1.5; color: var(--clr-txt);">
-                    Fluid Space Forge by Jim R. (<a href="https://jimrforge.com" target="_blank" style="color: var(--clr-link); text-decoration: underline; font-weight: 600;">JimRForge</a>), part of the CSS Tools series developed with Claude AI (<a href="https://anthropic.com" target="_blank" style="color: var(--clr-link); text-decoration: underline; font-weight: 600;">Anthropic</a>).
+                    Fluid Space Forge by Jim R. (<a href="https://jimrforge.com" target="_blank" style="color: #ce6565; text-decoration: underline; font-weight: 600;">JimRForge</a>), part of the CSS Tools series developed with Claude AI (<a href="https://anthropic.com" target="_blank" style="color: #ce6565; text-decoration: underline; font-weight: 600;">Anthropic</a>).
                 </p>
             </div>
         </div>

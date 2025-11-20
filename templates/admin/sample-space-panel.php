@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 <!-- Sample Space Preview Section -->
 <div class="fcc-info-toggle-section" style="margin-top: 20px;">
     <button class="fcc-info-toggle <?php echo $settings['viewportTestExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="sample-space-content">
-        <span style="color: #FAF9F6 !important;">🎯 Viewport Test Preview</span>
+        <span style="color: #FAF9F6 !important;">Viewport Test Preview</span>
         <span class="fcc-toggle-icon" style="color: #FAF9F6 !important;">▼</span>
     </button>
 

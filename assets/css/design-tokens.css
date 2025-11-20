@@ -74,8 +74,8 @@
     /* Typography Colors */
     --clr-txt: #6d4c2f;             /* Body text */
     --clr-txt-heading: #3d2f1f;     /* Headings */
-    --clr-link: #c97b3c;            /* Burnt Orange - Accessibility */
-    --clr-link-hover: #a85f29;      /* Burnt Orange Hover */
+    --clr-link: #ce6565;            /* Coral red - JIMRFORGE standard */
+    --clr-link-hover: #b54545;      /* Darker coral */
 
     /* Background Colors */
     --clr-pageBackground: #faf6f0;  /* Warm Cream */
