@@ -1204,6 +1204,11 @@
     // Update UI immediately
     updateGeneratesText();
     updateCSSOutputs();
+
+    // Save prefix immediately (like other control settings)
+    if (window.FluidSpaceForge && window.FluidSpaceForge.AutosaveManager) {
+      window.FluidSpaceForge.AutosaveManager.saveControlSettings();
+    }
   }
 
   /**
@@ -1432,7 +1437,7 @@
   function handleSettingsReset() {
     window.FluidSpaceForge.ModalManager.showConfirmModal(
       "Reset Settings",
-      "Reset all settings to default values?\n\nThis will reset:\n- Min Space Size to 8px\n- Max Space Size to 12px\n- Min Viewport Width to 375px\n- Max Viewport Width to 1620px\n- Min Scale to 1.125 (Major Second)\n- Max Scale to 1.25 (Major Third)\n\nYour class or variable Base and Prefix will not be affected, but the sizes of your suffix entries could change.",
+      "Reset all settings to default values?\n\nThis will reset:\n- Min Space Size to 8px\n- Max Space Size to 12px\n- Min Viewport Width to 375px\n- Max Viewport Width to 1620px\n- Min Scale to 1.125 (Major Second)\n- Max Scale to 1.333 (Perfect Fourth)\n\nYour class or variable Base and Prefix will not be affected, but the sizes of your suffix entries could change.",
       () => {
         // Get defaults from PHP constants
         const defaults = window.fluispfoAjax?.defaults || {};
@@ -1467,7 +1472,7 @@
 
         const maxScaleSelect = document.getElementById("max-scale");
         if (maxScaleSelect) {
-          maxScaleSelect.value = "1.25"; // Major Third
+          maxScaleSelect.value = "1.333"; // Perfect Fourth
         }
 
         // Trigger recalculation
@@ -1496,18 +1501,48 @@
       () => {
         restoreDefaults(currentTab);
 
+        // Reset base to "md" (id 3) for the current tab
+        const baseIdKey =
+          currentTab === "class"
+            ? "selectedClassSizeId"
+            : currentTab === "vars"
+            ? "selectedVariableSizeId"
+            : "selectedUtilitySizeId";
+        fluispfoAjax.data.settings[baseIdKey] = 3; // md is id 3
+
+        // Reset prefix based on tab type
+        if (currentTab === "class") {
+          fluispfoAjax.data.settings.classPrefix = "space";
+        } else if (currentTab === "vars") {
+          fluispfoAjax.data.settings.variablePrefix = "sp";
+        }
+        // Utilities tab has no prefix
+
         const panelContainer = document.getElementById("sizes-table-container");
         if (panelContainer) {
           panelContainer.innerHTML = generatePanelContent(currentTab);
           attachEventListeners();
         }
 
-        updateDataTableValues(getSelectedBaseId());
+        // Update prefix input value after panel regeneration
+        const prefixInput = document.getElementById("prefix-input");
+        if (prefixInput) {
+          if (currentTab === "class") {
+            prefixInput.value = "space";
+          } else if (currentTab === "vars") {
+            prefixInput.value = "sp";
+          }
+        }
+
+        // Update generates text to reflect new prefix
+        updateGeneratesText();
+
+        updateDataTableValues(3); // Use md (id 3) as base
         updateCSSOutputs();
         showResetNotification(displayName);
       },
       null,
-      { confirmText: "confirm", isDangerous: true }
+      { confirmText: "confirm", isDangerous: false }
     );
   }
 
@@ -1989,6 +2024,12 @@
     html = html.replace(/{{PANEL_TITLE}}/g, cfg.title);
     html = html.replace(/{{PANEL_DESCRIPTION}}/g, cfg.description);
     html = html.replace(/{{PREFIX_CONTROL_DISPLAY}}/g, tabType === "utils" ? "none" : "flex");
+
+    // Set prefix value based on tab type
+    const prefixValue = tabType === "class"
+      ? (fluispfoAjax.data.settings.classPrefix || "space")
+      : (fluispfoAjax.data.settings.variablePrefix || "sp");
+    html = html.replace(/{{PREFIX_VALUE}}/g, prefixValue);
 
     // Handle empty state
     if (!sizes || sizes.length === 0) {

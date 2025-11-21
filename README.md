@@ -6,7 +6,7 @@
 
 A WordPress plugin that generates responsive spacing systems using CSS `clamp()` functions. Create consistent, scalable margins, padding, and gaps that adapt beautifully from mobile to desktop.
 
-![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.3-blue.svg)
+![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.4-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.4+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-red.svg)

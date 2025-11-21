@@ -5,7 +5,7 @@ Tags: spacing, css, clamp, responsive, design-system
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,12 +157,29 @@ Yes! The plugin includes autosave functionality that saves your changes every 10
 
 == Changelog ==
 
+= 1.2.4 - 2025-11-21 =
+* **Fixed:** Modal button colors - cancel button now slate gray with white text, confirm button gold
+* **Fixed:** Reset functionality now properly resets base to "md" and prefixes per tab
+* **Fixed:** Settings Reset now uses Perfect Fourth (1.333) as default Max Scale
+* **Added:** New secondary button CSS class for modal dialogs
+
+= 1.2.3 - 2025-11-20 =
+* **UI Improvements:** Removed decorative icons from all panel headers for cleaner appearance
+* **UI Improvements:** Updated tab button font size to 16px for better readability
+* **UI Improvements:** Reorganized Community panel with Documentation section (User's Guide and Quick Start)
+* **Critical Fix:** Fixed uninstall.php to use correct Space Forge constants (was using Font Forge constants)
+* **Critical Fix:** Added PHPCS ignore comments for intentional direct database queries
+* **Critical Fix:** Resolved all WordPress Plugin Checker warnings
+* **Documentation:** Enhanced Support section with direct links to User's Guide and Quick Start
+
 = 1.2.2 - 2025-11-08 =
 * **Fixed:** WordPress.org compliance - replaced inline script tag with wp_add_inline_script()
 * **Fixed:** All JavaScript now properly enqueued using WordPress standards
 * Resolves WordPress.org plugin review feedback from November 5, 2025
 
 = 1.2.1 - 2025-10-29 =
+* Initial WordPress.org release with compliance updates
+
 = 1.0 (2025-01-06) =
 * Initial release
 * Generate responsive spacing using CSS clamp() functions
@@ -193,7 +210,10 @@ Initial release of Fluid Space Forge. Start creating responsive spacing systems 
 
 = Support =
 
-* **Documentation**: [GitHub Repository](https://github.com/Mij-Strebor/fluid-space-forge)
+* **Documentation**:
+  * [User's Guide](https://github.com/Mij-Strebor/fluid-space-forge/blob/master/USER-MANUAL.md) - Complete reference documentation
+  * [Quick Start](https://github.com/Mij-Strebor/fluid-space-forge/blob/master/QUICK-START.md) - Get started in 5 minutes
+  * [GitHub Repository](https://github.com/Mij-Strebor/fluid-space-forge)
 * **Issues**: Report bugs via [GitHub Issues](https://github.com/Mij-Strebor/fluid-space-forge/issues)
 * **Website**: [JimRForge.com](https://jimrforge.com)
 

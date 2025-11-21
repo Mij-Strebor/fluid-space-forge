@@ -20,7 +20,7 @@
  * @package    FluidSpaceForge
  * @subpackage Uninstall
  * @author     Jim R (JimRForge)
- * @version    1.2.3
+ * @version    1.2.4
  * @link       https://jimrforge.com
  */
 

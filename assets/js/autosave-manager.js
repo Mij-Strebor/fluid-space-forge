@@ -178,6 +178,7 @@
      * - Autosave toggle state
      * - Active tab selection
      * - Unit type (PX/REM)
+     * - CSS prefixes (classPrefix and variablePrefix)
      */
     saveControlSettings() {
       // Collect only control settings
@@ -205,6 +206,8 @@
           document
             .getElementById("preview-content")
             ?.classList.contains("expanded") ?? true,
+        classPrefix: window.fluispfoAjax?.data?.settings?.classPrefix || "space",
+        variablePrefix: window.fluispfoAjax?.data?.settings?.variablePrefix || "sp",
       };
 
       // Prepare AJAX request - send only control settings

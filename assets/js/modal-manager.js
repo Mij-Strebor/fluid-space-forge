@@ -171,10 +171,8 @@
                     <div class="fcc-modal-content">
                         <p style="margin: 0 0 20px 0; line-height: 1.6; white-space: pre-line;">${message}</p>
                         <div class="fcc-btn-group">
-                            <button type="button" class="fcc-btn" id="modal-cancel">${cancelText}</button>
-                            <button type="button" class="fcc-btn ${
-                              isDangerous ? "fcc-btn-danger" : ""
-                            }" id="modal-confirm">${confirmText}</button>
+                            <button type="button" class="fcc-btn fcc-btn-secondary" id="modal-cancel">${cancelText}</button>
+                            <button type="button" class="fcc-btn" id="modal-confirm">${confirmText}</button>
                         </div>
                     </div>
                 </div>

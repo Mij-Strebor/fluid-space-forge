@@ -68,7 +68,7 @@ if (!defined('ABSPATH')) {
             <div id="prefix-control" style="display: {{PREFIX_CONTROL_DISPLAY}}; flex-direction: column; gap: 4px;">
                 <label class="component-label" for="prefix-input" style="margin-bottom: 0; font-size: 12px;">Prefix</label>
                 <input type="text" id="prefix-input" class="component-input" style="width: 100px; height: 32px; padding: 4px 8px;"
-                    value="space"
+                    value="{{PREFIX_VALUE}}"
                     aria-label="Prefix for generated CSS (without . or -- markers)">
             </div>
         </div>

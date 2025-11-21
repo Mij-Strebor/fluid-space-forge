@@ -1,3 +1,21 @@
+## [1.2.4] - 2025-11-21
+
+### Fixed
+
+- **Modal Button Colors:** Fixed confirmation modal buttons to match JimRForge standards
+  - Cancel button now uses slate gray (#64748b) with white text
+  - Confirm button uses standard gold styling
+- **Reset Functionality:** Fixed data table reset to properly restore defaults
+  - Base now resets to "md" on all tabs
+  - Prefix resets to "space" for Classes, "sp" for Variables
+  - Data table regenerates with correct Min/Max viewport space size values
+- **Settings Reset:** Changed default Max Scale from 1.25 (Major Third) to 1.333 (Perfect Fourth)
+  - Updated modal dialog message to reflect new default value
+
+### Added
+
+- New `.fcc-btn-secondary` CSS class for modal cancel buttons
+
 ## [1.2.3] - 2025-11-13
 
 ### Changed

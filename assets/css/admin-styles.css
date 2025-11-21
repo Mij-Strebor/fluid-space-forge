@@ -462,7 +462,7 @@ Styleguide 4.3
 */
 .fcc-main-grid {
     display: grid;
-    grid-template-columns: 1fr 1.3fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--sp-6);
     margin-bottom: var(--sp-6);
 }
@@ -566,6 +566,20 @@ Styleguide 5.2
     font-style: normal;
     text-transform: none;
     letter-spacing: normal;
+}
+
+.fcc-btn-secondary {
+    background: var(--clr-txt-muted);         /* #64748b - slate gray */
+    color: var(--clr-white) !important;
+    border: none;
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.fcc-btn-secondary:hover {
+    background: #475569;                       /* Darker slate */
+    color: var(--clr-white) !important;
 }
 
 /*
