@@ -147,13 +147,10 @@ Yes! The plugin includes autosave functionality that saves your changes every 10
 
 == Screenshots ==
 
-1. Main admin interface showing the Classes tab with spacing scale editor
-2. CSS Custom Properties (Variables) output format
-3. Tailwind-style Utilities with margin, padding, and gap classes
-4. Live preview showing spacing at different screen sizes
-5. Settings panel for configuring base values and viewport range
-6. Modal dialog for editing spacing size names
-7. Drag and drop interface for reordering spacing scale
+1. Main admin interface showing the Utilities tab
+2. Tailwind output sizes selection
+3. Preview of margins, padding, and gaps over viewport range
+4. Margin, padding, and gap spacing CSS results
 
 == Changelog ==
 
