@@ -57,14 +57,19 @@ Styleguide 1.0
 
        Styleguide 1.1
     */
-    --clr-primary: #3d2f1f;           /* FFF standard - deep brown */
-    --clr-secondary: #6d4c2f;         /* FFF standard - medium brown */
+    --clr-primary: #3d2f1f;
+    /* FFF standard - deep brown */
+    --clr-secondary: #6d4c2f;
+    /* FFF standard - medium brown */
     --clr-tertiary: #86400E;
-    --clr-accent: #f4c542;            /* FFF standard - gold rgb(244, 197, 66) */
+    --clr-accent: #f4c542;
+    /* FFF standard - gold rgb(244, 197, 66) */
 
     /* Link Colors */
-    --clr-link: #ce6565;              /* Coral red - JIMRFORGE standard */
-    --clr-link-hover: #b54545;        /* Darker coral */
+    --clr-link: #ce6565;
+    /* Coral red - JIMRFORGE standard */
+    --clr-link-hover: #b54545;
+    /* Darker coral */
 
 
     /* Background Colors
@@ -74,10 +79,14 @@ Styleguide 1.0
 
        Styleguide 1.2
     */
-    --clr-page-bg: #faf6f0;          /* FFF standard - warm beige page background */
-    --clr-card-bg: #ffffff;          /* FFF standard - white card background */
-    --clr-light: #faf9f6;            /* FFF standard - lightest background for panels */
-    --clr-white: #fff;               /* Pure white for form fields */
+    --clr-page-bg: #faf6f0;
+    /* FFF standard - warm beige page background */
+    --clr-card-bg: #ffffff;
+    /* FFF standard - white card background */
+    --clr-light: #faf9f6;
+    /* FFF standard - lightest background for panels */
+    --clr-white: #fff;
+    /* Pure white for form fields */
 
     /* Text Colors
 
@@ -86,9 +95,12 @@ Styleguide 1.0
 
        Styleguide 1.3
     */
-    --clr-txt: #6d4c2f;              /* FFF standard - main text (was #67482d) */
-    --clr-txt-light: #faf9f6;        /* FFF standard - light text on dark backgrounds */
-    --clr-txt-muted: #64748b;        /* FFF standard - muted gray text */
+    --clr-txt: #6d4c2f;
+    /* FFF standard - main text (was #67482d) */
+    --clr-txt-light: #faf9f6;
+    /* FFF standard - light text on dark backgrounds */
+    --clr-txt-muted: #64748b;
+    /* FFF standard - muted gray text */
 
     /* Button Colors
 
@@ -97,10 +109,14 @@ Styleguide 1.0
 
        Styleguide 1.4
     */
-    --clr-btn-bg: #f4c542;           /* FFF standard - gold rgb(244, 197, 66) */
-    --clr-btn-hover: #e5b12d;        /* FFF standard - darker gold hover */
-    --clr-btn-txt: #3d2f1f;          /* FFF standard - brown text (was red) */
-    --clr-btn-bdr: #de0b0b;          /* Legacy red border (no longer used) */
+    --clr-btn-bg: #f4c542;
+    /* FFF standard - gold rgb(244, 197, 66) */
+    --clr-btn-hover: #e5b12d;
+    /* FFF standard - darker gold hover */
+    --clr-btn-txt: #3d2f1f;
+    /* FFF standard - brown text (was red) */
+    --clr-btn-bdr: #de0b0b;
+    /* Legacy red border (no longer used) */
 
     /* Status/Semantic Colors
        
@@ -168,7 +184,6 @@ Styleguide 1.0
        Styleguide 1.9
     */
     --clr-hover-bg: rgba(59, 130, 246, 0.05);
-    --clr-hover-bg-light: rgba(255, 255, 255, 0.2);
     --clr-selected-bg: rgba(59, 130, 246, 0.25);
     --clr-selected-bg-light: rgba(59, 130, 246, 0.1);
     --clr-selected-bdr: rgba(59, 130, 246, 0.5);
@@ -192,18 +207,30 @@ Styleguide 1.0
 
    Styleguide 1.14
 */
-    --clr-sample-margin-bg: #f8cb9c;          /* DevTools margin - light peach/tan */
-    --clr-sample-margin-border: #e0a26d;      /* Darker peach border */
-    --clr-sample-margin-text: #b87030;        /* Dark orange text */
-    --clr-sample-padding-bg: #c3deb6;         /* DevTools padding - light green */
-    --clr-sample-padding-border: #8fbc7f;     /* Medium green border */
-    --clr-sample-padding-text: #5a8a4a;       /* Dark green text */
-    --clr-sample-gap-bg: #f8cb9c;             /* Same as margin - light peach/tan */
-    --clr-sample-gap-border: #e0a26d;         /* Same as margin border */
-    --clr-sample-gap-text: #b87030;           /* Same as margin text */
-    --clr-sample-content-bg: #9fc5e7;         /* DevTools content - light blue */
-    --clr-sample-content-border: #6a9dcb;     /* Medium blue border */
-    --clr-sample-content-text: #3d5a7a;       /* Dark blue text */
+    --clr-sample-margin-bg: #f8cb9c;
+    /* DevTools margin - light peach/tan */
+    --clr-sample-margin-border: #e0a26d;
+    /* Darker peach border */
+    --clr-sample-margin-text: #b87030;
+    /* Dark orange text */
+    --clr-sample-padding-bg: #c3deb6;
+    /* DevTools padding - light green */
+    --clr-sample-padding-border: #8fbc7f;
+    /* Medium green border */
+    --clr-sample-padding-text: #5a8a4a;
+    /* Dark green text */
+    --clr-sample-gap-bg: #f8cb9c;
+    /* Same as margin - light peach/tan */
+    --clr-sample-gap-border: #e0a26d;
+    /* Same as margin border */
+    --clr-sample-gap-text: #b87030;
+    /* Same as margin text */
+    --clr-sample-content-bg: #9fc5e7;
+    /* DevTools content - light blue */
+    --clr-sample-content-border: #6a9dcb;
+    /* Medium blue border */
+    --clr-sample-content-text: #3d5a7a;
+    /* Dark blue text */
 
     /* Sample Container Colors */
     --clr-sample-container-bg: #f8f9fa;
@@ -282,7 +309,11 @@ body {
     background: var(--clr-page-bg) !important;
 }
 
-.wrap {    max-width: 1280px !important;    margin: 0 !important;    background: var(--clr-page-bg) !important;}
+.wrap {
+    max-width: 1280px !important;
+    margin: 0 !important;
+    background: var(--clr-page-bg) !important;
+}
 
 /* ==========================================================================
    3.0 TYPOGRAPHY
@@ -330,10 +361,10 @@ h2 {
     padding-bottom: var(--sp-2);
 }
 
-    font-size: var(--fs-2xl);
-    margin: 0 0 var(--sp-5) 0;
-    border-bottom: 2px solid var(--clr-bdr-dark);
-    padding-bottom: var(--sp-2);
+font-size: var(--fs-2xl);
+margin: 0 0 var(--sp-5) 0;
+border-bottom: 2px solid var(--clr-bdr-dark);
+padding-bottom: var(--sp-2);
 }
 
 /*
@@ -502,19 +533,26 @@ Styleguide 5.1
 */
 .fcc-btn,
 .fcc-copy-btn {
-    background: var(--clr-accent);           /* Gold #FFD700 */
-    color: var(--clr-primary);               /* Brown #3C2017 */
-    border: none;                            /* No border (FFF standard) */
+    background: var(--clr-accent);
+    /* Gold #FFD700 */
+    color: var(--clr-primary);
+    /* Brown #3C2017 */
+    border: none;
+    /* No border (FFF standard) */
     border-radius: var(--jimr-border-radius);
     box-shadow: var(--clr-shadow-md);
-    padding: var(--sp-2) var(--sp-4);        /* 8px 16px */
+    padding: var(--sp-2) var(--sp-4);
+    /* 8px 16px */
     display: inline-flex;
     align-items: center;
     gap: var(--sp-2);
-    font-size: 14px;                         /* FFF standard (14px not 12px) */
+    font-size: 14px;
+    /* FFF standard (14px not 12px) */
     font-weight: 600;
-    font-style: normal;                      /* FFF standard (not italic) */
-    text-transform: none;                    /* FFF standard (not lowercase) */
+    font-style: normal;
+    /* FFF standard (not italic) */
+    text-transform: none;
+    /* FFF standard (not lowercase) */
     letter-spacing: 0.5px;
     text-decoration: none;
     transition: var(--jimr-transition-slow);
@@ -524,8 +562,10 @@ Styleguide 5.1
 
 .fcc-btn:hover,
 .fcc-copy-btn:hover {
-    background: var(--clr-btn-hover);        /* Darker gold */
-    transform: translate(-2px, -2px);        /* Up and left (JIMRFORGE standard) */
+    background: var(--clr-btn-hover);
+    /* Darker gold */
+    transform: translate(-2px, -2px);
+    /* Up and left (JIMRFORGE standard) */
     box-shadow: var(--clr-shadow-lg);
 }
 
@@ -569,7 +609,8 @@ Styleguide 5.2
 }
 
 .fcc-btn-secondary {
-    background: var(--clr-txt-muted);         /* #64748b - slate gray */
+    background: var(--clr-txt-muted);
+    /* #64748b - slate gray */
     color: var(--clr-white) !important;
     border: none;
     font-style: normal;
@@ -578,7 +619,8 @@ Styleguide 5.2
 }
 
 .fcc-btn-secondary:hover {
-    background: #475569;                       /* Darker slate */
+    background: #475569;
+    /* Darker slate */
     color: var(--clr-white) !important;
 }
 
@@ -699,7 +741,8 @@ Styleguide 5.7
 */
 .fcc-panel {
     background: var(--clr-light);
-    padding: 36px;                              /* JIMRFORGE standard panel padding */
+    padding: 36px;
+    /* JIMRFORGE standard panel padding */
     border-radius: var(--jimr-border-radius-lg);
     border: 2px solid var(--clr-bdr-dark);
     box-shadow: var(--clr-shadow-lg);
@@ -878,8 +921,10 @@ Styleguide 5.11
 }
 
 .unit-button {
-    background: var(--clr-accent);          /* Gold #FFD700 (FFF standard) */
-    color: var(--clr-primary);              /* Brown #3C2017 (FFF standard) */
+    background: var(--clr-accent);
+    /* Gold #FFD700 (FFF standard) */
+    color: var(--clr-primary);
+    /* Brown #3C2017 (FFF standard) */
     border: none;
     width: 50%;
     padding: var(--sp-2);
@@ -916,9 +961,12 @@ Styleguide 5.12
 }
 
 .tab-button {
-    background: var(--clr-accent);          /* Gold #FFD700 */
-    color: var(--clr-primary);              /* Brown #3C2017 (FFF standard) */
-    border: none;                           /* No border (FFF standard) */
+    background: var(--clr-accent);
+    /* Gold #FFD700 */
+    color: var(--clr-primary);
+    /* Brown #3C2017 (FFF standard) */
+    border: none;
+    /* No border (FFF standard) */
     transition: var(--jimr-transition-slow);
     cursor: pointer;
     font-weight: 600;
@@ -927,8 +975,10 @@ Styleguide 5.12
 }
 
 .tab-button:hover {
-    background: var(--clr-btn-hover);       /* Darker gold */
-    color: var(--clr-primary);              /* Keep brown (FFF standard) */
+    background: var(--clr-btn-hover);
+    /* Darker gold */
+    color: var(--clr-primary);
+    /* Keep brown (FFF standard) */
     transform: translateY(-1px);
     box-shadow: var(--clr-shadow-md);
 }
@@ -1077,10 +1127,14 @@ Styleguide 5.15
     display: flex;
     flex-direction: column;
     gap: var(--sp-3);
-    max-height: 800px;              /* Max height for overflow scrolling */
-    overflow-y: auto;                /* Add scrolling when content overflows */
-    overflow-x: hidden;              /* Prevent horizontal scroll */
-    padding-right: 8px;              /* Space for scrollbar */
+    max-height: 800px;
+    /* Max height for overflow scrolling */
+    overflow-y: auto;
+    /* Add scrolling when content overflows */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    padding-right: 8px;
+    /* Space for scrollbar */
 }
 
 .fcc-preview-column-header {
@@ -1218,7 +1272,8 @@ Styleguide 5.16.4
 */
 .fcc-sample-box-wrapper {
     background: var(--clr-white);
-    border: none;                    /* No border (FFF standard) */
+    border: none;
+    /* No border (FFF standard) */
     border-radius: var(--jimr-border-radius);
     padding: 20px;
     width: 240px;
@@ -1319,8 +1374,10 @@ Styleguide 5.16.7
     padding: 20px;
     background: var(--clr-sample-gap-bg);
     transition: gap 0.2s ease;
-    align-items: center;           /* Center vertically */
-    justify-items: center;         /* Center horizontally for equal padding */
+    align-items: center;
+    /* Center vertically */
+    justify-items: center;
+    /* Center horizontally for equal padding */
     margin: 0 auto;
     box-sizing: border-box;
     width: fit-content;
@@ -1564,7 +1621,7 @@ Styleguide 5.17
 }
 
 .fcc-modal-close:hover {
-    background: var(--clr-hover-bg-light);
+    background: var(--clr-hover-bg);
 }
 
 .fcc-modal-content {
@@ -1692,9 +1749,12 @@ Styleguide 6.2
 }
 
 .space-preview-item.selected {
-    background-color: rgba(59, 130, 246, 0.15) !important;   /* FFF blue selection */
-    border-color: rgba(59, 130, 246, 0.5) !important;        /* FFF blue border */
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important; /* FFF blue glow */
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    /* FFF blue selection */
+    border-color: rgba(59, 130, 246, 0.5) !important;
+    /* FFF blue border */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+    /* FFF blue glow */
 }
 
 /*

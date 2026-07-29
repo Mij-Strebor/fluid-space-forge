@@ -111,4 +111,18 @@
     --trn-fast: 0.15s ease;
     --trn-base: 0.2s ease;
     --trn-slow: 0.3s ease;
+
+    /* Additional Text Colors */
+    --clr-txt-light: #faf9f6;              /* Light text on dark toggle headers */
+    --clr-txt-muted: #64748b;              /* Muted/disabled text */
+    --clr-txt-heading: #3d2f1f;            /* Dark heading text */
+    --clr-secondary-muted: rgba(109, 76, 47, 0.7); /* Secondary text at 70% opacity (version info) */
+
+    /* Contextual Background Colors */
+    --clr-info-box-bg: #e7e3df;            /* Warm tan - info/tip/best-practices boxes */
+    --clr-accent-box-bg: rgba(244, 197, 66, 0.15); /* Tinted gold - feature highlight boxes */
+
+    /* Borders */
+    --clr-border: #c9b89a;                 /* Standard border */
+    --clr-code-border: #cbd5e1;            /* Light gray - dashed empty-state borders */
 }

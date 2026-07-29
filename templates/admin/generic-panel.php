@@ -40,10 +40,10 @@ if (!defined('ABSPATH')) {
         </div>
     </div>
 
-    <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 6px; border: 2px dashed #cbd5e1; margin-top: 16px;">
+    <div style="text-align: center; padding: 60px 20px; background: var(--clr-white); border-radius: var(--rad-md); border: 2px dashed var(--clr-code-border); margin-top: 16px;">
         <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;">{{EMPTY_ICON}}</div>
-        <h3 style="color: #475569; margin: 0 0 8px 0; font-size: 18px;">{{EMPTY_TITLE}}</h3>
-        <p style="color: #64748b; margin: 0 0 20px 0; font-size: 16px;">{{EMPTY_TEXT}}</p>
+        <h3 style="color: var(--clr-txt-muted); margin: 0 0 8px 0; font-size: 18px;">{{EMPTY_TITLE}}</h3>
+        <p style="color: var(--clr-txt-muted); margin: 0 0 20px 0; font-size: 16px;">{{EMPTY_TEXT}}</p>
         <button id="add-first-size" class="fcc-btn" style="margin-right: 12px;">{{EMPTY_BUTTON_TEXT}}</button>
         <button id="reset-to-defaults" class="fcc-btn">reset to defaults</button>
     </div>

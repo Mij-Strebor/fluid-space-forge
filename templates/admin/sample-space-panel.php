@@ -20,13 +20,13 @@ if (!defined('ABSPATH')) {
 <!-- Sample Space Preview Section -->
 <div class="fcc-info-toggle-section" style="margin-top: 20px;">
     <button class="fcc-info-toggle <?php echo $settings['viewportTestExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="sample-space-content">
-        <span style="color: #FAF9F6 !important;">Viewport Test Preview</span>
-        <span class="fcc-toggle-icon" style="color: #FAF9F6 !important;">▼</span>
+        <span style="color: var(--clr-txt-light) !important;">Viewport Test Preview</span>
+        <span class="fcc-toggle-icon" style="color: var(--clr-txt-light) !important;">▼</span>
     </button>
 
     <div class="fcc-info-content <?php echo $settings['viewportTestExpanded'] ? 'expanded' : ''; ?>" id="sample-space-content">
         <!-- Interactive Preview Info -->
-        <div class="fcc-preview-intro" style="background: #e7e3df; padding: 16px 20px; margin: 0 80px 16px 80px; border-radius: 6px; border-left: 4px solid var(--clr-accent);">
+        <div class="fcc-preview-intro" style="background: var(--clr-info-box-bg); padding: 16px 20px; margin: 0 80px 16px 80px; border-radius: var(--rad-md); border-left: 4px solid var(--clr-accent);">
             <p style="margin: 0; color: var(--clr-txt); font-size: 16px; line-height: 1.6;">
                 <strong>Viewport Test:</strong> Use the interactive slider to test all your spacing sizes at any specific viewport width. The <strong>Space Size</strong> dropdown lets you select which size to preview. Drag the slider to see real-time spacing changes as you move across different screen sizes, helping you compare your entire spacing scale and ensure consistent relationships between sizes. Close this preview if not used.
             </p>

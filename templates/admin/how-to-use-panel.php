@@ -20,8 +20,8 @@ if (!defined('ABSPATH')) {
 <!-- How to Use Panel -->
 <div class="fcc-info-toggle-section">
     <button class="fcc-info-toggle <?php echo $settings['howToUseExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="info-content">
-        <span style="color: #FAF9F6 !important;">How to Use Fluid Space Forge</span>
-        <span class="fcc-toggle-icon" style="color: #FAF9F6 !important;">▼</span>
+        <span style="color: var(--clr-txt-light) !important;">How to Use Fluid Space Forge</span>
+        <span class="fcc-toggle-icon" style="color: var(--clr-txt-light) !important;">▼</span>
     </button>
     <div class="fcc-info-content <?php echo $settings['howToUseExpanded'] ? 'expanded' : ''; ?>" id="info-content">
         <div style="color: var(--clr-txt); font-size: 16px; line-height: 1.6; padding-bottom: 20px;">
@@ -44,11 +44,11 @@ if (!defined('ABSPATH')) {
                 </div>
             </div>
 
-            <div style="background: #e7e3df; padding: 16px 20px; margin: 16px 80px 0 80px; border-radius: 8px; border-left: 4px solid var(--clr-accent); text-align: center;">
-                <h3 style="color: #3C2017; font-size: 16px; font-weight: 600; margin: 0 0 6px 0;">💡 Pro Tip</h3>
+            <div style="background: var(--clr-info-box-bg); padding: 16px 20px; margin: 16px 80px 0 80px; border-radius: var(--rad-lg); border-left: 4px solid var(--clr-accent); text-align: center;">
+                <h3 style="color: var(--clr-primary); font-size: 16px; font-weight: 600; margin: 0 0 6px 0;">💡 Pro Tip</h3>
                     <p style="margin: 0; font-size: 16px; color: var(--clr-txt);">Use consistent space scales to create harmonious layouts that maintain their proportions across all device sizes.</p>
             </div>
-            <div style="background: #e7e3df; padding: 16px 20px; border-radius: 8px; border-left: 4px solid var(--clr-accent); margin: 20px 80px 20px 80px;">
+            <div style="background: var(--clr-info-box-bg); padding: 16px 20px; border-radius: var(--rad-lg); border-left: 4px solid var(--clr-accent); margin: 20px 80px 20px 80px;">
                 <h3 style="color: var(--clr-primary); font-size: 16px; font-weight: 600; margin: 0 0 12px 0; text-align: center;">✨ Best Practices</h3>
                 <ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.8; color: var(--clr-txt);">
                     <li><strong>Collapse panels for focus:</strong> Hide the About, How to Use, and Preview panels to create a streamlined workspace when you know what you are doing.</li>
