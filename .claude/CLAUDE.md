@@ -26,6 +26,35 @@
 
 ---
 
+## File Structure
+
+```
+fluid-space-forge/
+├── fluid-space-forge.php          # Main plugin file, headers, bootstrap
+├── uninstall.php                   # Cleanup on plugin deletion
+├── templates/admin/                 # Admin page panel templates
+│   ├── tab-navigation.php, generic-panel.php, sizes-table-container.php
+│   ├── sample-space-panel.php, preview-panel.php, css-output-panels.php
+│   ├── settings-panel.php, autosave-controls.php
+│   ├── about-section.php, how-to-use-panel.php, community-panel.php
+├── assets/
+│   ├── css/            # admin-styles.css, design-tokens.css, forge-header.css, typography-updates.css
+│   ├── js/              # admin-script.js, calculations.js, drag-drop-controller.js,
+│   │                     autosave-manager.js, modal-manager.js, sample-panel.js,
+│   │                     sample-space-controller.js, unified-size-access.js, utilities.js
+│   ├── fonts/            # Inter WOFF2 files (4 weights)
+│   ├── images/           # forge-banner.png
+│   └── docs/             # STALE — single-commit leftover from 2025-11-18, superseded by docs/. Flagged for removal, not deleted.
+├── docs/                             # Public docs — GitHub Pages source (aligned with AFF 2026-08-22)
+│   ├── index.md, quick-start.md, user-manual.md (+ matching PDFs)
+│   └── images/                       # banners, icons, screenshots
+└── dev-docs/                        # Internal only — excluded from distribution
+    ├── ROADMAP.md, COMPREHENSIVE-CSS.md
+    └── project-plans/                # additional-features.md, maintainability-roadmap.md, typography-guide.html
+```
+
+---
+
 ## What FSF Does
 
 FSF is a WordPress admin tool that generates CSS `clamp()` values for fluid (responsive) spacing. It provides:

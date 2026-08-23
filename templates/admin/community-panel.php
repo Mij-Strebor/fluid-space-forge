@@ -32,10 +32,10 @@ if (!defined('ABSPATH')) {
         <h3 style="color: var(--clr-primary); font-size: 18px; font-weight: 600; margin: 0 0 12px 0;">Documentation</h3>
         <ul style="margin: 0 0 20px 0; padding-left: 20px; font-size: 16px; line-height: 1.8; color: var(--clr-txt);">
             <li>
-                <strong><a href="https://github.com/Mij-Strebor/fluid-space-forge/blob/master/QUICK-START.md" target="_blank" style="color: var(--clr-link); text-decoration: underline;">Quick Start</a></strong> - Get started with Fluid Space Forge in 5 minutes and generate your first responsive spacing system.
+                <strong><a href="https://github.com/Mij-Strebor/fluid-space-forge/blob/master/docs/quick-start.md" target="_blank" style="color: var(--clr-link); text-decoration: underline;">Quick Start</a></strong> - Get started with Fluid Space Forge in 5 minutes and generate your first responsive spacing system.
             </li>
             <li>
-                <strong><a href="https://github.com/Mij-Strebor/fluid-space-forge/blob/master/USER-MANUAL.md" target="_blank" style="color: var(--clr-link); text-decoration: underline;">User Manual</a></strong> - Professional Responsive Spacing for WordPress
+                <strong><a href="https://github.com/Mij-Strebor/fluid-space-forge/blob/master/docs/user-manual.md" target="_blank" style="color: var(--clr-link); text-decoration: underline;">User Manual</a></strong> - Professional Responsive Spacing for WordPress
             </li>
         </ul>
 
