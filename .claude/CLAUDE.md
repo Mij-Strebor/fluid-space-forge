@@ -43,14 +43,15 @@ fluid-space-forge/
 │   │                     autosave-manager.js, modal-manager.js, sample-panel.js,
 │   │                     sample-space-controller.js, unified-size-access.js, utilities.js
 │   ├── fonts/            # Inter WOFF2 files (4 weights)
-│   ├── images/           # forge-banner.png
-│   └── docs/             # STALE — single-commit leftover from 2025-11-18, superseded by docs/. Flagged for removal, not deleted.
+│   └── images/           # forge-banner.png
 ├── docs/                             # Public docs — GitHub Pages source (aligned with AFF 2026-08-22)
 │   ├── index.md, quick-start.md, user-manual.md (+ matching PDFs)
 │   └── images/                       # banners, icons, screenshots
-└── dev-docs/                        # Internal only — excluded from distribution
-    ├── ROADMAP.md, COMPREHENSIVE-CSS.md
-    └── project-plans/                # additional-features.md, maintainability-roadmap.md, typography-guide.html
+├── dev-docs/                        # Internal only — excluded from distribution
+│   ├── ROADMAP.md, COMPREHENSIVE-CSS.md
+│   └── project-plans/                # additional-features.md, maintainability-roadmap.md, typography-guide.html
+├── composer.json, .phpcs.xml        # PHPCS + WordPress Coding Standards (added 2026-08-22, matching AFF)
+└── .gitignore, .distignore          # Added 2026-08-22 — neither existed before
 ```
 
 ---
