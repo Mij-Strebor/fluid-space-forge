@@ -15,7 +15,7 @@
 
 - **Plugin name:** Fluid Space Forge
 - **Acronym / folder:** `fsf` → `E:\projects\plugins\fsf`
-- **Version:** v1.2.4
+- **Version:** v1.3.0
 - **GitHub:** https://github.com/Mij-Strebor/fluid-space-forge
 - **Text domain:** `fluid-space-forge`
 - **Admin page slug:** `fluid-space-forge`
@@ -69,7 +69,7 @@ FSF is a WordPress admin tool that generates CSS `clamp()` values for fluid (res
 
 ## FSF is the Canonical UI Reference
 
-**FSF v1.2.4 is the styling prototype for all JimRForge FFF-family plugins.** When in doubt about a visual or UX decision for any other plugin, check FSF first. Do not deviate from FSF's implementation without a deliberate standards update.
+**FSF v1.3.0 is the styling prototype for all JimRForge FFF-family plugins.** When in doubt about a visual or UX decision for any other plugin, check FSF first. Do not deviate from FSF's implementation without a deliberate standards update.
 
 FSF itself must remain compliant with `E:\projects\JIMRFORGE-UI-STANDARDS.md` at all times. Any UI change to FSF potentially becomes the new standard and should be documented.
 

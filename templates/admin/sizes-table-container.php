@@ -25,21 +25,21 @@ if (!defined('ABSPATH')) {
     <!-- Base Value and Action Buttons Row -->
 
     <!-- Base Value and Prefix Controls Row -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 16px;">
         <!-- Left: Base and Prefix Controls -->
         <div style="display: flex; gap: 16px;">
             <!-- Base Value -->
-            <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; flex-direction: column; gap: 4px;" data-tooltip="Reference size all other sizes scale from">
                 <label class="component-label" for="base-value" style="margin-bottom: 0; font-size: 12px;">Base</label>
-                <select id="base-value" class="component-select" style="width: 120px; height: 32px;"
+                <select id="base-value" class="component-select" style="width: 90px; height: 32px;"
                     aria-label="Base reference size - used for calculating all other space sizes in the scale">
                     <option value="3" selected>space-md</option>
                 </select>
             </div>
             <!-- Prefix Input (hidden for Utilities tab) -->
-            <div id="prefix-control" style="display: flex; flex-direction: column; gap: 4px;">
+            <div id="prefix-control" style="display: flex; flex-direction: column; gap: 4px;" data-tooltip="Prefix used in generated CSS class/variable names">
                 <label class="component-label" for="prefix-input" style="margin-bottom: 0; font-size: 12px;">Prefix</label>
-                <input type="text" id="prefix-input" class="component-input" style="width: 100px; height: 32px; padding: 4px 8px;"
+                <input type="text" id="prefix-input" class="component-input" style="width: 80px; height: 32px; padding: 4px 8px;"
                     value="space"
                     aria-label="Prefix for generated CSS (without . or -- markers)">
             </div>
@@ -55,9 +55,9 @@ if (!defined('ABSPATH')) {
 
         <!-- Right: Action Buttons -->
         <div class="fcc-table-buttons" id="table-action-buttons">
-            <button id="add-size" class="fcc-btn">Add Size</button>
-            <button id="reset-defaults" class="fcc-btn">Reset</button>
-            <button id="clear-sizes" class="fcc-btn">Clear All</button>
+            <button id="add-size" class="fcc-btn" data-tooltip="Add a new size to this list">Add Size</button>
+            <button id="reset-defaults" class="fcc-btn" data-tooltip="Reset this tab's sizes to plugin defaults">Reset</button>
+            <button id="clear-sizes" class="fcc-btn" data-tooltip-position="left" data-tooltip="Remove all sizes from this tab">Clear All</button>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 # Fluid Space Forge User Manual
 
-**Version 1.2.4**
+**Version 1.3.0**
 Professional Responsive Spacing for WordPress
 
 ---
@@ -298,4 +298,4 @@ It sets which row is the reference point for the scaling math. Every other row's
 
 ---
 
-*Fluid Space Forge v1.2.4 — © 2026 Jim R Forge ([jimrforge.com](https://jimrforge.com)). All rights reserved.*
+*Fluid Space Forge v1.3.0 — © 2026 Jim R Forge ([jimrforge.com](https://jimrforge.com)). All rights reserved.*

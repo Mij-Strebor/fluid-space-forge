@@ -3,9 +3,9 @@ Contributors: mijstrebor
 Donate link: https://buymeacoffee.com/jimrweb
 Tags: spacing, css, clamp, responsive, design-system
 Requires at least: 5.0
-Tested up to: 6.8
-Requires PHP: 7.4
-Stable tag: 1.2.4
+Tested up to: 7.1
+Requires PHP: 8.2
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,22 @@ Yes! The plugin includes autosave functionality that saves your changes every 10
 4. Margin, padding, and gap spacing CSS results
 
 == Changelog ==
+
+= 1.3.0 - 2026-08-25 =
+* **Added:** Tooltips throughout the interface, including all expand/collapse section buttons
+* **Added:** Sticky Min Size/Max Size headers while scrolling the Space Size Preview
+* **Added:** Accessibility labels for icon-only Edit/Delete buttons
+* **Changed:** Preview panels now collapsed by default on a fresh install
+* **Changed:** Updated Community and Tools links (Jim R Forge, documentation, Media Inventory Forge, Atomic Framework Forge for Elementor)
+* **Fixed:** Horizontal scroll bar caused by hidden tooltip content pushing the page wider than the viewport
+* **Fixed:** Hero banner overflowing past the content edge into the scrollbar area
+* **Fixed:** Save button and Autosave could stack duplicate saves the longer a session ran
+* **Fixed:** Deleting the size used as a tab's base no longer breaks calculations for the rest of that tab
+* **Fixed:** Autosave no longer corrupts the other tabs' base size selection when saving
+* **Fixed:** Selected CSS panel now clears correctly when the selected size is deleted
+* **Fixed:** Viewport Test preview card colors and Space Size dropdown now refresh correctly
+* **Fixed:** Viewport range validation now accepts the full supported 200-5000px range
+* **Fixed:** Add Size/Reset/Clear All buttons no longer wrap awkwardly at normal widths
 
 = 1.2.4 - 2025-11-21 =
 * **Fixed:** Modal button colors - cancel button now slate gray with white text, confirm button gold

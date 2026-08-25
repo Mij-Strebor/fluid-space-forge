@@ -56,7 +56,10 @@
      * Called when data changes (settings updated, sizes modified, etc.)
      */
     refresh() {
-      this.populateSizeSelector();
+      const selector = document.getElementById("sample-space-size");
+      if (selector) {
+        this.populateSelector(selector);
+      }
       this.updatePreview();
     },
 

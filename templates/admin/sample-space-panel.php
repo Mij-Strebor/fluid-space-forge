@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 <!-- Sample Space Preview Section -->
 <div class="fcc-info-toggle-section" style="margin-top: 20px;">
-    <button class="fcc-info-toggle <?php echo $settings['viewportTestExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="sample-space-content">
+    <button class="fcc-info-toggle <?php echo $settings['viewportTestExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="sample-space-content" data-tooltip="Expand/Collapse">
         <span style="color: var(--clr-txt-light) !important;">Viewport Test Preview</span>
         <span class="fcc-toggle-icon" style="color: var(--clr-txt-light) !important;">▼</span>
     </button>
@@ -80,7 +80,7 @@ if (!defined('ABSPATH')) {
 
             <!-- Controls Row -->
             <div class="fcc-sample-controls">
-                <div class="fcc-sample-selector">
+                <div class="fcc-sample-selector" data-tooltip="Choose which size to preview on the slider">
                     <label class="component-label" for="sample-space-size">Space Size:</label>
                     <select id="sample-space-size" class="component-select" style="width: 150px;">
                         <option value="3" selected>md</option>
@@ -103,7 +103,8 @@ if (!defined('ABSPATH')) {
                         max="1620"
                         value="768"
                         step="1"
-                        aria-label="Viewport width slider">
+                        aria-label="Viewport width slider"
+                        data-tooltip="Drag to test spacing at any viewport width from 375px to 1620px">
                     <div class="fcc-slider-labels">
                         <span>375px</span>
                         <span>1620px</span>

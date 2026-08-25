@@ -24,6 +24,7 @@ if (!defined('ABSPATH')) {
         <div id="selected-copy-button">
             <button id="copy-selected-btn" class="fcc-copy-btn"
                 data-tooltip="Copy selected CSS to clipboard"
+                data-tooltip-position="left"
                 aria-label="Copy selected CSS to clipboard"
                 title="Copy CSS">
                 copy
@@ -41,6 +42,7 @@ if (!defined('ABSPATH')) {
         <div class="fcc-css-buttons" id="generated-copy-buttons">
             <button id="copy-all-btn" class="fcc-copy-btn"
                 data-tooltip="Copy all generated CSS to clipboard"
+                data-tooltip-position="left"
                 aria-label="Copy all generated CSS to clipboard"
                 title="Copy All CSS">
                 copy all

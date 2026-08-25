@@ -50,8 +50,10 @@
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 20px;      /* Match .wrap's own left padding (absolute positioning is relative to the padding box, so 0 would bleed past it) */
+    right: 20px;     /* Match .wrap's own right padding, same reason */
+    max-width: 1280px;  /* Match content column width */
+    margin: 0 auto;     /* Center within the left/right inset when narrower than the available space */
     height: 50vh;   /* 50% viewport height */
     min-height: 500px;  /* Ensure enough space for About panel */
     z-index: 0;     /* Behind all content */

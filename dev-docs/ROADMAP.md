@@ -2,7 +2,7 @@
 
 **Vision:** Establish Fluid Space Forge as the definitive WordPress solution for mathematically precise, fluid responsive spacing systems that seamlessly integrate with modern design workflows and development practices.
 
-**Current Version:** 1.2.4  
+**Current Version:** 1.3.0  
 **Architecture Status:** Solid foundation with modular JavaScript, comprehensive documentation, WordPress.org compliance  
 **Last Updated:** November 2025
 
@@ -88,6 +88,15 @@ settings
 ```
 
 Export/import (JSON) and the autosave system will handle the new structure. Backward compatibility: existing saves with no `categories` key load as a single unnamed category preserving all current entries.
+
+---
+
+## Near-Term Priority: Atomic Framework Forge (AFF) Compatible Output
+
+**Status:** Idea — not yet scoped  
+**Complexity:** Unknown
+
+Make FSF's generated CSS output (spacing classes/variables) directly consumable by Atomic Framework Forge, so the Jim R Forge plugins interoperate instead of producing independent, disconnected token sets. Needs a scoping pass to define what "compatible" actually means in practice — matching AFF's naming/token conventions, matching its data structure for import, or something else — before this becomes a real spec. Same idea also added to Fluid Font Forge's roadmap.
 
 ---
 
