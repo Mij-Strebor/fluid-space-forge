@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 <!-- Collapsible Preview Section -->
 <div class="fcc-info-toggle-section" style="clear: both; margin: 20px 0;">
-    <button class="fcc-info-toggle <?php echo $settings['spaceSizeExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="preview-content">
+    <button class="fcc-info-toggle <?php echo $settings['spaceSizeExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="preview-content" data-tooltip="Expand/Collapse">
         <span style="color: var(--clr-txt-light) !important;">Space Size Preview</span>
         <span class="fcc-toggle-icon" style="color: var(--clr-txt-light) !important;">▼</span>
     </button>

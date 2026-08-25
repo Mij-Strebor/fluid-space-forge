@@ -304,12 +304,12 @@
         }
         target.value = correctedValue;
       } else if (target.id === "min-viewport") {
-        if (isNaN(value) || value < 200) {
-          correctedValue = 200;
-          errorMsg = "Min Viewport must be at least 200px";
-        } else if (value > 992) {
-          correctedValue = 992;
-          errorMsg = "Min Viewport cannot exceed 992px (tablet max)";
+        if (isNaN(value) || value < constants.VIEWPORT_RANGE[0]) {
+          correctedValue = constants.VIEWPORT_RANGE[0];
+          errorMsg = `Min Viewport must be at least ${constants.VIEWPORT_RANGE[0]}px`;
+        } else if (value > constants.VIEWPORT_RANGE[1]) {
+          correctedValue = constants.VIEWPORT_RANGE[1];
+          errorMsg = `Min Viewport cannot exceed ${constants.VIEWPORT_RANGE[1]}px`;
         }
         target.value = correctedValue;
       } else if (target.id === "max-viewport") {
@@ -317,9 +317,9 @@
         if (isNaN(value) || value <= minVp) {
           correctedValue = minVp + 1;
           errorMsg = `Max Viewport must be greater than Min Viewport (${minVp}px)`;
-        } else if (value > 1920) {
-          correctedValue = 1920;
-          errorMsg = "Max Viewport cannot exceed 1920px (big screen max)";
+        } else if (value > constants.VIEWPORT_RANGE[1]) {
+          correctedValue = constants.VIEWPORT_RANGE[1];
+          errorMsg = `Max Viewport cannot exceed ${constants.VIEWPORT_RANGE[1]}px`;
         }
         target.value = correctedValue;
       }
@@ -540,23 +540,15 @@
     // Save button click handler
     const saveBtn = document.getElementById("save-btn");
     if (saveBtn) {
-      saveBtn.removeEventListener("click", () =>
-        window.FluidSpaceForge.AutosaveManager.handleSaveButton()
-      );
-      saveBtn.addEventListener("click", () =>
-        window.FluidSpaceForge.AutosaveManager.handleSaveButton()
-      );
+      saveBtn.removeEventListener("click", handleSaveButtonClick);
+      saveBtn.addEventListener("click", handleSaveButtonClick);
     }
 
     // Autosave toggle listener
     const autosaveToggle = document.getElementById("autosave-toggle");
     if (autosaveToggle) {
-      autosaveToggle.removeEventListener("change", () =>
-        window.FluidSpaceForge.AutosaveManager.handleAutosaveToggle()
-      );
-      autosaveToggle.addEventListener("change", () =>
-        window.FluidSpaceForge.AutosaveManager.handleAutosaveToggle()
-      );
+      autosaveToggle.removeEventListener("change", handleAutosaveToggleChange);
+      autosaveToggle.addEventListener("change", handleAutosaveToggleChange);
 
       // Check initial state and start autosave if already enabled
       if (autosaveToggle.checked) {
@@ -1049,6 +1041,14 @@
         generatespacePreview(tabName, currentSizes, getSelectedBaseId());
         attachEventListeners();
 
+        // Refresh the Sample Space (Viewport Test) preview for the new tab
+        if (
+          window.FluidSpaceForge &&
+          window.FluidSpaceForge.SampleSpaceController
+        ) {
+          window.FluidSpaceForge.SampleSpaceController.refresh();
+        }
+
         // Update generates text and prefix input value for new tab
         updateGeneratesText();
 
@@ -1489,6 +1489,14 @@
     );
   }
 
+  function handleSaveButtonClick() {
+    window.FluidSpaceForge.AutosaveManager.handleSaveButton();
+  }
+
+  function handleAutosaveToggleChange() {
+    window.FluidSpaceForge.AutosaveManager.handleAutosaveToggle();
+  }
+
   function handleReset() {
     const currentTab =
       document.querySelector(".tab-button.active")?.getAttribute("data-tab") ||
@@ -1565,6 +1573,10 @@
     if (!itemToDelete) return;
 
     const itemName = getSizeName(itemToDelete, currentTab);
+    const rowBeingDeleted = event.currentTarget.closest(".size-row");
+    const wasSelected = rowBeingDeleted
+      ? rowBeingDeleted.classList.contains("selected")
+      : false;
 
     window.FluidSpaceForge.ModalManager.showConfirmModal(
       "Delete Size",
@@ -1573,6 +1585,36 @@
         const itemIndex = currentData.findIndex((item) => item.id === sizeId);
         if (itemIndex !== -1) {
           currentData.splice(itemIndex, 1);
+        }
+
+        // If the deleted item was this tab's selected base, reassign to a
+        // remaining size so calculations don't silently fall back to defaults.
+        const baseIdKey =
+          currentTab === "class"
+            ? "selectedClassSizeId"
+            : currentTab === "vars"
+            ? "selectedVariableSizeId"
+            : "selectedUtilitySizeId";
+        if (parseInt(fluispfoAjax.data.settings[baseIdKey]) === sizeId) {
+          fluispfoAjax.data.settings[baseIdKey] = currentData[0]?.id || 3;
+        }
+
+        // If the deleted row was showing in the Selected CSS panel, clear it
+        // instead of leaving stale CSS for a now-nonexistent size.
+        if (wasSelected) {
+          const codePanel = document.getElementById("class-code");
+          const titlePanel = document.getElementById("selected-code-title");
+          if (codePanel) {
+            codePanel.textContent = "/* Click a row to see its CSS */";
+          }
+          if (titlePanel) {
+            const titles = {
+              class: "Selected Class CSS",
+              vars: "Selected Variable CSS",
+              utils: "Selected Utility CSS",
+            };
+            titlePanel.textContent = titles[currentTab] || "Selected CSS";
+          }
         }
 
         const panelContainer = document.getElementById("sizes-table-container");
@@ -1937,11 +1979,11 @@
             const cssValue = `${spacePx}px`;
 
             return `
-                  <div style="margin-bottom: 20px; padding: 12px; background: #var(--clr-sample-container-bg); border-radius: 6px; border: 1px solid #var(--clr-sample-container-border); box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-                      <div style="font-size: 32px; color: #var(--clr-sample-title-text); margin-bottom: 12px; font-weight: 600;">${name}</div>
+                  <div style="margin-bottom: 20px; padding: 12px; background: var(--clr-sample-container-bg); border-radius: 6px; border: 1px solid var(--clr-sample-container-border); box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                      <div style="font-size: 32px; color: var(--clr-sample-title-text); margin-bottom: 12px; font-weight: 600;">${name}</div>
                       
                       <div style="margin-bottom: 12px;">
-                          <div style="font-size: 10px; color: #var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Margin & Padding</div>
+                          <div style="font-size: 10px; color: var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Margin & Padding</div>
                           <div style="background: var(--clr-sample-margin-bg); padding: ${cssValue}; border: 1px dashed var(--clr-sample-margin-border); border-radius: 4px; display: inline-block;">
                               <div style="font-size: 9px; color: var(--clr-sample-margin-text); margin-bottom: 2px;">margin: ${displayValue}</div>
                              <div style="background: var(--clr-sample-padding-bg); padding: ${cssValue}; border: 1px dashed var(--clr-sample-padding-border);">
@@ -1954,7 +1996,7 @@
                       </div>
                       
                       <div>
-                          <div style="font-size: 10px; color: #var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Gap (Flexbox/Grid)</div>
+                          <div style="font-size: 10px; color: var(--clr-sample-label-text); margin-bottom: 4px; font-weight: 500;">Gap (Flexbox/Grid)</div>
                           <div style="display: flex; gap: ${cssValue}; border: 1px dashed var(--clr-sample-gap-border); padding: 8px; border-radius: 4px; background: var(--clr-sample-gap-bg);">
                               <div style="background: var(--clr-sample-content-bg); padding: 12px 16px; border: 1px solid var(--clr-sample-content-border); color: var(--clr-sample-content-text); font-size: 11px; font-weight: 500;">Item 1</div>
                               <div style="font-size: 9px; color: var(--clr-sample-gap-text); align-self: center; white-space: nowrap;">gap: ${displayValue}</div>
@@ -2101,10 +2143,10 @@
             <td>
                 <button class="edit-size" data-id="${
                   size.id
-                }" data-tooltip="Edit this size entry">✎</button>
+                }" data-tooltip="Edit this size entry" aria-label="Edit this size entry">✎</button>
                 <button class="delete-size" data-id="${
                   size.id
-                }" data-tooltip="Delete this size entry">🗑️</button>
+                }" data-tooltip="Delete this size entry" aria-label="Delete this size entry">🗑️</button>
             </td>
         </tr>
     `;

@@ -34,9 +34,9 @@ if (!defined('ABSPATH')) {
         </div>
 
         <div class="fcc-table-buttons">
-            <button id="add-size" class="fcc-btn">add size</button>
-            <button id="reset-defaults" class="fcc-btn">reset</button>
-            <button id="clear-sizes" class="fcc-btn" disabled style="opacity: 0.5;">clear all</button>
+            <button id="add-size" class="fcc-btn" data-tooltip="Add a new size to this list">add size</button>
+            <button id="reset-defaults" class="fcc-btn" data-tooltip="Reset this tab's sizes to plugin defaults">reset</button>
+            <button id="clear-sizes" class="fcc-btn" disabled style="opacity: 0.5;" data-tooltip-position="left" data-tooltip="Remove all sizes from this tab">clear all</button>
         </div>
     </div>
 
@@ -57,26 +57,26 @@ if (!defined('ABSPATH')) {
     </p>
 
 
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 16px;">
         <div style="display: flex; gap: 16px;">
-            <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; flex-direction: column; gap: 4px;" data-tooltip="Reference size all other sizes scale from">
                 <label class="component-label" for="base-value" style="margin-bottom: 0; font-size: 12px;">Base</label>
-                <select id="base-value" class="component-select" style="width: 120px; height: 32px;">
+                <select id="base-value" class="component-select" style="width: 90px; height: 32px;">
                     {{BASE_OPTIONS}}
                 </select>
             </div>
-            <div id="prefix-control" style="display: {{PREFIX_CONTROL_DISPLAY}}; flex-direction: column; gap: 4px;">
+            <div id="prefix-control" style="display: {{PREFIX_CONTROL_DISPLAY}}; flex-direction: column; gap: 4px;" data-tooltip="Prefix used in generated CSS class/variable names">
                 <label class="component-label" for="prefix-input" style="margin-bottom: 0; font-size: 12px;">Prefix</label>
-                <input type="text" id="prefix-input" class="component-input" style="width: 100px; height: 32px; padding: 4px 8px;"
+                <input type="text" id="prefix-input" class="component-input" style="width: 80px; height: 32px; padding: 4px 8px;"
                     value="{{PREFIX_VALUE}}"
                     aria-label="Prefix for generated CSS (without . or -- markers)">
             </div>
         </div>
 
         <div class="fcc-table-buttons">
-            <button id="add-size-populated" class="fcc-btn">add size</button>
-            <button id="reset-defaults-populated" class="fcc-btn">reset</button>
-            <button id="clear-sizes-populated" class="fcc-btn">clear all</button>
+            <button id="add-size-populated" class="fcc-btn" data-tooltip="Add a new size to this list">add size</button>
+            <button id="reset-defaults-populated" class="fcc-btn" data-tooltip="Reset this tab's sizes to plugin defaults">reset</button>
+            <button id="clear-sizes-populated" class="fcc-btn" data-tooltip-position="left" data-tooltip="Remove all sizes from this tab">clear all</button>
         </div>
     </div>
 

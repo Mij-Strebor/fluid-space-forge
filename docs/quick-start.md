@@ -83,4 +83,4 @@ Close either panel if you don't need it — the collapsed/expanded state is reme
 
 ---
 
-*Fluid Space Forge v1.2.4 — Jim R Forge ([jimrforge.com](https://jimrforge.com))*
+*Fluid Space Forge v1.3.0 — Jim R Forge ([jimrforge.com](https://jimrforge.com))*

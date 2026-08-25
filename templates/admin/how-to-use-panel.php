@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 <!-- How to Use Panel -->
 <div class="fcc-info-toggle-section">
-    <button class="fcc-info-toggle <?php echo $settings['howToUseExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="info-content">
+    <button class="fcc-info-toggle <?php echo $settings['howToUseExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="info-content" data-tooltip="Expand/Collapse">
         <span style="color: var(--clr-txt-light) !important;">How to Use Fluid Space Forge</span>
         <span class="fcc-toggle-icon" style="color: var(--clr-txt-light) !important;">▼</span>
     </button>

@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
     <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 20px;">
             <div class="fcc-autosave-flex">
-                <label>
+                <label data-tooltip="Automatically save changes as you edit, without clicking Save">
                     <input type="checkbox" id="autosave-toggle" <?php echo $settings['autosaveEnabled'] ? 'checked' : ''; ?>>
                     <span>Autosave</span>
                 </label>

@@ -1,3 +1,34 @@
+## [1.3.0] - 2026-08-25
+
+### Added
+
+- Tooltips added to the Space Size dropdown, Viewport Size slider, Autosave checkbox, Base dropdown, Prefix input, Add Size/Reset/Clear All buttons, and all four expand/collapse section toggles.
+- `aria-label` added to icon-only Edit/Delete buttons for screen reader and voice-control accessibility.
+- Sticky Min Size/Max Size column headers in the Space Size Preview, so they stay visible while scrolling through sizes.
+- Updated Community and Tools panel: new Jim R Forge link, updated Quick Start/User Manual links, Media Inventory Forge and Atomic Framework Forge for Elementor now listed as available on WordPress.org.
+
+### Changed
+
+- Viewport Test Preview and Space Size Preview now default to collapsed on a fresh install.
+- Removed three unused JavaScript files left over from Fluid Font Forge development (`unified-size-access.js`, `utilities.js`, `sample-panel.js`).
+- **Version** — Bumped to 1.3.0.
+
+### Fixed
+
+- **Horizontal Scroll Bar:** Tooltip content was hidden via `opacity`/`visibility` instead of `display: none`, so its full un-wrapped width still counted toward the page's scrollable area even while invisible. Capped tooltip width and let it wrap instead of forcing one long line.
+- **Hero Banner Overflow:** Banner background bled past the page's padding into the scrollbar area instead of aligning with the rest of the content column.
+- **Duplicate Saves:** Save button and Autosave toggle listeners were re-added on every re-render without the old listener actually being removed first (anonymous functions can't be un-registered), so duplicate saves stacked up the longer a session ran.
+- **Delete Active Base:** Deleting the size currently used as a tab's base silently fell back to hardcoded 8px/12px values for every remaining row on that tab instead of reassigning to a valid remaining size.
+- **Autosave Base Corruption:** Autosave read all three tabs' base-size selection from the same shared dropdown element, silently overwriting Classes/Variables/Utilities' stored base IDs with whichever tab happened to be open at save time. Now each tab's base is only updated when that tab is actually active.
+- **Selected CSS Panel:** Deleting the currently-selected row left its CSS displayed in the Selected CSS panel instead of resetting to the placeholder text.
+- **Viewport Test Preview Colors:** Invalid CSS (`#var(...)` instead of `var(...)`) broke background and text colors in the preview cards.
+- **Sample Space Preview Refresh:** The Viewport Test's Space Size dropdown never repopulated with the new tab's sizes when switching tabs.
+- **Viewport Range Validation:** JS validation hardcoded 992px/1920px limits instead of the actual 200-5000px range, incorrectly rejecting valid values within the supported range.
+- **Zero-Width Viewport Guard:** Added a server-side guard against min/max viewport being set equal (or inverted), which could otherwise produce `Infinity`/`NaN` in generated CSS via a direct AJAX request bypassing client-side validation.
+- **Button Wrapping:** Add Size/Reset/Clear All buttons wrapped to two lines with no gap from the Prefix field at normal widths.
+
+---
+
 ## [1.2.4] - 2025-11-21
 
 ### Fixed

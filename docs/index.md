@@ -6,7 +6,7 @@ title: Fluid Space Forge — Documentation
 
 A WordPress admin tool that generates CSS `clamp()` values for fluid, responsive spacing — output as CSS classes, custom properties, or Tailwind utilities, with a real-time DevTools-style preview.
 
-**Current release:** v1.2.4
+**Current release:** v1.3.0
 
 [Source code and downloads →](https://github.com/Mij-Strebor/fluid-space-forge)
 

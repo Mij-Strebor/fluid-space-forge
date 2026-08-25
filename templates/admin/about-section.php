@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
 
 <!-- About Section -->
 <div class="fcc-info-toggle-section">
-    <button class="fcc-info-toggle <?php echo $settings['aboutExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="about-content">
+    <button class="fcc-info-toggle <?php echo $settings['aboutExpanded'] ? 'expanded' : ''; ?>" data-toggle-target="about-content" data-tooltip="Expand/Collapse">
         <span style="color: var(--clr-txt-light) !important;">About Fluid Space Forge</span>
         <span class="fcc-toggle-icon" style="color: var(--clr-txt-light) !important;">▼</span>
     </button>

@@ -291,6 +291,17 @@
      * @private
      */
     _collectSettings() {
+      const activeTab =
+        document
+          .querySelector(".tab-button.active")
+          ?.getAttribute("data-tab") || "class";
+      // #base-value is a single shared DOM element reused across all three
+      // tabs, so its current value only reflects whichever tab is active.
+      // Only that tab's stored base ID should be updated from it; the other
+      // two must keep their own last-saved values.
+      const currentBaseValue = document.getElementById("base-value")?.value || 3;
+      const existingSettings = window.fluispfoAjax?.data?.settings || {};
+
       return {
         minBasespace: document.getElementById("min-base-space")?.value,
         maxBasespace: document.getElementById("max-base-space")?.value,
@@ -301,17 +312,16 @@
         unitType: document
           .querySelector(".unit-button.active")
           ?.getAttribute("data-unit"),
-        activeTab: document
-          .querySelector(".tab-button.active")
-          ?.getAttribute("data-tab"),
+        activeTab,
         autosaveEnabled: document.getElementById("autosave-toggle")?.checked,
-        classPrefix: window.fluispfoAjax?.data?.settings?.classPrefix || "space",
-        variablePrefix: window.fluispfoAjax?.data?.settings?.variablePrefix || "sp",
-        selectedClassSizeId: document.getElementById("base-value")?.value || 3,
+        classPrefix: existingSettings.classPrefix || "space",
+        variablePrefix: existingSettings.variablePrefix || "sp",
+        selectedClassSizeId:
+          activeTab === "class" ? currentBaseValue : existingSettings.selectedClassSizeId ?? 3,
         selectedVariableSizeId:
-          document.getElementById("base-value")?.value || 3,
+          activeTab === "vars" ? currentBaseValue : existingSettings.selectedVariableSizeId ?? 3,
         selectedUtilitySizeId:
-          document.getElementById("base-value")?.value || 3,
+          activeTab === "utils" ? currentBaseValue : existingSettings.selectedUtilitySizeId ?? 3,
         viewportTestExpanded:
           document
             .getElementById("sample-space-content")

@@ -34,6 +34,7 @@ If you need to clip content, use a wrapper element instead.
 .unit-button {
     overflow: visible;
     /* Required for tooltips */
+    white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -454,8 +455,10 @@ Grid layouts and container structures for page organization.
 Styleguide 4.0
 */
 .all-container {
-    width: 1280px;
+    max-width: 1280px;
+    width: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 
@@ -649,6 +652,7 @@ Styleguide 5.4
     gap: var(--sp-2);
     align-items: center;
     justify-content: flex-end;
+    flex-shrink: 0;
 }
 
 .fcc-css-buttons {
@@ -1143,9 +1147,22 @@ Styleguide 5.15
     align-items: center;
     margin-bottom: var(--sp-2);
     padding: var(--sp-2) var(--sp-3);
-    background: rgba(92, 51, 36, 0.1);
+    background: var(--clr-light);
     border-radius: var(--jimr-border-radius);
     border: 1px solid var(--clr-bdr-dark);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.fcc-preview-column-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(92, 51, 36, 0.1);
+    border-radius: inherit;
+    z-index: -1;
 }
 
 .fcc-preview-column-header h3 {
@@ -1964,7 +1981,9 @@ Styleguide 9.0
     color: var(--clr-white);
     font-size: var(--fs-xs);
     line-height: 1.4;
-    white-space: nowrap;
+    white-space: normal;
+    max-width: 220px;
+    width: max-content;
     border-radius: var(--jimr-border-radius);
     box-shadow: var(--clr-shadow-lg);
     opacity: 0;

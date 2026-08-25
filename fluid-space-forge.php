@@ -4,15 +4,15 @@
  * Plugin Name: Fluid Space Forge
  * Plugin URI: https://github.com/Mij-Strebor/fluid-space-forge
  * Description: Generate responsive spacing using CSS clamp() functions. Perfect companion to Font Clamp Calculator for creating fluid design systems.
- * Version: 1.2.4
+ * Version: 1.3.0
  * Author: Jim R.
  * Author URI: https://jimrforge.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: fluid-space-forge
  * Requires at least: 5.0
- * Tested up to: 6.8
- * Requires PHP: 7.4
+ * Tested up to: 7.1
+ * Requires PHP: 8.2
  * 
  */
 
@@ -33,7 +33,7 @@ class FluidSpaceForge
     // ========================================================================
 
     // Configuration Constants
-    const VERSION = '1.2.4';
+    const VERSION = '1.3.0';
     const PLUGIN_SLUG = 'fluid-space-forge';
     const NONCE_ACTION = 'fluispfo_nonce';
 
@@ -164,8 +164,8 @@ class FluidSpaceForge
             'autosaveEnabled' => true,
             'aboutExpanded' => true,
             'howToUseExpanded' => true,
-            'viewportTestExpanded' => true,
-            'spaceSizeExpanded' => true,
+            'viewportTestExpanded' => false,
+            'spaceSizeExpanded' => false,
             'classPrefix' => 'space',
             'variablePrefix' => 'sp',
         ];
@@ -968,6 +968,18 @@ class FluidSpaceForge
 
         // Merge: incoming settings override existing, but existing are preserved
         $settings = array_merge($existing_settings, $sanitized_incoming);
+
+        // Guard against a degenerate/zero-width viewport range: if minViewport and
+        // maxViewport end up equal (or inverted), the clamp() coefficient calculation
+        // in calculations.js divides by (maxViewport - minViewport), producing
+        // Infinity/NaN in every generated CSS rule. The JS blur validation normally
+        // prevents this, but a direct AJAX POST can bypass it entirely.
+        if (isset($settings['minViewport']) && isset($settings['maxViewport']) && $settings['maxViewport'] <= $settings['minViewport']) {
+            $settings['maxViewport'] = min(self::VIEWPORT_RANGE[1], $settings['minViewport'] + 1);
+            if ($settings['maxViewport'] <= $settings['minViewport']) {
+                $settings['minViewport'] = $settings['maxViewport'] - 1;
+            }
+        }
 
         // Get sizes JSON string (wp_unslash removes WordPress's automatic slashing)
         // Note: We do NOT use sanitize_text_field() on JSON strings as it corrupts the data
